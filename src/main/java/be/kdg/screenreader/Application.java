@@ -1,8 +1,8 @@
 package be.kdg.screenreader;
 
 import be.kdg.screenreader.model.Model;
-import be.kdg.screenreader.view.dictee.Presenter;
-import be.kdg.screenreader.view.dictee.View;
+import be.kdg.screenreader.view.game.GamePresenter;
+import be.kdg.screenreader.view.game.GameView;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -13,13 +13,13 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         // scenes in het begin mag hier maar naarmate de app groter wordt moet dat in de presenter
 
-        View dicteeView = new View();
+        GameView dicteeView = new GameView();
         // de scene zit in de view
 
         Scene scene = new Scene(dicteeView);
         // in de scene zitten nodes (buttons, text, ...)
 
-        new Presenter(dicteeView,new Model());
+        new GamePresenter(dicteeView,new Model());
 
 
         stage.setScene(scene);

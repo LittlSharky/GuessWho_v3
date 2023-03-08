@@ -1,16 +1,16 @@
-package be.kdg.screenreader.view.dictee;
+package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Model;
 
-public class Presenter {
+public class GamePresenter {
     // elke view/scene heeft zijn eigen presenter (home met homepresenter, game met gamepresenter)
     // bij grote applicaties -> per view en presenter een package aanmaken
     // moet ook weten van het model
 
-    private final View view;
+    private final GameView view;
     private final Model model;
 
-    public Presenter(View view, Model model) {
+    public GamePresenter(GameView view, Model model) {
         this.view = view;
         this.model = model;
 

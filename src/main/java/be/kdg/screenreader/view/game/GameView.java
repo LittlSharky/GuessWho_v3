@@ -1,10 +1,10 @@
-package be.kdg.screenreader.view.dictee;
+package be.kdg.screenreader.view.game;
 
 import javafx.scene.layout.BorderPane;
 
-public class View extends BorderPane {
+public class GameView extends BorderPane {
 
-    public View(){
+    public GameView(){
         initializeNodes();
         layoutNodes();
     }
