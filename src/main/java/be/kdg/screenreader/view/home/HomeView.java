@@ -21,8 +21,9 @@ public class HomeView extends VBox {
     private TextField confirmName;
     private Button start;
     private Image image;
-    VBox vbox;
-    ImageView imageView;// Create VBox container
+    private VBox vbox;
+    private ImageView imageView;// Create VBox container
+    private Label usernameLabel;
 
 
     public HomeView() {
@@ -35,30 +36,19 @@ public class HomeView extends VBox {
         this.confirmName = new TextField("Give here your username");
         this.start = new Button("START");
         this.vbox = new VBox();
-
+        this.imageView = new ImageView();
 
         // dit gaat zowel text als button initialiseren
     }
 
     private void layoutNodes() {
-        //we zetten alles van de lijst samen
-        VBox.setMargin(this.confirmName, new Insets(10, 10, 10, 10));
-        vbox.setPrefSize(1400, 800);
-        this.image = new Image("file:" + "src/main/java/be/kdg/screenreader/resources/Title.png");
-        this.imageView = new ImageView(this.image);
-        vbox.getChildren().add(imageView); // Add ImageView to VBox
-
-
-        // resources is enkel voor hardcoded images en savefiles eerder in de documenten van de gebruiker
-
-        this.getChildren().addAll(this.label, this.confirmName, this.start);
-        this.setAlignment(Pos.CENTER);
-
-        this.label.setFont(new Font(22));
-        this.label.setTextFill(Color.BLUE);
+        //put the image in the imageview
+        this.image = new Image("Title.png");
+        imageView.setImage(image);
         this.confirmName.setMaxWidth(450);
 
-
+        this.getChildren().addAll(imageView, this.confirmName, this.start);
+        this.setAlignment(Pos.CENTER);
     }
 
     Button getButton() {

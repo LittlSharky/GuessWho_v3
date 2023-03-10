@@ -2,7 +2,8 @@ package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Game;
 import be.kdg.screenreader.model.Question;
-import javafx.collections.FXCollections;
+import be.kdg.screenreader.view.home.HomePresenter;
+import be.kdg.screenreader.view.home.HomeView;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -11,7 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class GameView extends BorderPane {
@@ -34,6 +34,7 @@ public class GameView extends BorderPane {
     private Button confirmPerson;
     private ImageView confirmedPerson;
 
+
     public GameView() {
         this.persons = new ArrayList<>();
         this.fillPersons();
@@ -41,6 +42,7 @@ public class GameView extends BorderPane {
         initializeNodes();
         layoutNodes();
     }
+
 
     private void initializeNodes() {
         this.exit = new MenuItem("Exit");
@@ -60,6 +62,7 @@ public class GameView extends BorderPane {
         //Confirmed person image view
         this.confirmPerson = new Button("Confirm person");
         this.confirmedPerson = new ImageView();
+
     }
 
     private void layoutNodes() {
@@ -98,7 +101,6 @@ public class GameView extends BorderPane {
                 index++;
             }
         }
-
         this.setCenter(gameGrid);
     }
 

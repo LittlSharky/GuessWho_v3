@@ -33,6 +33,7 @@ public class HomePresenter {
         this.updateView();
     }
 
+
     // eventhandler = code die een event gaat ophalen door dat er iets gebeurt met view en daar iets mee gaat doen (bv. op knop drukken)
     // update view, als er een event gebeurt dan moet er daarna iets gebeuren om het te updaten en dat is updateview
     private void addEventHandlers() {
@@ -62,12 +63,14 @@ public class HomePresenter {
             choosePopup.getContent().addAll(choosePerson, buttonBox);
             choosePopup.show(this.gameView.getScene().getWindow());
 
+            String username = view.getConfirmName().getText();
+            Label usernameLabel = new Label(username);
+
 
             this.okButton.setOnAction(event -> {
                 choosePopup.hide();
             });
         });
-
 
 
     }

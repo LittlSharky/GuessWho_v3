@@ -20,14 +20,14 @@ public class Application extends javafx.application.Application {
 
         Scene scene = new Scene(homeView);
         // in de scene zitten nodes (buttons, text, ...)
+        //scene.getStylesheets().add("/stylesheets/stylesheet.css");
 
         new HomePresenter(homeView,new Game());
 
 
         stage.setScene(scene);
         stage.setTitle("JavaFX Application");
-        stage.setWidth(300);
-        stage.setHeight(500);
+        stage.sizeToScene();
         stage.show();
         // dit gaat het venster geven (venster = stage)
     }
