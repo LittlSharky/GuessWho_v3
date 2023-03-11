@@ -26,8 +26,8 @@ public class GameView extends BorderPane {
     private Question question;
 
     private GridPane gameGrid;
-    private final int ROWS = 5;
-    private final int COLUMNS = 4;
+    private final int ROWS = 4;
+    private final int COLUMNS = 5;
 
     private ArrayList<String> persons;
 
@@ -77,16 +77,21 @@ public class GameView extends BorderPane {
 
         //Default selected person
         setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
-        this.setRight(new VBox(10, confirmedPerson, confirmPerson));
+        VBox vBox = new  VBox(10, confirmedPerson, confirmPerson);
+
+        //Put the VBox at the right center of the screen
+        vBox.setAlignment(Pos.CENTER_RIGHT);
+
+        this.setRight(vBox);
 
         gameGrid.setHgap(10);
         gameGrid.setVgap(10);
 
         int index = 0;
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
-                GamePersonView person = new GamePersonView(this.persons.get(index), j, i);
-                gameGrid.add(person, j, i);
+        for (int i = 0; i < COLUMNS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                GamePersonView person = new GamePersonView(this.persons.get(index), i, j);
+                gameGrid.add(person, i, j);
                 index++;
             }
         }
@@ -144,7 +149,10 @@ public class GameView extends BorderPane {
 
     void setConfirmedPerson(Image image) {
         this.confirmedPerson = new ImageView(image);
-        this.setRight(new VBox(10, confirmedPerson, confirmPerson));
+        VBox vBox = new  VBox(10, confirmedPerson, confirmPerson);
+        //Put the VBox at the right center of the screen
+        vBox.setAlignment(Pos.CENTER_RIGHT);
+        this.setRight(vBox);
     }
 }
 

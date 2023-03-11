@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    // modelklasse = domme klasse die alleen maar weet waarmee hij bezig is
     Board newBoardH;
     Board newBoardC;
 

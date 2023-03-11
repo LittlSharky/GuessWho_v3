@@ -29,12 +29,12 @@ public class GamePresenter {
                 GamePersonView person = (GamePersonView) node;
                 if (model.getHumanBoard().isPersonConfirmed()) {
                     model.getHumanBoard()
-                            .setEliminated(person.getCOORD_Y(), person.getCOORD_X(),
-                                    !model.getHumanBoard().isEliminated(person.getCOORD_Y(), person.getCOORD_X()));
+                            .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
+                                    !model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
                     updateView();
                 } else {
                     view.setConfirmedPerson(person.getPhoto());
-                    model.getHumanBoard().setChosenPerson(person.getCOORD_Y(), person.getCOORD_X());
+                    model.getHumanBoard().setChosenPerson(person.getCOORD_X(), person.getCOORD_Y());
                 }
             });
         });
@@ -55,7 +55,7 @@ public class GamePresenter {
     private void updateView() {
         this.view.getGameGrid().getChildren().forEach(node -> {
             GamePersonView person = (GamePersonView) node;
-            person.setEliminated((model.getHumanBoard().isEliminated(person.getCOORD_Y(), person.getCOORD_X())));
+            person.setEliminated((model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
     }
 };

@@ -46,8 +46,8 @@ public class HomeView extends VBox {
         this.image = new Image("Title.png");
         imageView.setImage(image);
         this.confirmName.setMaxWidth(450);
-
         this.getChildren().addAll(imageView, this.confirmName, this.start);
+        this.setSpacing(10);
         this.setAlignment(Pos.CENTER);
     }
 
