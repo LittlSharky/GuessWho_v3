@@ -41,7 +41,7 @@ public class GamePersonView extends Canvas {
 
         if (this.eliminated) {
             this.gc.setStroke(Color.RED);
-            this.gc.setLineWidth(2);
+            this.gc.setLineWidth(10);
 
             this.gc.strokeLine(0, 0, WIDTH, HEIGHT);
             this.gc.strokeLine(WIDTH, 0, 0, HEIGHT);

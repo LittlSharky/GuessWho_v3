@@ -4,13 +4,14 @@ import be.kdg.screenreader.model.Game;
 import be.kdg.screenreader.model.Question;
 import be.kdg.screenreader.view.home.HomePresenter;
 import be.kdg.screenreader.view.home.HomeView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class GameView extends BorderPane {
     private MenuItem exit;
     private MenuItem info;
     private Button confirmQuestion;
-    private Button guess;
+    private Button guessButton;
     private Label name;
     private ComboBox<String> questions;
     private Question question;
@@ -27,13 +28,12 @@ public class GameView extends BorderPane {
     private GridPane gameGrid;
     private final int ROWS = 5;
     private final int COLUMNS = 4;
-    Game game;
 
     private ArrayList<String> persons;
 
     private Button confirmPerson;
     private ImageView confirmedPerson;
-
+    private ObservableList<String> questionObservable;
 
     public GameView() {
         this.persons = new ArrayList<>();
@@ -43,25 +43,24 @@ public class GameView extends BorderPane {
         layoutNodes();
     }
 
-
     private void initializeNodes() {
         this.exit = new MenuItem("Exit");
         this.info = new MenuItem("Info");
 
         //Initiliaze buttons
-        this.confirmQuestion = new Button();
-        this.guess = new Button();//pic
+        this.confirmQuestion = new Button("Confirm question");
+        this.guessButton = new Button();//pic
         this.name = new Label();
-        //Initiliaze questions
-
-        question = new Question();
-        questions = new ComboBox<>();
-        //ObservableList<String> questionObservable = FXCollections.observableArrayList(question.getListQuestion());
-        //questions.setItems(questionObservable);
 
         //Confirmed person image view
         this.confirmPerson = new Button("Confirm person");
         this.confirmedPerson = new ImageView();
+
+        //Initiliaze questions
+        this.question = new Question();
+        this.questions = new ComboBox<>();
+        this.questionObservable = FXCollections.observableArrayList(question.getListQuestion());
+        this.questions.setItems(questionObservable);
 
     }
 
@@ -75,16 +74,6 @@ public class GameView extends BorderPane {
         gameGrid = new GridPane();
         gameGrid.setPadding(new Insets(10));
 
-        //gameGrid.add(questions, 4, 5);
-
-        //confirmQuestion.setText("Confirm question");
-        //gameGrid.add(confirmQuestion, 5, 5);
-
-        //confirmPerson.setText("Confirm person");
-        //gameGrid.add(confirmPerson, 5, 2);
-
-        //guess.setText("Take a Guess!");
-        //gameGrid.add(guess, 5, 4);
 
         //Default selected person
         setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
@@ -102,6 +91,16 @@ public class GameView extends BorderPane {
             }
         }
         this.setCenter(gameGrid);
+
+        //Put the guess button and the question combobox in a HBox
+        HBox hBox = new HBox(10, questions, confirmQuestion);
+        //Put them at the bottom of the screen
+        hBox.setAlignment(Pos.BOTTOM_RIGHT);
+        HBox.setHgrow(questions, Priority.ALWAYS);
+        this.setBottom(hBox);
+
+        //Put the comboBox and the confirmButton with the same padding around them
+        BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
     }
 
     public Button getConfirmPerson() {
@@ -113,7 +112,7 @@ public class GameView extends BorderPane {
     }
 
     public Button getGuess() {
-        return guess;
+        return guessButton;
     }
 
     private void fillPersons() {

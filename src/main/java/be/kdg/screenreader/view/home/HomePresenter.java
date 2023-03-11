@@ -47,7 +47,8 @@ public class HomePresenter {
 
             this.view.getScene().setRoot(gameView);
             //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
-            gameView.getScene().getWindow().sizeToScene();
+            gameView.getScene().getWindow().setHeight(850);
+            gameView.getScene().getWindow().setWidth(1000);
             //modelGuesswho.setUsernameOne((view.getConfirmName()).getText());
             //choosePerson.setStyle("-fx-background-color: pink; -fx-padding: 100px; -fx-alignment: top-right");
 

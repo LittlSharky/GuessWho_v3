@@ -27,9 +27,9 @@ public class Application extends javafx.application.Application {
 
         stage.setScene(scene);
         stage.setTitle("JavaFX Application");
-        stage.sizeToScene();
+        stage.setHeight(600);
+        stage.setWidth(800);
         stage.show();
-        // dit gaat het venster geven (venster = stage)
     }
 
     public static void main(String[] args) {
