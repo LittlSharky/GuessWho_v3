@@ -49,7 +49,7 @@ public class GameView extends BorderPane {
 
         //Initiliaze buttons
         this.confirmQuestion = new Button("Confirm question");
-        this.guessButton = new Button();//pic
+        this.guessButton = new Button("Take a Guess!");//pic
         this.name = new Label();
 
         //Confirmed person image view
@@ -97,9 +97,11 @@ public class GameView extends BorderPane {
         }
         this.setCenter(gameGrid);
 
-        //Put the guess button and the question combobox in a HBox
-        HBox hBox = new HBox(10, questions, confirmQuestion);
-        //Put them at the bottom of the screen
+        //Make a vBox with the guessButton and the confirmQuestion button
+        VBox vBoxTwo = new VBox(10,  guessButton,confirmQuestion);
+        //Make a hBox with the questions and the vBoxTwo
+        HBox hBox = new HBox(10, questions, vBoxTwo);
+        //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
         HBox.setHgrow(questions, Priority.ALWAYS);
         this.setBottom(hBox);
