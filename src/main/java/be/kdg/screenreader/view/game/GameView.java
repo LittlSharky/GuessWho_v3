@@ -49,7 +49,7 @@ public class GameView extends BorderPane {
 
         //Initiliaze buttons
         this.confirmQuestion = new Button("Confirm question");
-        this.guessButton = new Button("Take a Guess!");//pic
+        this.guessButton = new Button("Take a Guess!");
         this.name = new Label();
 
         //Confirmed person image view
