@@ -56,11 +56,11 @@ public class GameView extends BorderPane {
         this.confirmPerson = new Button("Confirm person");
         this.confirmedPerson = new ImageView();
 
-        //Initiliaze questions
+        /*Initiliaze questions
         this.question = new Question();
         this.questions = new ComboBox<>();
         this.questionObservable = FXCollections.observableArrayList(question.getListQuestion());
-        this.questions.setItems(questionObservable);
+        this.questions.setItems(questionObservable); --> This block of code can be in the GameQuestionView */
 
     }
 

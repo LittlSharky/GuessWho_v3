@@ -15,4 +15,9 @@ public class Question {
         return listQuestion;
     }
 
+    public String getQuestion(int index) {
+        return listQuestion.get(index);
+    }
+
+
 }
