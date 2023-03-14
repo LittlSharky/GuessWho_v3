@@ -32,9 +32,12 @@ public class GamePresenter {
                             .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
                                     !model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
                     updateView();
+                    // to eliminate / de-eliminate characters
                 } else {
                     view.setConfirmedPerson(person.getPhoto());
                     model.getHumanBoard().setChosenPerson(person.getCOORD_X(), person.getCOORD_Y());
+                    model.getComputerBoard().computerChoosePerson();
+                    // if a character is not chosen yet as chosenPerson
                 }
             });
         });
@@ -42,6 +45,18 @@ public class GamePresenter {
         this.view.getConfirmPerson().setOnAction(actionEvent -> {
             try {
                 model.getHumanBoard().setPersonConfirmed();
+                this.view.getConfirmPerson().setDisable(true);
+            } catch (Exception e) {
+                Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);
+                alertNotChosen.setTitle("ERROR");
+                alertNotChosen.setContentText(e.getMessage());
+                alertNotChosen.showAndWait();
+            }
+        });
+        this.view.getConfirmQuestion().setOnAction(actionEvent -> {
+            GameQuestionView gameQuestionView = new GameQuestionView();
+            try {
+                gameQuestionView.getComboBoxQuestion();
                 this.view.getConfirmPerson().setDisable(true);
             } catch (Exception e) {
                 Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);

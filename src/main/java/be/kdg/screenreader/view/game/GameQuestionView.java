@@ -21,4 +21,9 @@ public class GameQuestionView {
     public ComboBox getComboBoxQuestion() {
         return comboBoxQuestion;
     }
+    public boolean checkedQuestion(int index){
+        this.index = index;
+        question.checkedQuestion(this.index);
+        return false;
+    }
 }

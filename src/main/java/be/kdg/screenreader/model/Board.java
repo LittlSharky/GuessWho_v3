@@ -2,6 +2,8 @@ package be.kdg.screenreader.model;
 
 import be.kdg.screenreader.model.enums.*;
 
+import java.util.Random;
+
 public class Board {
     private final int ROWS = 4;
     private final int COLUMNS = 5;
@@ -9,6 +11,7 @@ public class Board {
 
     private boolean personConfirmed;
     private Person person;
+    private Person personC;
 
     private Person[] array = {
             new Person(Name.AMY, HairColor.GINGER, Sex.FEMALE, EyeColor.RED, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
@@ -48,17 +51,22 @@ public class Board {
             throw new IllegalArgumentException("No person chosen");
         this.personConfirmed = true;
     }
-
+    public void computerChoosePerson(){
+        Random random = new Random(array.length);
+        array[random.nextInt()] = personC;
+    }
     public boolean isPersonConfirmed() {
         return personConfirmed;
     }
 
     public boolean isEliminated(int x, int y) {
         return bord[x][y].isEliminated();
+        // gives the state of the character ( eliminated / not eliminated )
     }
 
     public void setEliminated(int x, int y, boolean eliminated) {
         bord[x][y].setEliminated(eliminated);
+        // is going to eliminate / not eliminate a person
     }
 
     private void generateBoard() {
@@ -68,5 +76,9 @@ public class Board {
                 this.bord[i][j] = array[index++];
             }
         }
+    }
+
+    public Person getPersonC() {
+        return personC;
     }
 }

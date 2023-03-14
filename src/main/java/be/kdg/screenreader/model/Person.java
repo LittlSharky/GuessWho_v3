@@ -77,7 +77,7 @@ public class Person {
     public void setEliminated(boolean eliminated) {
         this.eliminated = eliminated;
     }
-
+    // Eliminate the person ^
     public boolean isEliminated() {
         return this.eliminated;
     }
