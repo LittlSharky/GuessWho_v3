@@ -9,7 +9,7 @@ public class GamePresenter {
     // moet ook weten van het model
 
     private final GameView view;
-    private GameQuestionView gameQuestionView;
+    private GameQuestionView gameQuestionView = new GameQuestionView();
     private final Game model;
 
     public GamePresenter(GameView view, Game model) {
@@ -56,7 +56,7 @@ public class GamePresenter {
         });
 
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
-            gameQuestionView = new GameQuestionView();
+            updateView();
             int selectedIndex = gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
             gameQuestionView.checkedQuestion(selectedIndex);
             Alert alertNotChosen = new Alert(Alert.AlertType.INFORMATION);
@@ -76,6 +76,9 @@ public class GamePresenter {
         this.view.getGameGrid().getChildren().forEach(node -> {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
+        });
+        this.gameQuestionView.getComboBoxQuestion().setOnAction(actionEvent -> {
+            int selectedIndex = gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
         });
     }
 };

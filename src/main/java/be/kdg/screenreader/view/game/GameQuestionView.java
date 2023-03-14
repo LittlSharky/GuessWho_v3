@@ -7,7 +7,7 @@ import javafx.scene.control.ComboBox;
 
 public class GameQuestionView {
     private Question question;
-    private ComboBox comboBoxQuestion;
+    private ComboBox<String> comboBoxQuestion;
     private ObservableList<String> questionObservable;
     private int index;
 
@@ -18,7 +18,7 @@ public class GameQuestionView {
         this.comboBoxQuestion.setItems(questionObservable);
     }
 
-    public ComboBox getComboBoxQuestion() {
+    public ComboBox<String> getComboBoxQuestion() {
         return comboBoxQuestion;
     }
     public boolean checkedQuestion(int index){
