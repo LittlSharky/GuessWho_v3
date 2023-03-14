@@ -22,6 +22,7 @@ public class GameView extends BorderPane {
     private Button confirmQuestion;
     private Button guessButton;
     private Label name;
+    private HBox hBox;
 
     private GridPane gameGrid;
     private final int ROWS = 4;
@@ -94,7 +95,7 @@ public class GameView extends BorderPane {
         //Make a vBox with the guessButton and the confirmQuestion button
         VBox vBoxTwo = new VBox(10,  guessButton,confirmQuestion);
         //Make a hBox with the questions and the vBoxTwo
-        HBox hBox = new HBox(10, gameQuestionView.getComboBoxQuestion(), vBoxTwo);
+        this.hBox = new HBox(10, gameQuestionView.getComboBoxQuestion(), vBoxTwo);
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
         HBox.setHgrow(gameQuestionView.getComboBoxQuestion(), Priority.ALWAYS);
@@ -149,6 +150,10 @@ public class GameView extends BorderPane {
         //Put the VBox at the right center of the screen
         vBox.setAlignment(Pos.CENTER_RIGHT);
         this.setRight(vBox);
+    }
+
+    public HBox gethBox() {
+        return hBox;
     }
 }
 

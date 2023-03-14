@@ -9,6 +9,7 @@ public class GamePresenter {
     // moet ook weten van het model
 
     private final GameView view;
+    private GameQuestionView gameQuestionView;
     private final Game model;
 
     public GamePresenter(GameView view, Game model) {
@@ -53,17 +54,21 @@ public class GamePresenter {
                 alertNotChosen.showAndWait();
             }
         });
+
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
-            GameQuestionView gameQuestionView = new GameQuestionView();
-            try {
-                gameQuestionView.getComboBoxQuestion();
-                this.view.getConfirmPerson().setDisable(true);
-            } catch (Exception e) {
-                Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);
-                alertNotChosen.setTitle("ERROR");
-                alertNotChosen.setContentText(e.getMessage());
+            gameQuestionView = new GameQuestionView();
+            int selectedIndex = gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
+            gameQuestionView.checkedQuestion(selectedIndex);
+            Alert alertNotChosen = new Alert(Alert.AlertType.INFORMATION);
+            if (gameQuestionView.checkedQuestion(selectedIndex)){
+                alertNotChosen.setTitle("INFO");
+                alertNotChosen.setContentText("True");
+                alertNotChosen.showAndWait();
+            } else {
+                alertNotChosen.setContentText("False");
                 alertNotChosen.showAndWait();
             }
+
         });
     }
 

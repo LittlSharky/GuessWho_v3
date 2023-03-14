@@ -23,7 +23,6 @@ public class GameQuestionView {
     }
     public boolean checkedQuestion(int index){
         this.index = index;
-        question.checkedQuestion(this.index);
-        return false;
+        return question.checkedQuestion(this.index);
     }
 }

@@ -52,8 +52,8 @@ public class Board {
         this.personConfirmed = true;
     }
     public void computerChoosePerson(){
-        Random random = new Random(array.length);
-        array[random.nextInt()] = personC;
+        Random random = new Random();
+        array[random.nextInt(array.length - 1)] = personC;
     }
     public boolean isPersonConfirmed() {
         return personConfirmed;
