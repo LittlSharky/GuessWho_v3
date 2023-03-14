@@ -22,8 +22,6 @@ public class GameView extends BorderPane {
     private Button confirmQuestion;
     private Button guessButton;
     private Label name;
-    private ComboBox<String> questions;
-    private Question question;
 
     private GridPane gameGrid;
     private final int ROWS = 4;
@@ -33,8 +31,7 @@ public class GameView extends BorderPane {
 
     private Button confirmPerson;
     private ImageView confirmedPerson;
-    private ObservableList<String> questionObservable;
-
+    private GameQuestionView gameQuestionView;
     public GameView() {
         this.persons = new ArrayList<>();
         this.fillPersons();
@@ -56,11 +53,8 @@ public class GameView extends BorderPane {
         this.confirmPerson = new Button("Confirm person");
         this.confirmedPerson = new ImageView();
 
-        /*Initiliaze questions
-        this.question = new Question();
-        this.questions = new ComboBox<>();
-        this.questionObservable = FXCollections.observableArrayList(question.getListQuestion());
-        this.questions.setItems(questionObservable); --> This block of code can be in the GameQuestionView */
+        //Initiliaze questions
+        gameQuestionView = new GameQuestionView();
 
     }
 
@@ -100,10 +94,10 @@ public class GameView extends BorderPane {
         //Make a vBox with the guessButton and the confirmQuestion button
         VBox vBoxTwo = new VBox(10,  guessButton,confirmQuestion);
         //Make a hBox with the questions and the vBoxTwo
-        HBox hBox = new HBox(10, questions, vBoxTwo);
+        HBox hBox = new HBox(10, gameQuestionView.getComboBoxQuestion(), vBoxTwo);
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        HBox.setHgrow(questions, Priority.ALWAYS);
+        HBox.setHgrow(gameQuestionView.getComboBoxQuestion(), Priority.ALWAYS);
         this.setBottom(hBox);
 
         //Put the comboBox and the confirmButton with the same padding around them

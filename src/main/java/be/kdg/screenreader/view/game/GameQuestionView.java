@@ -18,4 +18,7 @@ public class GameQuestionView {
         this.comboBoxQuestion.setItems(questionObservable);
     }
 
+    public ComboBox getComboBoxQuestion() {
+        return comboBoxQuestion;
+    }
 }

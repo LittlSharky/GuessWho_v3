@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Question {
+    private Game game = new Game();
+    private Board boardH = game.getHumanBoard();
     String[] questions = {"Is he/she female?","Does the person wear glasses?", "Are their eyes blue?",
             "Does the person have brown eyes?", "Are their eyes grey?","Does he have beard?",
             "Does he have a moustache?", "Is the person bald?", "Does the person have blond hair?",
