@@ -81,7 +81,8 @@ public class GamePresenter {
             if (model.getQuestionH().isQuestionConfirmed()) {
                 model.getQuestionH().setChosenQuestion(this.view.getGameQuestionView().getComboBoxQuestion().getSelectionModel().getSelectedIndex(),
                         model.getQuestionH().isChosenQuestion(model.getQuestionH().getChosenIndex()));
-                updateView();
+
+                this.view.getGameQuestionView().setChosenQuestion(model.getQuestionH().isChosenQuestion(questionView.getIndex()));
             }
         });
     }
