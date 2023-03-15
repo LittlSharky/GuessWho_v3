@@ -23,7 +23,6 @@ public class GameView extends BorderPane {
     private Button confirmQuestion;
     private Button guessButton;
     private Label name;
-    private HBox hBox;
 
     private GridPane gameGrid;
     private final int ROWS = 4;
@@ -36,6 +35,7 @@ public class GameView extends BorderPane {
     private ComboBox<String> comboBoxQuestion;
 
     private Popup popup;
+
     public GameView() {
         this.persons = new ArrayList<>();
         this.fillPersons();
@@ -74,7 +74,7 @@ public class GameView extends BorderPane {
 
         //Default selected person
         setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
-        VBox vBox = new  VBox(10, confirmedPerson, confirmPerson);
+        VBox vBox = new VBox(10, confirmedPerson, confirmPerson);
 
         //Put the VBox at the right center of the screen
         vBox.setAlignment(Pos.CENTER_RIGHT);
@@ -94,15 +94,14 @@ public class GameView extends BorderPane {
         }
         this.setCenter(gameGrid);
         //Make a vBox with the guessButton and the confirmQuestion button
-        VBox vBoxTwo = new VBox(10,  guessButton,confirmQuestion);
-        //Make a hBox with the questions and the vBoxTwo
-        this.hBox = new HBox(10, this.comboBoxQuestion, vBoxTwo);
+        HBox hBox = new HBox(10, this.comboBoxQuestion, confirmQuestion, guessButton);
+
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        HBox.setHgrow(this.getComboBoxQuestion(), Priority.ALWAYS);
         this.setBottom(hBox);
 
         //Put the comboBox and the confirmButton with the same padding around them
+        BorderPane.setMargin(vBox, new Insets(10, 75, 10, 10));
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
     }
 
@@ -146,15 +145,7 @@ public class GameView extends BorderPane {
     }
 
     void setConfirmedPerson(Image image) {
-        this.confirmedPerson = new ImageView(image);
-        VBox vBox = new  VBox(10, confirmedPerson, confirmPerson);
-        //Put the VBox at the right center of the screen
-        vBox.setAlignment(Pos.CENTER_RIGHT);
-        this.setRight(vBox);
-    }
-
-    public HBox gethBox() {
-        return hBox;
+        this.confirmedPerson.setImage(image);
     }
 
     public ComboBox<String> getComboBoxQuestion() {

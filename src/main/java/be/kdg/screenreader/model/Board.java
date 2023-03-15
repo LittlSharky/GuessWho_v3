@@ -46,6 +46,10 @@ public class Board {
         return this.question.checkQuestion(questionIndex, this.chosenPerson);
     }
 
+    public void removeQuestion(int questionIndex) {
+        this.question.removeQuestion(questionIndex);
+    }
+
     public boolean isEliminated(int x, int y) {
         return bord[x][y].isEliminated();
         // gives the state of the character ( eliminated / not eliminated )

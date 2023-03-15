@@ -29,7 +29,7 @@ public class Question {
         questionsMap.put("Is the person bald?", 7);
         questionsMap.put("Does the person have blond hair?", 8);
         questionsMap.put("Does the person have black hair?", 9);
-        questionsMap.put("Is their hair color brown?",10);
+        questionsMap.put("Is their hair color brown?", 10);
         questionsMap.put("Does the person wear something on their head?", 11);
 
         questions.addAll(questionsMap.keySet());
@@ -41,10 +41,6 @@ public class Question {
 
     public boolean checkQuestion(int questionIndex, Person person) {
         int index = compareQuestions(questionIndex);
-        this.questions.remove(questionIndex);
-
-        System.out.println("QuestionIndex: " + questionIndex);
-        System.out.println("index: " + index);
 
         switch (index) {
             case 0 -> {
@@ -91,7 +87,11 @@ public class Question {
         }
     }
 
-    private int compareQuestions(int questionIndex){
+    public void removeQuestion(int questionIndex) {
+        this.questions.remove(questionIndex);
+    }
+
+    private int compareQuestions(int questionIndex) {
         // is going to compare the question keys from the stationary question map to the dynamic combobox question
         String askedQuestion = questions.get(questionIndex);
         return this.questionsMap.get(askedQuestion);

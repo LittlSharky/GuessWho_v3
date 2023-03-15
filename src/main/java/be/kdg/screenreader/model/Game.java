@@ -22,9 +22,17 @@ public class Game {
     }
 
     public boolean checkQuestion(boolean human, int questionIndex) {
-        if (human)
-            return boardC.checkQuestion(questionIndex);
-        return boardH.checkQuestion(questionIndex);
+        boolean answer;
+
+        if (human) {
+            answer = boardC.checkQuestion(questionIndex);
+            boardH.removeQuestion(questionIndex);
+        } else {
+            answer = boardH.checkQuestion(questionIndex);
+            boardC.removeQuestion(questionIndex);
+        }
+
+        return answer;
     }
 
     //TODO move to AI class
