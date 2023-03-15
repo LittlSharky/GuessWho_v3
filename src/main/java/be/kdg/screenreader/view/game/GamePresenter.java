@@ -74,22 +74,19 @@ public class GamePresenter {
 
 
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
-            boolean chosenQuestion = true;
-            model.getQuestionH().setChosenQuestion(chosenQuestion);
-            GameQuestionView questionView = (GameQuestionView) gameQuestionView;
+            int questionIndex = this.view.getGameQuestionView().getComboBoxQuestion().getSelectionModel().getSelectedIndex();
 
-            if (model.getQuestionH().isQuestionConfirmed()) {
-                model.getQuestionH().setChosenQuestion(this.view.getGameQuestionView().getComboBoxQuestion().getSelectionModel().getSelectedIndex(),
-                        model.getQuestionH().isChosenQuestion(model.getQuestionH().getChosenIndex()));
-
-                this.view.getGameQuestionView().setChosenQuestion(model.getQuestionH().isChosenQuestion(questionView.getIndex()));
+            //No question selected
+            if (questionIndex != -1) {
+                this.view.getGameQuestionView().setChosenQuestion(model.getQuestionH().isChosenQuestion(gameQuestionView.getIndex()));
             }
         });
     }
-    private void updateView(){
+
+    private void updateView() {
         this.view.getGameGrid().getChildren().forEach(node -> {
             GamePersonView person = (GamePersonView) node;
-            person.setEliminated((model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
+            person.setEliminated((model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
      /*   this.view.getGameQuestionView().getComboBoxQuestion().getItems().forEach(item -> {
             GameQuestionView questionView = (GameQuestionView) item;

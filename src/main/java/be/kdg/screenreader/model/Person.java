@@ -8,15 +8,14 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Person {
-    private Name name;
-    private HairColor hairColor;
-    private Sex sex;
-    private EyeColor eyeColor;
-    private FacialHair facialHair;
-    private Accessories accessories;
-    private Accessories extraAccessories;
-    private int coordX;
-    private int coordY;
+    private final Name name;
+    private final HairColor hairColor;
+    private final Sex sex;
+    private final EyeColor eyeColor;
+    private final FacialHair facialHair;
+    private final Accessories accessories;
+    private final Accessories extraAccessories;
+
     private boolean eliminated;
 
     public Person(Name name, HairColor hairColor, Sex sex, EyeColor eyeColor, FacialHair facialHair, Accessories accessories, Accessories extraAccessories) {

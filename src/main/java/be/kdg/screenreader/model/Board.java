@@ -7,13 +7,59 @@ import java.util.Random;
 public class Board {
     private final int ROWS = 4;
     private final int COLUMNS = 5;
-    private Person[][] bord;
 
+    private final Person[][] bord;
+    private Person chosenPerson;
     private boolean personConfirmed;
-    private Person person;
-    private Person personC;
-    private Question questionH;
-    private Person[] array = {
+    private Question question;
+
+    public Board() {
+        bord = new Person[COLUMNS][ROWS];
+        this.generateBoard();
+    }
+
+    private void generateBoard() {
+        int index = 0;
+        for (int i = 0; i < COLUMNS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                this.bord[i][j] = PEOPLE[index++];
+            }
+        }
+    }
+
+    public void setChosenPerson(int x, int y) {
+        this.chosenPerson = bord[x][y];
+    }
+
+    public void setPersonConfirmed() {
+        if (this.chosenPerson == null)
+            throw new IllegalArgumentException("No person chosen");
+        this.personConfirmed = true;
+    }
+
+    public boolean isPersonConfirmed() {
+        return personConfirmed;
+    }
+
+    public boolean isEliminated(int x, int y) {
+        return bord[x][y].isEliminated();
+        // gives the state of the character ( eliminated / not eliminated )
+    }
+
+    public void setEliminated(int x, int y, boolean eliminated) {
+        bord[x][y].setEliminated(eliminated);
+        // is going to eliminate / not eliminate a person
+    }
+
+    public int getROWS() {
+        return ROWS;
+    }
+
+    public int getCOLUMNS() {
+        return COLUMNS;
+    }
+
+    private final Person[] PEOPLE = {
             new Person(Name.AMY, HairColor.GINGER, Sex.FEMALE, EyeColor.RED, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.GRAHAM, HairColor.GREY, Sex.MALE, EyeColor.BLUE, FacialHair.BEARD, Accessories.NONE, Accessories.NONE),
             new Person(Name.JOSHUA, HairColor.BALD, Sex.MALE, EyeColor.BLUE, FacialHair.MOUSTACHE, Accessories.NONE, Accessories.NONE),
@@ -34,51 +80,5 @@ public class Board {
             new Person(Name.LAUREN, HairColor.BROWN, Sex.FEMALE, EyeColor.BROWN, FacialHair.NONE, Accessories.NONE, Accessories.NONE),
             new Person(Name.NEIL, HairColor.GINGER, Sex.MALE, EyeColor.BROWN, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.THOMAS, HairColor.BLOND, Sex.MALE, EyeColor.BLUE, FacialHair.NONE, Accessories.HAT, Accessories.NONE),
-
     };
-
-    public Board() {
-        bord = new Person[COLUMNS][ROWS];
-        this.generateBoard();
-    }
-
-    public void setChosenPerson(int x, int y) {
-        this.person = bord[x][y];
-    }
-
-    public void setPersonConfirmed() {
-        if (this.person == null)
-            throw new IllegalArgumentException("No person chosen");
-        this.personConfirmed = true;
-    }
-    public boolean isPersonConfirmed() {
-        return personConfirmed;
-    }
-
-    public boolean isEliminated(int x, int y) {
-        return bord[x][y].isEliminated();
-        // gives the state of the character ( eliminated / not eliminated )
-    }
-
-    public void setEliminated(int x, int y, boolean eliminated) {
-        bord[x][y].setEliminated(eliminated);
-        // is going to eliminate / not eliminate a person
-    }
-
-    private void generateBoard() {
-        int index = 0;
-        for (int i = 0; i < COLUMNS; i++) {
-            for (int j = 0; j < ROWS; j++) {
-                this.bord[i][j] = array[index++];
-            }
-        }
-    }
-    public void computerChoosePerson() {
-        Random random = new Random();
-        personC = array[random.nextInt(array.length - 1)];
-    }
-    public Person getPersonC() {
-        return personC;
-    }
-
 }

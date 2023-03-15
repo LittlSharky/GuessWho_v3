@@ -1,8 +1,6 @@
 package be.kdg.screenreader.view.game;
 
-import be.kdg.screenreader.model.Game;
 import be.kdg.screenreader.model.Question;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -18,7 +16,7 @@ public class GameQuestionView {
     public GameQuestionView() {
         this.question = new Question();
         this.comboBoxQuestion = new ComboBox<String>();
-        this.questionObservable =  FXCollections.observableArrayList(question.getListQuestion());
+        this.questionObservable =  FXCollections.observableArrayList(question.getQuestions());
         this.comboBoxQuestion.setItems(questionObservable);
         this.chosenQuestion = false;
 
