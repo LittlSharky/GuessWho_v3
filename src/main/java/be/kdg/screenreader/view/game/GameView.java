@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Popup;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class GameView extends BorderPane {
     private Button confirmPerson;
     private ImageView confirmedPerson;
     private GameQuestionView gameQuestionView;
+    private Popup popup;
     public GameView() {
         this.persons = new ArrayList<>();
         this.fillPersons();
@@ -56,7 +58,6 @@ public class GameView extends BorderPane {
 
         //Initiliaze questions
         gameQuestionView = new GameQuestionView();
-
     }
 
     private void layoutNodes() {
@@ -91,7 +92,6 @@ public class GameView extends BorderPane {
             }
         }
         this.setCenter(gameGrid);
-
         //Make a vBox with the guessButton and the confirmQuestion button
         VBox vBoxTwo = new VBox(10,  guessButton,confirmQuestion);
         //Make a hBox with the questions and the vBoxTwo
@@ -103,6 +103,10 @@ public class GameView extends BorderPane {
 
         //Put the comboBox and the confirmButton with the same padding around them
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
+    }
+
+    public GameQuestionView getGameQuestionView() {
+        return gameQuestionView;
     }
 
     public Button getConfirmPerson() {

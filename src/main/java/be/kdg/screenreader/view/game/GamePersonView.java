@@ -1,5 +1,6 @@
 package be.kdg.screenreader.view.game;
 
+import be.kdg.screenreader.model.Question;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -12,12 +13,12 @@ public class GamePersonView extends Canvas {
     private final ImageView photo;
 
     private boolean eliminated;
-
     private final double WIDTH;
     private final double HEIGHT;
 
     private final int COORD_X;
     private final int COORD_Y;
+    private Question[] questions;
 
     public GamePersonView(String path, int columnIndex, int rowIndex) {
         this.photo = new ImageView(path);
@@ -45,11 +46,13 @@ public class GamePersonView extends Canvas {
 
             this.gc.strokeLine(0, 0, WIDTH, HEIGHT);
             this.gc.strokeLine(WIDTH, 0, 0, HEIGHT);
-        }else {
-            this.gc.clearRect(0,0,WIDTH,HEIGHT); //clear de canvas
+        } else {
+            this.gc.clearRect(0, 0, WIDTH, HEIGHT); //clear de canvas
             this.gc.drawImage(this.photo.getImage(), 0, 0);
         }
     }
+
+
 
     public Image getPhoto() {
         return photo.getImage();

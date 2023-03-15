@@ -12,7 +12,7 @@ public class Board {
     private boolean personConfirmed;
     private Person person;
     private Person personC;
-
+    private Question questionH;
     private Person[] array = {
             new Person(Name.AMY, HairColor.GINGER, Sex.FEMALE, EyeColor.RED, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.GRAHAM, HairColor.GREY, Sex.MALE, EyeColor.BLUE, FacialHair.BEARD, Accessories.NONE, Accessories.NONE),
@@ -47,13 +47,9 @@ public class Board {
     }
 
     public void setPersonConfirmed() {
-        if(this.person == null)
+        if (this.person == null)
             throw new IllegalArgumentException("No person chosen");
         this.personConfirmed = true;
-    }
-    public void computerChoosePerson(){
-        Random random = new Random();
-        array[random.nextInt(array.length - 1)] = personC;
     }
     public boolean isPersonConfirmed() {
         return personConfirmed;
@@ -77,8 +73,12 @@ public class Board {
             }
         }
     }
-
+    public void computerChoosePerson() {
+        Random random = new Random();
+        personC = array[random.nextInt(array.length - 1)];
+    }
     public Person getPersonC() {
         return personC;
     }
+
 }

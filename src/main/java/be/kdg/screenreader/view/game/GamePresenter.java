@@ -1,7 +1,11 @@
 package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Game;
+import be.kdg.screenreader.model.Question;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 
 public class GamePresenter {
     // elke view/scene heeft zijn eigen presenter (home met homepresenter, game met gamepresenter)
@@ -37,7 +41,6 @@ public class GamePresenter {
                 } else {
                     view.setConfirmedPerson(person.getPhoto());
                     model.getHumanBoard().setChosenPerson(person.getCOORD_X(), person.getCOORD_Y());
-                    model.getComputerBoard().computerChoosePerson();
                     // if a character is not chosen yet as chosenPerson
                 }
             });
@@ -47,6 +50,7 @@ public class GamePresenter {
             try {
                 model.getHumanBoard().setPersonConfirmed();
                 this.view.getConfirmPerson().setDisable(true);
+                model.getComputerBoard().computerChoosePerson();
             } catch (Exception e) {
                 Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);
                 alertNotChosen.setTitle("ERROR");
@@ -54,31 +58,43 @@ public class GamePresenter {
                 alertNotChosen.showAndWait();
             }
         });
+       /* this.gameQuestionView.getComboBoxQuestion().setOnAction(actionEvent -> {
+            ComboBox<String> comboBox = gameQuestionView.getComboBoxQuestion();
+            comboBox.getParent().requestFocus();
+            gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
+            model.getHumanBoard().isChosenQuestion(gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex());
+            comboBox.getParent().getParent().requestFocus();
+        });*/
+
+        this.view.getGameQuestionView().getComboBoxQuestion().setOnAction(actionEvent -> {
+            ComboBox<String> comboBox = this.view.getGameQuestionView().getComboBoxQuestion();
+            comboBox.getParent().requestFocus();
+            this.view.getGameQuestionView().getComboBoxQuestion().getSelectionModel().getSelectedIndex();
+        });
+
 
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
-            updateView();
-            int selectedIndex = gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
-            gameQuestionView.checkedQuestion(selectedIndex);
-            Alert alertNotChosen = new Alert(Alert.AlertType.INFORMATION);
-            if (gameQuestionView.checkedQuestion(selectedIndex)){
-                alertNotChosen.setTitle("INFO");
-                alertNotChosen.setContentText("True");
-                alertNotChosen.showAndWait();
-            } else {
-                alertNotChosen.setContentText("False");
-                alertNotChosen.showAndWait();
-            }
+            boolean chosenQuestion = true;
+            model.getQuestionH().setChosenQuestion(chosenQuestion);
+            GameQuestionView questionView = (GameQuestionView) gameQuestionView;
 
+            if (model.getQuestionH().isQuestionConfirmed()) {
+                model.getQuestionH().setChosenQuestion(this.view.getGameQuestionView().getComboBoxQuestion().getSelectionModel().getSelectedIndex(),
+                        model.getQuestionH().isChosenQuestion(model.getQuestionH().getChosenIndex()));
+                updateView();
+            }
         });
     }
-
-    private void updateView() {
+    private void updateView(){
         this.view.getGameGrid().getChildren().forEach(node -> {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
-        this.gameQuestionView.getComboBoxQuestion().setOnAction(actionEvent -> {
-            int selectedIndex = gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
-        });
+     /*   this.view.getGameQuestionView().getComboBoxQuestion().getItems().forEach(item -> {
+            GameQuestionView questionView = (GameQuestionView) item;
+            questionView.setChosenQuestion(model.getQuestionH().isChosenQuestion(questionView.getIndex()));
+        });*/
     }
-};
+
+}
+

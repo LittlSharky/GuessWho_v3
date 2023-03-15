@@ -58,22 +58,6 @@ public class Person {
         return sex;
     }
 
-    public int getCoordX() {
-        return coordX;
-    }
-
-    public int getCoordY() {
-        return coordY;
-    }
-
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
-    }
-
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
-    }
-
     public void setEliminated(boolean eliminated) {
         this.eliminated = eliminated;
     }

@@ -6,7 +6,7 @@ import java.util.List;
 public class Game {
     Board newBoardH;
     Board newBoardC;
-
+    Question questionH;
     List<String> notAskedQuestionHuman;
 
 
@@ -17,6 +17,7 @@ public class Game {
     public void reset() {
         newBoardH = new Board();
         newBoardC = new Board();
+        questionH = new Question();
     }
 
     public Board getHumanBoard() {
@@ -25,6 +26,10 @@ public class Game {
 
     public Board getComputerBoard() {
         return newBoardC;
+    }
+
+    public Question getQuestionH() {
+        return questionH;
     }
 }
 

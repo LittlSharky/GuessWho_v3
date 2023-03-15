@@ -15,14 +15,14 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         // scenes in het begin mag hier maar naarmate de app groter wordt moet dat in de presenter
 
-        HomeView homeView = new HomeView();
+        GameView homeView = new GameView();
         // de scene zit in de view
 
         Scene scene = new Scene(homeView);
         // in de scene zitten nodes (buttons, text, ...)
         //scene.getStylesheets().add("/stylesheets/stylesheet.css");
 
-        new HomePresenter(homeView,new Game());
+        new GamePresenter(homeView,new Game());
 
 
         stage.setScene(scene);
