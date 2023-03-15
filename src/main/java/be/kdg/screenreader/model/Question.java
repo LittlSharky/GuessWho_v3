@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Question {
-    private Game game;
+    private Game game = new Game();
+    private Board board;
     private int chosenIndex;
     String[] questions = {"Is he/she female?","Does the person wear glasses?", "Are their eyes blue?",
             "Does the person have brown eyes?", "Are their eyes grey?","Does he have beard?",
@@ -64,6 +65,7 @@ public class Question {
                 return game.newBoardC.getPersonC().getAccessories().equals(Accessories.HAT);
             }
         }
-        return false;
+
+        return true;
     }
 }

@@ -5,6 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class GameQuestionView {
     private Question question;
     private ComboBox<String> comboBoxQuestion;
@@ -21,8 +23,8 @@ public class GameQuestionView {
     public ComboBox<String> getComboBoxQuestion() {
         return comboBoxQuestion;
     }
-    public boolean checkedQuestion(int index){
-        this.index = index;
+    public boolean checkedQuestion(AtomicInteger index){
+        this.index = index.get();
         return question.checkedQuestion(this.index);
     }
 }

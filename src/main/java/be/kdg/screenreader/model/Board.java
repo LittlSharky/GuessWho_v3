@@ -53,7 +53,7 @@ public class Board {
     }
     public void computerChoosePerson(){
         Random random = new Random();
-        array[random.nextInt(array.length - 1)] = personC;
+        this.personC = array[random.nextInt(array.length - 1)];
     }
     public boolean isPersonConfirmed() {
         return personConfirmed;
@@ -81,4 +81,5 @@ public class Board {
     public Person getPersonC() {
         return personC;
     }
+
 }

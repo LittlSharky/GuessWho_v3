@@ -3,6 +3,8 @@ package be.kdg.screenreader.view.game;
 import be.kdg.screenreader.model.Game;
 import javafx.scene.control.Alert;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class GamePresenter {
     // elke view/scene heeft zijn eigen presenter (home met homepresenter, game met gamepresenter)
     // bij grote applicaties -> per view en presenter een package aanmaken
@@ -56,8 +58,10 @@ public class GamePresenter {
         });
 
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
-            updateView();
-            int selectedIndex = gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
+            AtomicInteger selectedIndex = new AtomicInteger();
+            gameQuestionView.getComboBoxQuestion().getSelectionModel().selectedIndexProperty().addListener((observableValue, oldIndex, newIndex) -> {
+                selectedIndex.set(newIndex.intValue());
+            });
             gameQuestionView.checkedQuestion(selectedIndex);
             Alert alertNotChosen = new Alert(Alert.AlertType.INFORMATION);
             if (gameQuestionView.checkedQuestion(selectedIndex)){
@@ -70,15 +74,13 @@ public class GamePresenter {
             }
 
         });
+
     }
 
     private void updateView() {
         this.view.getGameGrid().getChildren().forEach(node -> {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
-        });
-        this.gameQuestionView.getComboBoxQuestion().setOnAction(actionEvent -> {
-            int selectedIndex = gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
         });
     }
 };
