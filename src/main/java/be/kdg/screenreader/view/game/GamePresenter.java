@@ -2,6 +2,7 @@ package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Game;
 import be.kdg.screenreader.model.Question;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -13,7 +14,6 @@ public class GamePresenter {
     // moet ook weten van het model
 
     private final GameView view;
-    private GameQuestionView gameQuestionView = new GameQuestionView();
     private final Game model;
 
     public GamePresenter(GameView view, Game model) {
@@ -21,6 +21,7 @@ public class GamePresenter {
         this.model = model;
 
         this.addEventHandlers();
+        this.updateView();
     }
 
     // eventhandler = code die een event gaat ophalen door dat er iets gebeurt met view en daar iets mee gaat doen (bv. op knop drukken)
@@ -32,15 +33,15 @@ public class GamePresenter {
         this.view.getGameGrid().getChildren().forEach(node -> {
             node.setOnMouseClicked(mouseEvent -> {
                 GamePersonView person = (GamePersonView) node;
-                if (model.getHumanBoard().isPersonConfirmed()) {
-                    model.getHumanBoard()
+                if (model.getBoard(true).isPersonConfirmed()) {
+                    model.getBoard(true)
                             .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
-                                    !model.getHumanBoard().isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
+                                    !model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
                     updateView();
                     // to eliminate / de-eliminate characters
                 } else {
                     view.setConfirmedPerson(person.getPhoto());
-                    model.getHumanBoard().setChosenPerson(person.getCOORD_X(), person.getCOORD_Y());
+                    model.getBoard(true).setChosenPerson(person.getCOORD_X(), person.getCOORD_Y());
                     // if a character is not chosen yet as chosenPerson
                 }
             });
@@ -48,9 +49,10 @@ public class GamePresenter {
 
         this.view.getConfirmPerson().setOnAction(actionEvent -> {
             try {
-                model.getHumanBoard().setPersonConfirmed();
+                model.getBoard(true).setPersonConfirmed();
                 this.view.getConfirmPerson().setDisable(true);
-                model.getComputerBoard().computerChoosePerson();
+
+                model.computerChoosePerson();
             } catch (Exception e) {
                 Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);
                 alertNotChosen.setTitle("ERROR");
@@ -58,27 +60,19 @@ public class GamePresenter {
                 alertNotChosen.showAndWait();
             }
         });
-       /* this.gameQuestionView.getComboBoxQuestion().setOnAction(actionEvent -> {
-            ComboBox<String> comboBox = gameQuestionView.getComboBoxQuestion();
-            comboBox.getParent().requestFocus();
-            gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
-            model.getHumanBoard().isChosenQuestion(gameQuestionView.getComboBoxQuestion().getSelectionModel().getSelectedIndex());
-            comboBox.getParent().getParent().requestFocus();
-        });*/
-
-        this.view.getGameQuestionView().getComboBoxQuestion().setOnAction(actionEvent -> {
-            ComboBox<String> comboBox = this.view.getGameQuestionView().getComboBoxQuestion();
-            comboBox.getParent().requestFocus();
-            this.view.getGameQuestionView().getComboBoxQuestion().getSelectionModel().getSelectedIndex();
-        });
-
 
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
-            int questionIndex = this.view.getGameQuestionView().getComboBoxQuestion().getSelectionModel().getSelectedIndex();
-
+            int questionIndex = this.view.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
             //No question selected
             if (questionIndex != -1) {
-                this.view.getGameQuestionView().setChosenQuestion(model.getQuestionH().isChosenQuestion(gameQuestionView.getIndex()));
+                boolean answer = this.model.checkQuestion(true, questionIndex);
+
+                Alert answerAlert = new Alert(Alert.AlertType.INFORMATION);
+                answerAlert.setTitle("Answer");
+                answerAlert.setContentText("Het antwoord op uw vraag is: " + (answer ? "Ja" : "Nee"));
+                answerAlert.showAndWait();
+
+                this.updateView();
             }
         });
     }
@@ -88,11 +82,10 @@ public class GamePresenter {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
-     /*   this.view.getGameQuestionView().getComboBoxQuestion().getItems().forEach(item -> {
-            GameQuestionView questionView = (GameQuestionView) item;
-            questionView.setChosenQuestion(model.getQuestionH().isChosenQuestion(questionView.getIndex()));
-        });*/
-    }
 
+        this.view.getComboBoxQuestion().setItems(
+                FXCollections.observableArrayList(model.getBoard(true).getQuestions())
+        );
+    }
 }
 

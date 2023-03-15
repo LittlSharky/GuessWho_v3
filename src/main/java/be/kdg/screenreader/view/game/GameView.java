@@ -33,7 +33,8 @@ public class GameView extends BorderPane {
 
     private Button confirmPerson;
     private ImageView confirmedPerson;
-    private GameQuestionView gameQuestionView;
+    private ComboBox<String> comboBoxQuestion;
+
     private Popup popup;
     public GameView() {
         this.persons = new ArrayList<>();
@@ -57,7 +58,7 @@ public class GameView extends BorderPane {
         this.confirmedPerson = new ImageView();
 
         //Initiliaze questions
-        gameQuestionView = new GameQuestionView();
+        this.comboBoxQuestion = new ComboBox<String>();
     }
 
     private void layoutNodes() {
@@ -95,18 +96,14 @@ public class GameView extends BorderPane {
         //Make a vBox with the guessButton and the confirmQuestion button
         VBox vBoxTwo = new VBox(10,  guessButton,confirmQuestion);
         //Make a hBox with the questions and the vBoxTwo
-        this.hBox = new HBox(10, gameQuestionView.getComboBoxQuestion(), vBoxTwo);
+        this.hBox = new HBox(10, this.comboBoxQuestion, vBoxTwo);
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        HBox.setHgrow(gameQuestionView.getComboBoxQuestion(), Priority.ALWAYS);
+        HBox.setHgrow(this.getComboBoxQuestion(), Priority.ALWAYS);
         this.setBottom(hBox);
 
         //Put the comboBox and the confirmButton with the same padding around them
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
-    }
-
-    public GameQuestionView getGameQuestionView() {
-        return gameQuestionView;
     }
 
     public Button getConfirmPerson() {
@@ -158,6 +155,10 @@ public class GameView extends BorderPane {
 
     public HBox gethBox() {
         return hBox;
+    }
+
+    public ComboBox<String> getComboBoxQuestion() {
+        return comboBoxQuestion;
     }
 }
 

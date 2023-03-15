@@ -2,7 +2,7 @@ package be.kdg.screenreader.model;
 
 import be.kdg.screenreader.model.enums.*;
 
-import java.util.Random;
+import java.util.List;
 
 public class Board {
     private final int ROWS = 4;
@@ -15,6 +15,7 @@ public class Board {
 
     public Board() {
         bord = new Person[COLUMNS][ROWS];
+        this.question = new Question();
         this.generateBoard();
     }
 
@@ -41,6 +42,10 @@ public class Board {
         return personConfirmed;
     }
 
+    public boolean checkQuestion(int questionIndex) {
+        return this.question.checkQuestion(questionIndex, this.chosenPerson);
+    }
+
     public boolean isEliminated(int x, int y) {
         return bord[x][y].isEliminated();
         // gives the state of the character ( eliminated / not eliminated )
@@ -57,6 +62,10 @@ public class Board {
 
     public int getCOLUMNS() {
         return COLUMNS;
+    }
+
+    public List<String> getQuestions() {
+        return this.question.getQuestions();
     }
 
     private final Person[] PEOPLE = {

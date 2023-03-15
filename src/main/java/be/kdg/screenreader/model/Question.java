@@ -2,60 +2,88 @@ package be.kdg.screenreader.model;
 
 import be.kdg.screenreader.model.enums.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Question {
     private List<String> questions;
+    // ^^ the one that is in the combobox
+    private final TreeMap<String, Integer> questionsMap;
+    // ^^ This list of questions doesn't change EVER
 
     public Question() {
+        this.questions = new ArrayList<>();
+        this.questionsMap = new TreeMap<>();
+        initialQuestions();
+    }
 
-        this.questions = Arrays.asList(questionArray);
+    public void initialQuestions() {
+        questionsMap.put("Is he/she female?", 0);
+        questionsMap.put("Does the person wear glasses?", 1);
+        questionsMap.put("Are their eyes blue?", 2);
+        questionsMap.put("Does the person have brown eyes?", 3);
+        questionsMap.put("Are their eyes grey?", 4);
+        questionsMap.put("Does he have a beard?", 5);
+        questionsMap.put("Does he have a moustache?", 6);
+        questionsMap.put("Is the person bald?", 7);
+        questionsMap.put("Does the person have blond hair?", 8);
+        questionsMap.put("Does the person have black hair?", 9);
+        questionsMap.put("Is their hair color brown?",10);
+        questionsMap.put("Does the person wear something on their head?", 11);
+
+        questions.addAll(questionsMap.keySet());
     }
 
     public List<String> getQuestions() {
         return questions;
     }
 
-    public boolean checkQuestion(int questionIndex) {
-        switch (chosenindex) {
+    public boolean checkQuestion(int questionIndex, Person person) {
+        int index = compareQuestions(questionIndex);
+        this.questions.remove(questionIndex);
+
+        System.out.println("QuestionIndex: " + questionIndex);
+        System.out.println("index: " + index);
+
+        switch (index) {
             case 0 -> {
-                return game.boardC.getPersonC().getSex().equals(Sex.FEMALE);
+                return person.getSex().equals(Sex.FEMALE);
             }
             case 1 -> {
-                return game.boardC.getPersonC().getAccessories().equals(Accessories.GLASSES);
+                return person.getAccessories().equals(Accessories.GLASSES);
             }
             case 2 -> {
-                return game.boardC.getPersonC().getEyeColor().equals(EyeColor.BLUE);
+                return person.getEyeColor().equals(EyeColor.BLUE);
             }
             case 3 -> {
-                return game.boardC.getPersonC().getEyeColor().equals(EyeColor.BROWN);
+                return person.getEyeColor().equals(EyeColor.BROWN);
             }
             case 4 -> {
-                return game.boardC.getPersonC().getEyeColor().equals(EyeColor.GREY);
+                return person.getEyeColor().equals(EyeColor.GREY);
             }
             case 5 -> {
-                return game.boardC.getPersonC().getFacialHair().equals(FacialHair.BEARD)
-                        || game.boardC.getPersonC().getFacialHair().equals(FacialHair.BOTH);
+                return person.getFacialHair().equals(FacialHair.BEARD)
+                        || person.getFacialHair().equals(FacialHair.BOTH);
             }
             case 6 -> {
-                return game.boardC.getPersonC().getFacialHair().equals(FacialHair.MOUSTACHE)
-                        || game.boardC.getPersonC().getFacialHair().equals(FacialHair.BOTH);
+                return person.getFacialHair().equals(FacialHair.MOUSTACHE)
+                        || person.getFacialHair().equals(FacialHair.BOTH);
             }
             case 7 -> {
-                return game.boardC.getPersonC().getHairColor().equals(HairColor.BALD);
+                return person.getHairColor().equals(HairColor.BALD);
             }
             case 8 -> {
-                return game.boardC.getPersonC().getHairColor().equals(HairColor.BLOND);
+                return person.getHairColor().equals(HairColor.BLOND);
             }
             case 9 -> {
-                return game.boardC.getPersonC().getHairColor().equals(HairColor.BLACK);
+                return person.getHairColor().equals(HairColor.BLACK);
             }
             case 10 -> {
-                return game.boardC.getPersonC().getHairColor().equals(HairColor.BROWN);
+                return person.getHairColor().equals(HairColor.BROWN);
             }
             case 11 -> {
-                return game.boardC.getPersonC().getAccessories().equals(Accessories.HAT);
+                return person.getAccessories().equals(Accessories.HAT);
             }
             default -> {
                 return false;
@@ -63,8 +91,9 @@ public class Question {
         }
     }
 
-    private final String[] questionArray = {"Is he/she female?", "Does the person wear glasses?", "Are their eyes blue?",
-            "Does the person have brown eyes?", "Are their eyes grey?", "Does he have beard?",
-            "Does he have a moustache?", "Is the person bald?", "Does the person have blond hair?",
-            "Does the person have black hair?", "Is their hair color brown?", "Does the person wear something on their head?"};
+    private int compareQuestions(int questionIndex){
+        // is going to compare the question keys from the stationary question map to the dynamic combobox question
+        String askedQuestion = questions.get(questionIndex);
+        return this.questionsMap.get(askedQuestion);
+    }
 }
