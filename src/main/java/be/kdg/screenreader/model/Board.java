@@ -11,7 +11,7 @@ public class Board {
     private final Person[][] bord;
     private Person chosenPerson;
     private boolean personConfirmed;
-    private boolean toggled;
+    private Person guessPerson;
     private Question question;
 
     public Board() {
@@ -60,11 +60,8 @@ public class Board {
         bord[x][y].setEliminated(eliminated);
         // is going to eliminate / not eliminate a person
     }
-    public boolean isToggled(){
-       return this.toggled = true;
-    }
-    public void setToggled(int x, int y, boolean toggled){
-        bord[x][y].setToggled(toggled);
+    public void setGuessPerson(int x, int y){
+        this.guessPerson = bord[x][y];
     }
     public int getROWS() {
         return ROWS;

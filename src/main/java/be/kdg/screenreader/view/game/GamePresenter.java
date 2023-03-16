@@ -8,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 
+import java.lang.reflect.Type;
+
 public class GamePresenter {
     // elke view/scene heeft zijn eigen presenter (home met homepresenter, game met gamepresenter)
     // bij grote applicaties -> per view en presenter een package aanmaken
@@ -78,8 +80,28 @@ public class GamePresenter {
             model.getAi().play();
         });
         this.view.getGuessButton().setOnAction(actionEvent -> {
-
-        }
+            this.view.getGameGrid().getChildren().forEach(node -> {
+                GamePersonView person = (GamePersonView) node;
+                node.setOnMouseClicked(mouseEvent -> {
+                    if (this.view.getGuessButton().isSelected()) {
+                        if (model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())) {
+                            Alert alertNotAvailble = new Alert(Alert.AlertType.ERROR);
+                            alertNotAvailble.setTitle("ERROR");
+                            alertNotAvailble.setContentText("This person has been eliminated and can't be chose as a guess. Please choose another, uneliminate it or end your turn.");
+                            alertNotAvailble.showAndWait();
+                        } else {
+                            model.getBoard(true).setGuessPerson(person.getCOORD_X(), person.getCOORD_Y());
+                            //CheckWin method
+                        }
+                    } else {
+                        model.getBoard(true)
+                                .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
+                                        !model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
+                        updateView();
+                    }
+                });
+            });
+        });
     }
 
     private void updateView() {
@@ -87,7 +109,6 @@ public class GamePresenter {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
-
         this.view.getComboBoxQuestion().setItems(
                 FXCollections.observableArrayList(model.getBoard(true).getQuestions())
         );

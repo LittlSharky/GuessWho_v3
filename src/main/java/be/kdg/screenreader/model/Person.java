@@ -17,6 +17,7 @@ public class Person {
     private final Accessories extraAccessories;
 
     private boolean eliminated;
+    private boolean toggled;
 
     public Person(Name name, HairColor hairColor, Sex sex, EyeColor eyeColor, FacialHair facialHair, Accessories accessories, Accessories extraAccessories) {
         this.name = name;
@@ -41,10 +42,6 @@ public class Person {
         return accessories;
     }
 
-    public Accessories getExtraAccessories() {
-        return extraAccessories;
-    }
-
     public EyeColor getEyeColor() {
         return eyeColor;
     }
@@ -63,5 +60,9 @@ public class Person {
     // Eliminate the person ^
     public boolean isEliminated() {
         return this.eliminated;
+    }
+
+    public void setToggled(boolean toggled) {
+        this.toggled = toggled;
     }
 }
