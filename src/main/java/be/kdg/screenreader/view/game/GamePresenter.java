@@ -51,8 +51,6 @@ public class GamePresenter {
             try {
                 model.getBoard(true).setPersonConfirmed();
                 this.view.getConfirmPerson().setDisable(true);
-
-                model.computerChoosePerson();
             } catch (Exception e) {
                 Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);
                 alertNotChosen.setTitle("ERROR");

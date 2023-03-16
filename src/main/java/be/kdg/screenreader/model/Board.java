@@ -72,6 +72,10 @@ public class Board {
         return this.question.getQuestions();
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
     private final Person[] PEOPLE = {
             new Person(Name.AMY, HairColor.GINGER, Sex.FEMALE, EyeColor.RED, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.GRAHAM, HairColor.GREY, Sex.MALE, EyeColor.BLUE, FacialHair.BEARD, Accessories.NONE, Accessories.NONE),
@@ -94,4 +98,8 @@ public class Board {
             new Person(Name.NEIL, HairColor.GINGER, Sex.MALE, EyeColor.BROWN, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.THOMAS, HairColor.BLOND, Sex.MALE, EyeColor.BLUE, FacialHair.NONE, Accessories.HAT, Accessories.NONE),
     };
+
+    public Person[] getPEOPLE() {
+        return PEOPLE;
+    }
 }

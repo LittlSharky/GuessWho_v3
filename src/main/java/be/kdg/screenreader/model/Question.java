@@ -41,7 +41,6 @@ public class Question {
 
     public boolean checkQuestion(int questionIndex, Person person) {
         int index = compareQuestions(questionIndex);
-
         switch (index) {
             case 0 -> {
                 return person.getSex().equals(Sex.FEMALE);
@@ -91,9 +90,13 @@ public class Question {
         this.questions.remove(questionIndex);
     }
 
-    private int compareQuestions(int questionIndex) {
+    public int compareQuestions(int questionIndex) {
         // is going to compare the question keys from the stationary question map to the dynamic combobox question
         String askedQuestion = questions.get(questionIndex);
         return this.questionsMap.get(askedQuestion);
+    }
+
+    public TreeMap<String, Integer> getQuestionsMap() {
+        return questionsMap;
     }
 }

@@ -5,6 +5,7 @@ import java.util.Random;
 public class Game {
     Board boardH;
     Board boardC;
+    AI ai;
 
     public Game() {
         reset();
@@ -13,6 +14,7 @@ public class Game {
     public void reset() {
         boardH = new Board();
         boardC = new Board();
+        ai = new AI(this);
     }
 
     public Board getBoard(boolean human) {
@@ -23,7 +25,6 @@ public class Game {
 
     public boolean checkQuestion(boolean human, int questionIndex) {
         boolean answer;
-
         if (human) {
             answer = boardC.checkQuestion(questionIndex);
             boardH.removeQuestion(questionIndex);
@@ -31,18 +32,11 @@ public class Game {
             answer = boardH.checkQuestion(questionIndex);
             boardC.removeQuestion(questionIndex);
         }
-
         return answer;
     }
 
-    //TODO move to AI class
-    public void computerChoosePerson() {
-        Random random = new Random();
-        int x = random.nextInt(this.boardC.getCOLUMNS() - 1);
-        int y = random.nextInt(this.boardC.getROWS() - 1);
-
-        this.boardC.setChosenPerson(x, y);
-        this.boardC.setPersonConfirmed();
+    public AI getAi() {
+        return ai;
     }
 }
 

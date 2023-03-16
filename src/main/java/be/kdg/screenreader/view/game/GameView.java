@@ -23,6 +23,7 @@ public class GameView extends BorderPane {
     private Button confirmQuestion;
     private ToggleButton guessButton;
     private Label name;
+    private Button doneEliminating;
 
     private GridPane gameGrid;
     private final int ROWS = 4;
@@ -48,10 +49,11 @@ public class GameView extends BorderPane {
         this.exit = new MenuItem("Exit");
         this.info = new MenuItem("Info");
 
-        //Initiliaze buttons
+        //Initiliaze buttons & labels
         this.confirmQuestion = new Button("Confirm question");
         this.guessButton = new ToggleButton("Take a Guess!");
         this.name = new Label();
+        this.doneEliminating = new Button("Done eliminating");
 
         //Confirmed person image view
         this.confirmPerson = new Button("Confirm person");
@@ -93,7 +95,7 @@ public class GameView extends BorderPane {
             }
         }
         this.setCenter(gameGrid);
-        //Make a vBox with the guessButton and the confirmQuestion button
+        //Make a hBox with the guessButton and the confirmQuestion button
         HBox hBox = new HBox(10, this.comboBoxQuestion, confirmQuestion, guessButton);
 
         //Put them at the bottom of the screen on the right
