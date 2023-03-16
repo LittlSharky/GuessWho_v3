@@ -21,7 +21,7 @@ public class GameView extends BorderPane {
     private MenuItem exit;
     private MenuItem info;
     private Button confirmQuestion;
-    private Button guessButton;
+    private ToggleButton guessButton;
     private Label name;
 
     private GridPane gameGrid;
@@ -50,7 +50,7 @@ public class GameView extends BorderPane {
 
         //Initiliaze buttons
         this.confirmQuestion = new Button("Confirm question");
-        this.guessButton = new Button("Take a Guess!");
+        this.guessButton = new ToggleButton("Take a Guess!");
         this.name = new Label();
 
         //Confirmed person image view
@@ -113,9 +113,6 @@ public class GameView extends BorderPane {
         return confirmQuestion;
     }
 
-    public Button getGuess() {
-        return guessButton;
-    }
 
     private void fillPersons() {
         persons.add("Amy.png");
