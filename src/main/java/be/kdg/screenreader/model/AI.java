@@ -7,9 +7,11 @@ import java.util.Random;
 public class AI {
     private final Game GAME;
     private boolean answerHuman;
+    private int counter;
 
     public AI(Game game) {
         GAME = game;
+        resetCounter();
         this.computerChoosePerson(GAME.boardC.getCOLUMNS(), GAME.boardC.getROWS());
 
     }
@@ -24,9 +26,20 @@ public class AI {
         System.out.println("Computer chose: " + GAME.boardC.getChosenPerson().getName());
     }
 
+    public void resetCounter() {
+        counter = 0;
+    }
 
     public void play() {
-
+        askQuestion();
+        eliminate();
+        resetCounter();
+        for (Person person : GAME.boardC.getPEOPLE()) {
+            if (!person.isEliminated()) {
+                counter++;
+            }
+        }
+        makeGuess(counter);
     }
 
     public String askQuestion() {
@@ -122,46 +135,42 @@ public class AI {
                                 }
                             }
                         case 8:
-                            if (answerHuman){
+                            if (answerHuman) {
                                 if (!person.getHairColor().equals(HairColor.BLOND)) {
                                     person.setEliminated(true);
                                 }
-                            }
-                             else {
+                            } else {
                                 if (person.getHairColor().equals(HairColor.BLOND)) {
                                     person.setEliminated(true);
                                 }
                             }
                         case 9:
-                            if (answerHuman){
+                            if (answerHuman) {
                                 if (!person.getHairColor().equals(HairColor.BLACK)) {
                                     person.setEliminated(true);
                                 }
-                            }
-                             else {
+                            } else {
                                 if (person.getHairColor().equals(HairColor.BLACK)) {
                                     person.setEliminated(true);
                                 }
                             }
                         case 10:
-                            if (answerHuman){
+                            if (answerHuman) {
                                 if (!person.getHairColor().equals(HairColor.BROWN)) {
                                     person.setEliminated(true);
                                 }
-                            }
-                             else {
+                            } else {
                                 if (person.getHairColor().equals(HairColor.BROWN)) {
                                     person.setEliminated(true);
                                 }
                             }
                         case 11:
-                            if (answerHuman){
-                                if (!person.getAccessories().equals(Accessories.HAT)){
+                            if (answerHuman) {
+                                if (!person.getAccessories().equals(Accessories.HAT)) {
                                     person.setEliminated(true);
                                 }
-                            }
-                            else {
-                                if (person.getAccessories().equals(Accessories.HAT)){
+                            } else {
+                                if (person.getAccessories().equals(Accessories.HAT)) {
                                     person.setEliminated(true);
                                 }
                             }
@@ -170,16 +179,11 @@ public class AI {
             }
         }
     }
-    public Person makeGuess(){
-        int counterFalse = 0;
-        for (Person person : GAME.boardC.getPEOPLE()) {
-            if (!person.isEliminated()){
-                counterFalse++;
-            }
-        }
-        if (counterFalse == 1){
+
+    public Person makeGuess(int counter) {
+        if (counter == 1) {
             for (Person person : GAME.boardC.getPEOPLE()) {
-                if (!person.isEliminated()){
+                if (!person.isEliminated()) {
                     return person;
                 }
             }

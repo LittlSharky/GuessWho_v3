@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 
 import java.lang.reflect.Type;
@@ -91,28 +93,30 @@ public class GamePresenter {
                             alertNotAvailble.showAndWait();
                         } else {
                             model.getBoard(true).setGuessPerson(person.getCOORD_X(), person.getCOORD_Y());
-                            if (model.checkWin(true, model.getBoard(true).getGuessPerson())){
+                            if (model.checkWin(true, model.getBoard(true).getGuessPerson())) {
                                 Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
                                 alertWin.setTitle("You win!");
-                                alertWin.setContentText("You guessed the right person!");
+                                alertWin.setContentText("You guessed the right person! Congrats! You won the game.");
                                 alertWin.showAndWait();
-                            } else {
-                                Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
-                                alertLose.setTitle("You lose!");
-                                alertLose.setContentText("You guessed the wrong person!");
-                                alertLose.showAndWait();
-                            }
+                                //return to rootscene
+                            } else{
+                            Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
+                            alertLose.setTitle("You lose!");
+                            alertLose.setContentText("You guessed the wrong person! Unfortunately you did not win this game...");
+                            alertLose.showAndWait();
+                            //return to rootscene
                         }
-                    } else {
-                        model.getBoard(true)
-                                .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
-                                        !model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
-                        updateView();
                     }
-                });
+                } else{
+                    model.getBoard(true)
+                            .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
+                                    !model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
+                    updateView();
+                }
             });
         });
-    }
+    });
+}
 
     private void updateView() {
         this.view.getGameGrid().getChildren().forEach(node -> {
