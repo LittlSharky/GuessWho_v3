@@ -23,7 +23,7 @@ public class GameView extends BorderPane {
     private Button confirmQuestion;
     private ToggleButton guessButton;
     private Label name;
-    private Button doneEliminating;
+    private Button endTurn;
 
     private GridPane gameGrid;
     private final int ROWS = 4;
@@ -53,7 +53,7 @@ public class GameView extends BorderPane {
         this.confirmQuestion = new Button("Confirm question");
         this.guessButton = new ToggleButton("Take a Guess!");
         this.name = new Label();
-        this.doneEliminating = new Button("Done eliminating");
+        this.endTurn = new Button("End turn");
 
         //Confirmed person image view
         this.confirmPerson = new Button("Confirm person");
@@ -73,15 +73,14 @@ public class GameView extends BorderPane {
         gameGrid = new GridPane();
         gameGrid.setPadding(new Insets(10));
 
-
         //Default selected person
         setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
         VBox vBox = new VBox(10, confirmedPerson, confirmPerson);
 
         //Put the VBox at the right center of the screen
         vBox.setAlignment(Pos.CENTER_RIGHT);
-
         this.setRight(vBox);
+
 
         gameGrid.setHgap(10);
         gameGrid.setVgap(10);
@@ -95,6 +94,9 @@ public class GameView extends BorderPane {
             }
         }
         this.setCenter(gameGrid);
+        this.setTop(endTurn);
+        endTurn.setAlignment(Pos.TOP_RIGHT);
+
         //Make a hBox with the guessButton and the confirmQuestion button
         HBox hBox = new HBox(10, this.comboBoxQuestion, confirmQuestion, guessButton);
 
@@ -105,6 +107,8 @@ public class GameView extends BorderPane {
         //Put the comboBox and the confirmButton with the same padding around them
         BorderPane.setMargin(vBox, new Insets(10, 75, 10, 10));
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
+        BorderPane.setMargin(endTurn, new Insets(0, 0, 0, 600));
+
     }
 
     public Button getConfirmPerson() {
@@ -149,6 +153,14 @@ public class GameView extends BorderPane {
 
     public ComboBox<String> getComboBoxQuestion() {
         return comboBoxQuestion;
+    }
+
+    public ToggleButton getGuessButton() {
+        return guessButton;
+    }
+
+    public Button getEndTurn() {
+        return endTurn;
     }
 }
 

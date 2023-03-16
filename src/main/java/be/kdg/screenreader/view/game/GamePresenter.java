@@ -73,6 +73,13 @@ public class GamePresenter {
                 this.updateView();
             }
         });
+
+        this.view.getEndTurn().setOnAction(actionEvent -> {
+            model.getAi().play();
+        });
+        this.view.getGuessButton().setOnAction(actionEvent -> {
+
+        }
     }
 
     private void updateView() {

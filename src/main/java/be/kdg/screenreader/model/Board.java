@@ -11,6 +11,7 @@ public class Board {
     private final Person[][] bord;
     private Person chosenPerson;
     private boolean personConfirmed;
+    private boolean toggled;
     private Question question;
 
     public Board() {
@@ -59,15 +60,18 @@ public class Board {
         bord[x][y].setEliminated(eliminated);
         // is going to eliminate / not eliminate a person
     }
-
+    public boolean isToggled(){
+       return this.toggled = true;
+    }
+    public void setToggled(int x, int y, boolean toggled){
+        bord[x][y].setToggled(toggled);
+    }
     public int getROWS() {
         return ROWS;
     }
-
     public int getCOLUMNS() {
         return COLUMNS;
     }
-
     public List<String> getQuestions() {
         return this.question.getQuestions();
     }
@@ -75,7 +79,6 @@ public class Board {
     public Question getQuestion() {
         return question;
     }
-
     private final Person[] PEOPLE = {
             new Person(Name.AMY, HairColor.GINGER, Sex.FEMALE, EyeColor.RED, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.GRAHAM, HairColor.GREY, Sex.MALE, EyeColor.BLUE, FacialHair.BEARD, Accessories.NONE, Accessories.NONE),
