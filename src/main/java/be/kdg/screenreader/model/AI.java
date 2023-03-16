@@ -11,6 +11,7 @@ public class AI {
     public AI(Game game) {
         GAME = game;
         this.computerChoosePerson(GAME.boardC.getCOLUMNS(), GAME.boardC.getROWS());
+
     }
 
     public void computerChoosePerson(int rows, int columns) {
@@ -20,7 +21,9 @@ public class AI {
 
         GAME.boardC.setChosenPerson(x, y);
         GAME.boardC.setPersonConfirmed();
+        System.out.println("Computer chose: " + GAME.boardC.getChosenPerson().getName());
     }
+
 
     public void play() {
 

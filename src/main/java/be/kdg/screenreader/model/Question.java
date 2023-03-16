@@ -78,7 +78,7 @@ public class Question {
                 return person.getHairColor().equals(HairColor.BROWN);
             }
             case 11 -> {
-                return person.getAccessories().equals(Accessories.HAT);
+                return person.getExtraAccessories().equals(Accessories.HAT);
             }
             default -> {
                 return false;

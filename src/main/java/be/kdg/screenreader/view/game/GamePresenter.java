@@ -91,7 +91,17 @@ public class GamePresenter {
                             alertNotAvailble.showAndWait();
                         } else {
                             model.getBoard(true).setGuessPerson(person.getCOORD_X(), person.getCOORD_Y());
-                            //CheckWin method
+                            if (model.checkWin(true, model.getBoard(true).getGuessPerson())){
+                                Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
+                                alertWin.setTitle("You win!");
+                                alertWin.setContentText("You guessed the right person!");
+                                alertWin.showAndWait();
+                            } else {
+                                Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
+                                alertLose.setTitle("You lose!");
+                                alertLose.setContentText("You guessed the wrong person!");
+                                alertLose.showAndWait();
+                            }
                         }
                     } else {
                         model.getBoard(true)

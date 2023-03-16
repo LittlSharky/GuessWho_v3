@@ -54,6 +54,10 @@ public class Person {
         return sex;
     }
 
+    public Accessories getExtraAccessories() {
+        return extraAccessories;
+    }
+
     public void setEliminated(boolean eliminated) {
         this.eliminated = eliminated;
     }
@@ -62,7 +66,4 @@ public class Person {
         return this.eliminated;
     }
 
-    public void setToggled(boolean toggled) {
-        this.toggled = toggled;
-    }
 }

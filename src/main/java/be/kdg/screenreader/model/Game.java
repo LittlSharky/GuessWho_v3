@@ -1,7 +1,5 @@
 package be.kdg.screenreader.model;
 
-import java.util.Random;
-
 public class Game {
     Board boardH;
     Board boardC;
@@ -33,6 +31,18 @@ public class Game {
             boardC.removeQuestion(questionIndex);
         }
         return answer;
+    }
+
+    public boolean checkWin(boolean human, Person guessPerson) {
+        boolean win;
+        if (human) {
+            win = boardC.checkWin(guessPerson);
+            System.out.println(guessPerson.getName());
+        } else {
+            win = boardH.checkWin(guessPerson);
+            System.out.println(guessPerson.getName());
+        }
+        return win;
     }
 
     public AI getAi() {
