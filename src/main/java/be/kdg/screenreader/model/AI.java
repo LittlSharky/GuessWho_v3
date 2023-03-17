@@ -7,13 +7,14 @@ import java.util.Random;
 public class AI {
     private final Game GAME;
     private boolean answerHuman;
+    private int randomquestion;
     private int counter;
 
     public AI(Game game) {
         GAME = game;
         resetCounter();
         this.computerChoosePerson(GAME.boardC.getCOLUMNS(), GAME.boardC.getROWS());
-
+        resetCounter();
     }
 
     public void computerChoosePerson(int rows, int columns) {
@@ -32,19 +33,25 @@ public class AI {
 
     public void play() {
         askQuestion();
-        eliminate();
-        resetCounter();
+        removeQuestion(this.randomquestion);
+        makeGuess(counter);
         for (Person person : GAME.boardC.getPEOPLE()) {
             if (!person.isEliminated()) {
                 counter++;
             }
         }
-        makeGuess(counter);
+        makeGuess(this.counter);
     }
 
     public String askQuestion() {
         Random random = new Random();
-        return GAME.boardC.getQuestion().getQuestions().get(random.nextInt(GAME.boardC.getQuestions().size() - 1));
+        randomquestion = random.nextInt(GAME.boardC.getQuestions().size() - 1);
+        return GAME.boardC.getQuestion().getQuestions().get(randomquestion);
+
+
+    }
+    public void removeQuestion(int question){
+        GAME.boardC.getQuestions().remove(question);
     }
 
     public void eliminate() {
@@ -53,7 +60,7 @@ public class AI {
                 for (int index : GAME.boardC.getQuestion().getQuestionsMap().values()) {
                     switch (index) {
                         case 0:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (person.getSex().equals(Sex.MALE)) {
                                     person.setEliminated(true);
                                 }
@@ -64,7 +71,7 @@ public class AI {
                             }
 
                         case 1:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (!person.getAccessories().equals(Accessories.GLASSES)) {
                                     person.setEliminated(true);
                                 }
@@ -74,7 +81,7 @@ public class AI {
                                 }
                             }
                         case 2:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (!person.getEyeColor().equals(EyeColor.BLUE)) {
                                     person.setEliminated(true);
                                 }
@@ -84,7 +91,7 @@ public class AI {
                                 }
                             }
                         case 3:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (!person.getEyeColor().equals(EyeColor.BROWN)) {
                                     person.setEliminated(true);
                                 }
@@ -94,7 +101,7 @@ public class AI {
                                 }
                             }
                         case 4:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (!person.getEyeColor().equals(EyeColor.GREY)) {
                                     person.setEliminated(true);
                                 }
@@ -104,7 +111,7 @@ public class AI {
                                 }
                             }
                         case 5:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (!person.getFacialHair().equals(FacialHair.BEARD)) {
                                     person.setEliminated(true);
                                 }
@@ -115,7 +122,7 @@ public class AI {
                                 }
                             }
                         case 6:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (!person.getFacialHair().equals(FacialHair.MOUSTACHE)) {
                                     person.setEliminated(true);
                                 }
@@ -125,7 +132,7 @@ public class AI {
                                 }
                             }
                         case 7:
-                            if (answerHuman) {
+                            if (isAnswerHuman()) {
                                 if (!person.getHairColor().equals(HairColor.BALD)) {
                                     person.setEliminated(true);
                                 }
@@ -135,42 +142,46 @@ public class AI {
                                 }
                             }
                         case 8:
-                            if (answerHuman) {
+                            if (isAnswerHuman()){
                                 if (!person.getHairColor().equals(HairColor.BLOND)) {
                                     person.setEliminated(true);
                                 }
-                            } else {
+                            }
+                             else {
                                 if (person.getHairColor().equals(HairColor.BLOND)) {
                                     person.setEliminated(true);
                                 }
                             }
                         case 9:
-                            if (answerHuman) {
+                            if (isAnswerHuman()){
                                 if (!person.getHairColor().equals(HairColor.BLACK)) {
                                     person.setEliminated(true);
                                 }
-                            } else {
+                            }
+                             else {
                                 if (person.getHairColor().equals(HairColor.BLACK)) {
                                     person.setEliminated(true);
                                 }
                             }
                         case 10:
-                            if (answerHuman) {
+                            if (isAnswerHuman()){
                                 if (!person.getHairColor().equals(HairColor.BROWN)) {
                                     person.setEliminated(true);
                                 }
-                            } else {
+                            }
+                             else {
                                 if (person.getHairColor().equals(HairColor.BROWN)) {
                                     person.setEliminated(true);
                                 }
                             }
                         case 11:
-                            if (answerHuman) {
-                                if (!person.getAccessories().equals(Accessories.HAT)) {
+                            if (isAnswerHuman()){
+                                if (!person.getAccessories().equals(Accessories.HAT)){
                                     person.setEliminated(true);
                                 }
-                            } else {
-                                if (person.getAccessories().equals(Accessories.HAT)) {
+                            }
+                            else {
+                                if (person.getAccessories().equals(Accessories.HAT)){
                                     person.setEliminated(true);
                                 }
                             }
@@ -179,8 +190,7 @@ public class AI {
             }
         }
     }
-
-    public Person makeGuess(int counter) {
+    public Person makeGuess(int counter){
         if (counter == 1) {
             for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.isEliminated()) {

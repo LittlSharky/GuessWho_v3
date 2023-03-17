@@ -37,8 +37,8 @@ public class Application extends javafx.application.Application {
         Scene scene = new Scene(homeView);
         stage.setScene(scene);
         stage.setTitle("JavaFX Application");
-        stage.setHeight(600);
-        stage.setWidth(800);
+        stage.setHeight(800);
+        stage.setWidth(1000);
         stage.show();
     }
 
