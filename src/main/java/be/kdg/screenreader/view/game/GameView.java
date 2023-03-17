@@ -18,7 +18,12 @@ import java.util.ArrayList;
 
 public class GameView extends BorderPane {
 
+    private MenuItem newGame;
+    private MenuItem loadGame;
+    private MenuItem saveGame;
     private MenuItem exit;
+    private MenuItem howToPlay;
+    private MenuItem rules;
     private MenuItem info;
     private Button confirmQuestion;
     private ToggleButton guessButton;
@@ -48,6 +53,11 @@ public class GameView extends BorderPane {
     private void initializeNodes() {
         this.exit = new MenuItem("Exit");
         this.info = new MenuItem("Info");
+        this.saveGame = new MenuItem("Save game");
+        this.loadGame = new MenuItem("Load game");
+        this.newGame = new MenuItem("New game");
+        this.howToPlay = new MenuItem("How to play");
+        this.rules = new MenuItem("Rules");
 
         //Initiliaze buttons & labels
         this.confirmQuestion = new Button("Confirm question");
@@ -64,9 +74,10 @@ public class GameView extends BorderPane {
     }
 
     private void layoutNodes() {
-        Menu gameMenu = new Menu("Game", null, this.exit);
-        Menu aboutMenu = new Menu("About", null, this.info);
-        MenuBar menuBar = new MenuBar(gameMenu, aboutMenu);
+        Menu gameMenu = new Menu("Game", null,  this.newGame, this.loadGame, this.saveGame,this.exit);
+        Menu helpMenu = new Menu("Help", null, this.howToPlay, this.rules);
+        Menu aboutMenu = new Menu("About",null, this.info);
+        MenuBar menuBar = new MenuBar(gameMenu, helpMenu,aboutMenu);
 
         gameGrid = new GridPane();
         gameGrid.setPadding(new Insets(10));

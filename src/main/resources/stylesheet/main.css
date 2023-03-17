@@ -1,0 +1,8 @@
+.root{
+    -fx-background-color: #0055A4;
+}
+ImageView{
+    -fx-border-style: solid;
+    -fx-border-width: 50px;
+    -fx-border-color: #a40044;
+}

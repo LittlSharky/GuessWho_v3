@@ -1,22 +1,21 @@
 package be.kdg.screenreader.model;
 
 import be.kdg.screenreader.model.enums.*;
-import com.sun.speech.freetts.en.us.FeatureProcessors;
 
 import java.util.List;
 
 public class Board {
-    private final int ROWS = 4;
-    private final int COLUMNS = 5;
+    public static final int ROWS = 4;
+    public static final int COLUMNS = 5;
 
-    private final Person[][] bord;
+    private final Person[][] board;
     private Person chosenPerson;
     private boolean personConfirmed;
     private Person guessPerson;
     private Question question;
 
     public Board() {
-        bord = new Person[COLUMNS][ROWS];
+        board = new Person[COLUMNS][ROWS];
         this.question = new Question();
         this.generateBoard();
     }
@@ -25,13 +24,13 @@ public class Board {
         int index = 0;
         for (int i = 0; i < COLUMNS; i++) {
             for (int j = 0; j < ROWS; j++) {
-                this.bord[i][j] = PEOPLE[index++];
+                this.board[i][j] = PEOPLE[index++];
             }
         }
     }
 
     public void setChosenPerson(int x, int y) {
-        this.chosenPerson = bord[x][y];
+        this.chosenPerson = board[x][y];
     }
 
     public void setPersonConfirmed() {
@@ -54,17 +53,17 @@ public class Board {
     }
 
     public boolean isEliminated(int x, int y) {
-        return bord[x][y].isEliminated();
+        return board[x][y].isEliminated();
         // gives the state of the character ( eliminated / not eliminated )
     }
 
     public void setEliminated(int x, int y, boolean eliminated) {
-        bord[x][y].setEliminated(eliminated);
+        board[x][y].setEliminated(eliminated);
         // is going to eliminate / not eliminate a person
     }
 
     public void setGuessPerson(int x, int y) {
-        this.guessPerson = bord[x][y];
+        this.guessPerson = board[x][y];
     }
 
     public Person getGuessPerson() {

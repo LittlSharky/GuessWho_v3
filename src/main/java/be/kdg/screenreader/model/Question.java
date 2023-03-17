@@ -41,15 +41,17 @@ public class Question {
 
     public boolean checkQuestion(int questionIndex, Person person) {
         int index = compareQuestions(questionIndex);
+        System.out.println(index);
+        System.out.println(questionIndex);
         switch (index) {
             case 0 -> {
                 return person.getSex().equals(Sex.FEMALE);
             }
             case 1 -> {
-                return person.getAccessories().equals(Accessories.GLASSES);
+                return   person.getAccessories().equals(Accessories.GLASSES);
             }
             case 2 -> {
-                return person.getEyeColor().equals(EyeColor.BLUE);
+                return  person.getEyeColor().equals(EyeColor.BLUE);
             }
             case 3 -> {
                 return person.getEyeColor().equals(EyeColor.BROWN);
@@ -58,32 +60,30 @@ public class Question {
                 return person.getEyeColor().equals(EyeColor.GREY);
             }
             case 5 -> {
-                return person.getFacialHair().equals(FacialHair.BEARD)
+                return  person.getFacialHair().equals(FacialHair.BEARD)
                         || person.getFacialHair().equals(FacialHair.BOTH);
             }
             case 6 -> {
-                return person.getFacialHair().equals(FacialHair.MOUSTACHE)
+                return  person.getFacialHair().equals(FacialHair.MOUSTACHE)
                         || person.getFacialHair().equals(FacialHair.BOTH);
             }
             case 7 -> {
                 return person.getHairColor().equals(HairColor.BALD);
             }
             case 8 -> {
-                return person.getHairColor().equals(HairColor.BLOND);
+                return  person.getHairColor().equals(HairColor.BLOND);
             }
             case 9 -> {
-                return person.getHairColor().equals(HairColor.BLACK);
+                return  person.getHairColor().equals(HairColor.BLACK);
             }
             case 10 -> {
                 return person.getHairColor().equals(HairColor.BROWN);
             }
             case 11 -> {
-                return person.getExtraAccessories().equals(Accessories.HAT);
-            }
-            default -> {
-                return false;
+                return  person.getExtraAccessories().equals(Accessories.HAT);
             }
         }
+        return false;
     }
 
     public void removeQuestion(int questionIndex) {

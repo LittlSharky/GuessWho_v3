@@ -27,7 +27,7 @@ public class HomePresenter {
     private Label choosePerson = new Label("Choose your character!");
     Button okButton;
 
-    public HomePresenter(HomeView view, Game model) {
+    public HomePresenter(HomeView view) {
         this.view = view;
         this.model = model;
 

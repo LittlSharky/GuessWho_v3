@@ -47,7 +47,7 @@ public class GamePersonView extends Canvas {
             this.gc.strokeLine(0, 0, WIDTH, HEIGHT);
             this.gc.strokeLine(WIDTH, 0, 0, HEIGHT);
         } else {
-            this.gc.clearRect(0, 0, WIDTH, HEIGHT); //clear de canvas
+            this.gc.clearRect(0, 0, WIDTH, HEIGHT);//clear de canvas
             this.gc.drawImage(this.photo.getImage(), 0, 0);
         }
     }
