@@ -3,9 +3,12 @@ package be.kdg.screenreader.view.home;
 import be.kdg.screenreader.model.Game;
 import be.kdg.screenreader.view.game.GamePresenter;
 import be.kdg.screenreader.view.game.GameView;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
@@ -17,10 +20,9 @@ public class HomePresenter {
     // bij grote applicaties -> per view en presenter een package aanmaken
     // moet ook weten van het model
 
-    private final HomeView view;
-    private final Game model;
+    private  HomeView view;
+    private  Game model;
     private GameView gameView;
-    private Game modelGuesswho;
     private Popup choosePopup = new Popup();
     private Label choosePerson = new Label("Choose your character!");
     Button okButton;
@@ -42,13 +44,13 @@ public class HomePresenter {
 
         this.view.getButton().setOnAction(actionEvent -> {
             gameView = new GameView();
-            modelGuesswho = new Game();
-            new GamePresenter(gameView, modelGuesswho);
+            model = new Game();
+            new GamePresenter(gameView, model);
 
             this.view.getScene().setRoot(gameView);
             //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
-            gameView.getScene().getWindow().setHeight(850);
-            gameView.getScene().getWindow().setWidth(1000);
+            gameView.getScene().getWindow().sizeToScene();
+
             //modelGuesswho.setUsernameOne((view.getConfirmName()).getText());
             //choosePerson.setStyle("-fx-background-color: pink; -fx-padding: 100px; -fx-alignment: top-right");
 

@@ -66,22 +66,10 @@ public class GameView extends BorderPane {
     private void layoutNodes() {
         Menu gameMenu = new Menu("Game", null, this.exit);
         Menu aboutMenu = new Menu("About", null, this.info);
-
         MenuBar menuBar = new MenuBar(gameMenu, aboutMenu);
-        this.setTop(menuBar);
 
         gameGrid = new GridPane();
         gameGrid.setPadding(new Insets(10));
-
-        //Default selected person
-        setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
-        VBox vBox = new VBox(10, confirmedPerson, confirmPerson);
-
-        //Put the VBox at the right center of the screen
-        vBox.setAlignment(Pos.CENTER_RIGHT);
-        this.setRight(vBox);
-
-
         gameGrid.setHgap(10);
         gameGrid.setVgap(10);
 
@@ -93,21 +81,36 @@ public class GameView extends BorderPane {
                 index++;
             }
         }
-        this.setCenter(gameGrid);
-        this.setTop(endTurn);
-        endTurn.setAlignment(Pos.TOP_RIGHT);
+        //Default selected person
+        setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
+        VBox vBoxConfirm = new VBox(10, confirmedPerson, confirmPerson);
+        //Put the VBox at the right center of the screen
+        vBoxConfirm.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox left = new HBox();
+        left.getChildren().addAll(gameGrid, endTurn);
+        left.setPadding(new Insets(10, 0, 0, 10));
+        left.setAlignment(Pos.TOP_RIGHT);
 
         //Make a hBox with the guessButton and the confirmQuestion button
         HBox hBox = new HBox(10, this.comboBoxQuestion, confirmQuestion, guessButton);
-
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
-        this.setBottom(hBox);
-
         //Put the comboBox and the confirmButton with the same padding around them
-        BorderPane.setMargin(vBox, new Insets(10, 75, 10, 10));
+        BorderPane.setMargin(vBoxConfirm, new Insets(10, 100, 10, 10));
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
-        BorderPane.setMargin(endTurn, new Insets(0, 0, 0, 600));
+
+        GridPane.setHgrow(gameGrid, Priority.ALWAYS);
+        GridPane.setVgrow(gameGrid, Priority.ALWAYS);
+
+        HBox.setHgrow(left, Priority.ALWAYS);
+        VBox.setVgrow(vBoxConfirm, Priority.ALWAYS);
+        HBox.setHgrow(hBox, Priority.ALWAYS);
+
+        this.setTop(menuBar);
+        this.setRight(vBoxConfirm);
+        this.setLeft(left);
+        this.setBottom(hBox);
 
     }
 
@@ -161,6 +164,14 @@ public class GameView extends BorderPane {
 
     public Button getEndTurn() {
         return endTurn;
+    }
+
+    public MenuItem getExit() {
+        return exit;
+    }
+
+    public MenuItem getInfo() {
+        return info;
     }
 }
 

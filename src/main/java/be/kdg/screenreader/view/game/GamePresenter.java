@@ -5,10 +5,7 @@ import be.kdg.screenreader.model.Question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 
 import java.lang.reflect.Type;
 
@@ -33,6 +30,37 @@ public class GamePresenter {
     private void addEventHandlers() {
         // hieronder is een anonimous interclass (eventhandler = interface, methodes hiervan ook implementeren)(gereplaced met lamba)
         // als je meerdere keren deze eventhandler nodig hebt dan moet je hiervoor een aparte klasse aanmaken
+        this.view.getInfo().setOnAction(actionEvent -> {
+            Dialog<String> dialog = new Dialog<>();
+            dialog.setTitle("Info");
+            dialog.setHeaderText("Info");
+
+            Label content = new Label("This is a game where you have to guess the character of your opponent. " +
+                    "You can ask questions to your opponent and he/she will answer yes or no. " +
+                    "You can also eliminate characters by clicking on them. " +
+                    "The first player to guess the character of the other player wins the game.");
+
+
+            dialog.getDialogPane().setContent(content);
+
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().add(okButton);
+
+            dialog.showAndWait();
+        });
+        this.view.getExit().setOnAction(actionEvent -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Exit");
+            alert.setContentText("Are you sure you want to exit?");
+            ButtonType yesButton = new ButtonType("Yes");
+            ButtonType cancelButton = new ButtonType("Cancel");
+            alert.getButtonTypes().setAll(yesButton, cancelButton);
+            alert.showAndWait().ifPresent(response -> {
+                if (response == yesButton) {
+                    System.exit(0);
+                }
+            });
+        });
 
         this.view.getGameGrid().getChildren().forEach(node -> {
             node.setOnMouseClicked(mouseEvent -> {
