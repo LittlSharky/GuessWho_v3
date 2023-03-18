@@ -44,8 +44,8 @@ public class Board {
     }
 
 
-    public boolean checkQuestion(int questionIndex) {
-        return this.question.checkQuestion(questionIndex, this.chosenPerson);
+    public boolean checkQuestion(int questionIndex, Person person) {
+        return this.question.checkQuestion(questionIndex, this.chosenPerson = person);
     }
 
     public void removeQuestion(int questionIndex) {

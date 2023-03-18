@@ -24,10 +24,10 @@ public class Game {
     public boolean checkQuestion(boolean human, int questionIndex) {
         boolean answer;
         if (human) {
-            answer = boardC.checkQuestion(questionIndex);
+            answer = boardH.checkQuestion(questionIndex,boardC.getChosenPerson());
             boardH.removeQuestion(questionIndex);
         } else {
-            answer = boardH.checkQuestion(questionIndex);
+            answer = boardC.checkQuestion(questionIndex, boardH.getChosenPerson());
             boardC.removeQuestion(questionIndex);
         }
         return answer;
