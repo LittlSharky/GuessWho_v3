@@ -60,10 +60,10 @@ public class HomePresenter {
 
             // create the buttons and add them to the layout container
             okButton = new Button("OK");
-            buttonBox.getChildren().addAll(okButton);
-
+            buttonBox.getChildren().addAll(choosePerson, okButton);
+            buttonBox.setAlignment(Pos.CENTER);
             //add content to the popup
-            choosePopup.getContent().addAll(choosePerson, buttonBox);
+            choosePopup.getContent().addAll(buttonBox);
             choosePopup.show(this.gameView.getScene().getWindow());
 
             String username = view.getConfirmName().getText();

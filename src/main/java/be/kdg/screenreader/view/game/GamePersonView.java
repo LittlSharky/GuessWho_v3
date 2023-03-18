@@ -18,8 +18,6 @@ public class GamePersonView extends Canvas {
 
     private final int COORD_X;
     private final int COORD_Y;
-    private Question[] questions;
-
     public GamePersonView(String path, int columnIndex, int rowIndex) {
         this.photo = new ImageView(path);
         this.eliminated = false;

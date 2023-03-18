@@ -1,8 +1,41 @@
-.root{
+.root {
     -fx-background-color: #0055A4;
 }
-ImageView{
+
+ImageView {
     -fx-border-style: solid;
     -fx-border-width: 50px;
     -fx-border-color: #a40044;
+}
+
+.popup {
+    -fx-position: fixed;
+    -fx-z-index: 1;
+    -fx-left: 0;
+    -fx-top: 0;
+    -fx-width: 100%;
+    -fx-height: 100%;
+    -fx-overflow: auto;
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+}
+
+.popup-content {
+    -fx-background-color: #fefefe;
+    -fx-margin: auto;
+    -fx-padding: 20px;
+    -fx-border: medium solid gray;
+    -fx-width: 80%;
+}
+
+.close-btn {
+    -fx-color: #aaa;
+    -fx-float: right;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.close-btn:hover {
+    -fx-color: black;
+    -fx-text-decoration: none;
+    -fx-cursor: pointer;
 }
