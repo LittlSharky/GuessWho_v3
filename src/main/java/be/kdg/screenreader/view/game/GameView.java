@@ -124,6 +124,26 @@ public class GameView extends BorderPane {
 
     }
 
+    public MenuItem getNewGame() {
+        return newGame;
+    }
+
+    public MenuItem getLoadGame() {
+        return loadGame;
+    }
+
+    public MenuItem getSaveGame() {
+        return saveGame;
+    }
+
+    public MenuItem getHowToPlay() {
+        return howToPlay;
+    }
+
+    public MenuItem getRules() {
+        return rules;
+    }
+
     public Button getConfirmPerson() {
         return confirmPerson;
     }

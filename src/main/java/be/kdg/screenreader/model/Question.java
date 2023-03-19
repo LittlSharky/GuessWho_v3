@@ -38,9 +38,9 @@ public class Question {
     public List<String> getQuestions() {
         return questions;
     }
-
+    public int index;
     public boolean checkQuestion(int questionIndex, Person person) {
-        int index = compareQuestions(questionIndex);
+        index = compareQuestions(questionIndex);
         System.out.println(index);
         System.out.println(questionIndex);
         switch (index) {
@@ -98,5 +98,9 @@ public class Question {
 
     public TreeMap<String, Integer> getQuestionsMap() {
         return questionsMap;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

@@ -29,22 +29,28 @@ public class GamePresenter {
     private void addEventHandlers() {
         // hieronder is een anonimous interclass (eventhandler = interface, methodes hiervan ook implementeren)(gereplaced met lamba)
         // als je meerdere keren deze eventhandler nodig hebt dan moet je hiervoor een aparte klasse aanmaken
-        this.view.getInfo().setOnAction(actionEvent -> {
+        this.view.getHowToPlay().setOnAction(actionEvent -> {
             Dialog<String> dialog = new Dialog<>();
-            dialog.setTitle("Info");
-            dialog.setHeaderText("Info");
+            dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
+            dialog.setTitle("How To Play");
+            dialog.setHeaderText("Instruction");
+            dialog.setContentText("This is a game where you have to guess the character of your opponent.\n" +
+                    "1. The  player and the computer chooses a character.\n"+
+                    "2. The computer and the player has to guess the character of each other.\n"+
+                    "3. The questions are only yes or no answers.\n"+
+                    "4. The player is always going to start with a question. The computer will answer with Yes or No.\n"+
+                    "5. Then the player can click on the images to eliminate the characters.\n"+
+                    "6. Ending your turn by clicking on the button 'End Turn'.\n"+
+                    "7. The Computer will ask you a question. A popup will show with the question that has been asked and you have to answer it with Yes or No by clicking on the button.\n"+
+                    "8. The player can take a guess whenever he or she wants.\n"+
+                    "9. You can win the game by guessing right or the computer guesses wrong.\n\n"+
+                    "NOTE: You can only guess when it is your turn. When you guess wrong, the computer will win the game. The same goes for the computer.");
 
-            Label content = new Label("This is a game where you have to guess the character of your opponent. " +
-                    "You can ask questions to your opponent and he/she will answer yes or no. " +
-                    "You can also eliminate characters by clicking on them. " +
-                    "The first player to guess the character of the other player wins the game.");
 
-
-            dialog.getDialogPane().setContent(content);
+            dialog.getDialogPane();
 
             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().add(okButton);
-
             dialog.showAndWait();
         });
         this.view.getExit().setOnAction(actionEvent -> {
@@ -111,17 +117,18 @@ public class GamePresenter {
         });
 
         this.view.getEndTurn().setOnAction(actionEvent -> {
-            model.getAi().play();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Question computer:");
             alert.setContentText(model.getAi().askQuestion());
-            model.checkQuestion(true,model.getAi().getRandomquestion());
             ButtonType trueButton = new ButtonType("True");
             ButtonType falseButton = new ButtonType("False");
             alert.getButtonTypes().setAll(trueButton, falseButton);
             alert.showAndWait().ifPresent(response -> {
                 model.getAi().setAnswerHumanQuestion(response == trueButton);
             });
+            model.checkQuestion(false,model.getAi().getRandomquestion());
+
+            model.getAi().play();
             this.view.getConfirmQuestion().setDisable(false);
             this.view.getGuessButton().setDisable(false);
         });

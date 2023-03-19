@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class Application extends javafx.application.Application {
     @Override
@@ -23,8 +24,18 @@ public class Application extends javafx.application.Application {
 
         Scene scene = new Scene(homeView);
         // in de scene zitten nodes (buttons, text, ...)
-        scene.getStylesheets().add(getClass().getResource("/stylesheet/main.css").toExternalForm());
+        String cssMainFile = this.getClass().getResource("/stylesheet/main.css").toExternalForm();
+        String cssDialogFile = this.getClass().getResource("/stylesheet/dialog.css").toExternalForm();
+        scene.getStylesheets().addAll(cssMainFile, cssDialogFile);
         new HomePresenter(homeView);
+
+
+        URL cssFile = getClass().getResource("/stylesheet/dialog.css");
+        if (cssFile == null) {
+            System.err.println("Error loading CSS file");
+        } else {
+            System.out.println("Loaded CSS file: " + cssFile.toExternalForm());
+        }
 
         stage.setScene(scene);
         stage.setResizable(false);

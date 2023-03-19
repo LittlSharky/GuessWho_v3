@@ -1,8 +1,29 @@
-.content{
-    -fx-font-size: 14px;
-    -fx-font-family: "Arial";
-    -fx-text-fill: black;
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5px;
+    -fx-border-width: 3px;
+    -fx-padding: 20px;
 }
-.dialogPane{
-    -fx-background-color: #f5f5f5;
+
+.dialog-pane .header-panel {
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-background-color: pink;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 0 0 1 0;
 }
+
+.dialog-pane .content {
+    -fx-font-size: 13px;
+    -fx-padding: 10px;
+    -fx-font-style: italic;
+}
+
+.dialog-pane .button-bar {
+    -fx-padding: 10px;
+    -fx-alignment: left;
+    -fx-font-size: 20px;
+}
+
