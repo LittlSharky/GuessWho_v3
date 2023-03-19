@@ -115,6 +115,7 @@ public class GamePresenter {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Question computer:");
             alert.setContentText(model.getAi().askQuestion());
+            model.checkQuestion(true,model.getAi().getRandomquestion());
             ButtonType trueButton = new ButtonType("True");
             ButtonType falseButton = new ButtonType("False");
             alert.getButtonTypes().setAll(trueButton, falseButton);

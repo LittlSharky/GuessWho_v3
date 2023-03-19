@@ -32,16 +32,22 @@ public class AI {
         counter = 0;
     }
 
+    public int getRandomquestion() {
+        return randomquestion;
+    }
+
     public void play() {
         askQuestion();
-        removeQuestion(this.randomquestion);
-        makeGuess(counter);
+        eliminate();
+        checkCounter();
+        makeGuess(this.counter);
+    }
+    public void checkCounter(){
         for (Person person : GAME.boardC.getPEOPLE()) {
             if (!person.isEliminated()) {
                 counter++;
             }
         }
-        makeGuess(this.counter);
     }
 
     public String askQuestion() {
@@ -51,10 +57,6 @@ public class AI {
 
 
     }
-    public void removeQuestion(int question){
-        GAME.boardC.getQuestions().remove(question);
-    }
-
     public void eliminate() {
         for (Person person : GAME.boardC.getPEOPLE()) {
             if (!person.isEliminated()) {
