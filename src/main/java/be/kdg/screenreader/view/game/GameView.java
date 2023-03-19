@@ -12,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Popup;
 
 import java.util.ArrayList;
@@ -38,16 +41,20 @@ public class GameView extends BorderPane {
     private Button confirmPerson;
     private ImageView confirmedPerson;
     private ComboBox<String> comboBoxQuestion;
+    private String username;
 
-    private Popup popup;
-
+    public void setUsername(String username) {
+        this.username = username;
+    }
     public GameView() {
         this.persons = new ArrayList<>();
         this.fillPersons();
 
+
         initializeNodes();
         layoutNodes();
     }
+
 
     private void initializeNodes() {
         this.exit = new MenuItem("Exit");
@@ -61,7 +68,7 @@ public class GameView extends BorderPane {
         //Initiliaze buttons & labels
         this.confirmQuestion = new Button("Confirm question");
         this.guessButton = new ToggleButton("Take a Guess!");
-        this.name = new Label();
+        this.name = new Label("Player: " + this.username);
         this.endTurn = new Button("End turn");
 
         //Confirmed person image view
@@ -69,7 +76,7 @@ public class GameView extends BorderPane {
         this.confirmedPerson = new ImageView();
 
         //Initiliaze questions
-        this.comboBoxQuestion = new ComboBox<String>();
+        this.comboBoxQuestion = new ComboBox<>();
     }
 
     private void layoutNodes() {
@@ -91,6 +98,8 @@ public class GameView extends BorderPane {
                 index++;
             }
         }
+
+
         //Default selected person
         setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
         VBox vBoxConfirm = new VBox(10, confirmedPerson, confirmPerson);
@@ -98,7 +107,7 @@ public class GameView extends BorderPane {
         vBoxConfirm.setAlignment(Pos.CENTER_RIGHT);
 
         HBox left = new HBox();
-        left.getChildren().addAll(gameGrid, endTurn);
+        left.getChildren().addAll(gameGrid, endTurn, this.name);
         left.setPadding(new Insets(10, 0, 0, 10));
         left.setAlignment(Pos.TOP_RIGHT);
 
@@ -121,6 +130,7 @@ public class GameView extends BorderPane {
         this.setRight(vBoxConfirm);
         this.setLeft(left);
         this.setBottom(hBox);
+
 
     }
 

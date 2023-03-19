@@ -25,7 +25,8 @@ public class HomePresenter {
     private GameView gameView;
     private Popup choosePopup = new Popup();
     private Label choosePerson = new Label("Choose your character!");
-    Button okButton;
+    private Button okButton;
+    private String username;
 
     public HomePresenter(HomeView view) {
         this.view = view;
@@ -66,9 +67,8 @@ public class HomePresenter {
             choosePopup.getContent().addAll(buttonBox);
             choosePopup.show(this.gameView.getScene().getWindow());
 
-            String username = view.getConfirmName().getText();
-            Label usernameLabel = new Label(username);
-
+            username = view.getConfirmName().getText();
+            gameView.setUsername(this.username);
 
             this.okButton.setOnAction(event -> {
                 choosePopup.hide();
@@ -77,7 +77,6 @@ public class HomePresenter {
 
 
     }
-
 
     private void updateView() {
 
