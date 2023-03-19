@@ -6,9 +6,10 @@ import java.util.Random;
 
 public class AI {
     private final Game GAME;
-    private boolean answerHuman;
+    private boolean answerHumanQuestion;
     private int randomquestion;
     private int counter;
+    private Person guessComputer;
 
     public AI(Game game) {
         GAME = game;
@@ -60,7 +61,7 @@ public class AI {
                 for (int index : GAME.boardC.getQuestion().getQuestionsMap().values()) {
                     switch (index) {
                         case 0:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (person.getSex().equals(Sex.MALE)) {
                                     person.setEliminated(true);
                                 }
@@ -71,7 +72,7 @@ public class AI {
                             }
 
                         case 1:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (!person.getAccessories().equals(Accessories.GLASSES)) {
                                     person.setEliminated(true);
                                 }
@@ -81,7 +82,7 @@ public class AI {
                                 }
                             }
                         case 2:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (!person.getEyeColor().equals(EyeColor.BLUE)) {
                                     person.setEliminated(true);
                                 }
@@ -91,7 +92,7 @@ public class AI {
                                 }
                             }
                         case 3:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (!person.getEyeColor().equals(EyeColor.BROWN)) {
                                     person.setEliminated(true);
                                 }
@@ -101,7 +102,7 @@ public class AI {
                                 }
                             }
                         case 4:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (!person.getEyeColor().equals(EyeColor.GREY)) {
                                     person.setEliminated(true);
                                 }
@@ -111,7 +112,7 @@ public class AI {
                                 }
                             }
                         case 5:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (!person.getFacialHair().equals(FacialHair.BEARD)) {
                                     person.setEliminated(true);
                                 }
@@ -122,7 +123,7 @@ public class AI {
                                 }
                             }
                         case 6:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (!person.getFacialHair().equals(FacialHair.MOUSTACHE)) {
                                     person.setEliminated(true);
                                 }
@@ -132,7 +133,7 @@ public class AI {
                                 }
                             }
                         case 7:
-                            if (isAnswerHuman()) {
+                            if (isAnswerHumanQuestion()) {
                                 if (!person.getHairColor().equals(HairColor.BALD)) {
                                     person.setEliminated(true);
                                 }
@@ -142,7 +143,7 @@ public class AI {
                                 }
                             }
                         case 8:
-                            if (isAnswerHuman()){
+                            if (isAnswerHumanQuestion()){
                                 if (!person.getHairColor().equals(HairColor.BLOND)) {
                                     person.setEliminated(true);
                                 }
@@ -153,7 +154,7 @@ public class AI {
                                 }
                             }
                         case 9:
-                            if (isAnswerHuman()){
+                            if (isAnswerHumanQuestion()){
                                 if (!person.getHairColor().equals(HairColor.BLACK)) {
                                     person.setEliminated(true);
                                 }
@@ -164,7 +165,7 @@ public class AI {
                                 }
                             }
                         case 10:
-                            if (isAnswerHuman()){
+                            if (isAnswerHumanQuestion()){
                                 if (!person.getHairColor().equals(HairColor.BROWN)) {
                                     person.setEliminated(true);
                                 }
@@ -175,7 +176,7 @@ public class AI {
                                 }
                             }
                         case 11:
-                            if (isAnswerHuman()){
+                            if (isAnswerHumanQuestion()){
                                 if (!person.getAccessories().equals(Accessories.HAT)){
                                     person.setEliminated(true);
                                 }
@@ -194,19 +195,21 @@ public class AI {
         if (counter == 1) {
             for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.isEliminated()) {
-                    return person;
+                    this.guessComputer = person;
+                    return guessComputer;
                 }
             }
         }
         return null;
     }
 
-    public boolean isAnswerHuman() {
-        return answerHuman;
+    public boolean isAnswerHumanQuestion() {
+        return answerHumanQuestion;
     }
 
-    public void setAnswerHuman(boolean answerHuman) {
-        this.answerHuman = answerHuman;
+    public void setAnswerHumanQuestion(boolean answerHumanQuestion) {
+        this.answerHumanQuestion = answerHumanQuestion;
         // in view an alert when the human must answer the question about their character -> true or false
     }
+
 }

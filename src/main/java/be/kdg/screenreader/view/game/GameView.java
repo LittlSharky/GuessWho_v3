@@ -29,7 +29,6 @@ public class GameView extends BorderPane {
     private ToggleButton guessButton;
     private Label name;
     private Button endTurn;
-
     private GridPane gameGrid;
     private final int ROWS = 4;
     private final int COLUMNS = 5;
@@ -184,5 +183,6 @@ public class GameView extends BorderPane {
     public MenuItem getInfo() {
         return info;
     }
+
 }
 

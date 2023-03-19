@@ -1,13 +1,8 @@
 package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Game;
-import be.kdg.screenreader.model.Question;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-
-import java.lang.reflect.Type;
 
 public class GamePresenter {
     // elke view/scene heeft zijn eigen presenter (home met homepresenter, game met gamepresenter)
@@ -23,6 +18,10 @@ public class GamePresenter {
 
         this.addEventHandlers();
         this.updateView();
+        this.view.getConfirmQuestion().setDisable(true);
+        this.view.getGuessButton().setDisable(true);
+        this.view.getEndTurn().setDisable(true);
+
     }
 
     // eventhandler = code die een event gaat ophalen door dat er iets gebeurt met view en daar iets mee gaat doen (bv. op knop drukken)
@@ -89,6 +88,9 @@ public class GamePresenter {
                 alertNotChosen.setContentText(e.getMessage());
                 alertNotChosen.showAndWait();
             }
+            this.view.getConfirmQuestion().setDisable(false);
+            this.view.getGuessButton().setDisable(false);
+            this.view.getEndTurn().setDisable(false);
         });
 
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
@@ -104,10 +106,23 @@ public class GamePresenter {
 
                 this.updateView();
             }
+            this.view.getConfirmQuestion().setDisable(true);
+            this.view.getGuessButton().setDisable(true);
         });
 
         this.view.getEndTurn().setOnAction(actionEvent -> {
             model.getAi().play();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Question computer:");
+            alert.setContentText(model.getAi().askQuestion());
+            ButtonType trueButton = new ButtonType("True");
+            ButtonType falseButton = new ButtonType("False");
+            alert.getButtonTypes().setAll(trueButton, falseButton);
+            alert.showAndWait().ifPresent(response -> {
+                model.getAi().setAnswerHumanQuestion(response == trueButton);
+            });
+            this.view.getConfirmQuestion().setDisable(false);
+            this.view.getGuessButton().setDisable(false);
         });
         this.view.getGuessButton().setOnAction(actionEvent -> {
             this.view.getGameGrid().getChildren().forEach(node -> {
