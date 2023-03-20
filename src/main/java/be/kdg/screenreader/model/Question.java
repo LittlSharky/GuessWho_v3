@@ -41,8 +41,6 @@ public class Question {
     public int index;
     public boolean checkQuestion(int questionIndex, Person person) {
         index = compareQuestions(questionIndex);
-        System.out.println(index);
-        System.out.println(questionIndex);
         switch (index) {
             case 0 -> {
                 return person.getSex().equals(Sex.FEMALE);
@@ -60,12 +58,12 @@ public class Question {
                 return person.getEyeColor().equals(EyeColor.GREY);
             }
             case 5 -> {
-                return  person.getFacialHair().equals(FacialHair.BEARD)
-                        || person.getFacialHair().equals(FacialHair.BOTH);
+                return  person.getExtraFacialHair().equals(FacialHair.BEARD)
+                        || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD));
             }
             case 6 -> {
                 return  person.getFacialHair().equals(FacialHair.MOUSTACHE)
-                        || person.getFacialHair().equals(FacialHair.BOTH);
+                        ||(person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD));
             }
             case 7 -> {
                 return person.getHairColor().equals(HairColor.BALD);
@@ -95,11 +93,6 @@ public class Question {
         String askedQuestion = questions.get(questionIndex);
         return this.questionsMap.get(askedQuestion);
     }
-
-    public TreeMap<String, Integer> getQuestionsMap() {
-        return questionsMap;
-    }
-
     public int getIndex() {
         return index;
     }

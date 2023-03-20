@@ -13,16 +13,18 @@ public class Person {
     private final Sex sex;
     private final EyeColor eyeColor;
     private final FacialHair facialHair;
+    private final FacialHair extraFacialHair;
     private final Accessories accessories;
     private final Accessories extraAccessories;
     private boolean eliminated;
 
-    public Person(Name name, HairColor hairColor, Sex sex, EyeColor eyeColor, FacialHair facialHair, Accessories accessories, Accessories extraAccessories) {
+    public Person(Name name, HairColor hairColor, Sex sex, EyeColor eyeColor, FacialHair facialHair, FacialHair extraFacialHair, Accessories accessories, Accessories extraAccessories) {
         this.name = name;
         this.hairColor = hairColor;
         this.sex = sex;
         this.eyeColor = eyeColor;
         this.facialHair = facialHair;
+        this.extraFacialHair = extraFacialHair;
         this.accessories = accessories;
         this.extraAccessories = extraAccessories;
         this.eliminated = false;
@@ -46,6 +48,10 @@ public class Person {
 
     public FacialHair getFacialHair() {
         return facialHair;
+    }
+
+    public FacialHair getExtraFacialHair() {
+        return extraFacialHair;
     }
 
     public Sex getSex() {
