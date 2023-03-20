@@ -114,13 +114,11 @@ public class AI {
                     case 5 -> {
                         if (isAnswerHumanQuestion()) {
                             if (!person.getFacialHair().equals(FacialHair.BEARD)) {
-                                System.out.println("NO BEARD");
                                 person.setEliminated(true);
                             }
 
                         } else {
                             if (person.getFacialHair().equals(FacialHair.BEARD)) {
-                                System.out.println("BEARD");
 
                                 person.setEliminated(true);
                             }
@@ -198,7 +196,7 @@ public class AI {
         }
     }
 
-    public Person makeGuess(int counter, Person guessComputer){
+    public void makeGuess(int counter, Person guessComputer){
         if (counter == 1) {
             for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.getEliminated()) {
@@ -208,7 +206,6 @@ public class AI {
                 }
             }
         }
-        return null;
     }
 
     public boolean isAnswerHumanQuestion() {
