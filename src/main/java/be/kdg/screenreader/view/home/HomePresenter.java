@@ -6,8 +6,7 @@ import be.kdg.screenreader.view.game.GameView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
@@ -20,17 +19,14 @@ public class HomePresenter {
     // bij grote applicaties -> per view en presenter een package aanmaken
     // moet ook weten van het model
 
-    private  HomeView view;
-    private  Game model;
+    private HomeView view;
+    private Game model;
     private GameView gameView;
-    private Popup choosePopup = new Popup();
-    private Label choosePerson = new Label("Choose your character!");
-    private Button okButton;
     private String username;
+    private Dialog<String> dialogChooseCharacter;
 
     public HomePresenter(HomeView view) {
         this.view = view;
-        this.model = model;
 
         this.addEventHandlers();
         this.updateView();
@@ -52,38 +48,18 @@ public class HomePresenter {
             //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
             gameView.getScene().getWindow().sizeToScene();
 
-            //modelGuesswho.setUsernameOne((view.getConfirmName()).getText());
-            //choosePerson.setStyle("-fx-background-color: pink; -fx-padding: 100px; -fx-alignment: top-right");
-
-            // create a layout container for the buttons
-            VBox buttonBox = new VBox();
-            buttonBox.setSpacing(10);
-
-            // create the buttons and add them to the layout container
-            okButton = new Button("OK");
-            buttonBox.getChildren().addAll(choosePerson, okButton);
-            buttonBox.setAlignment(Pos.CENTER);
-            //add content to the popup
-            choosePopup.getContent().addAll(buttonBox);
-            choosePopup.show(this.gameView.getScene().getWindow());
-
-            username = view.getConfirmName().getText();
-            model.setUsername(this.username);
-
-            this.okButton.setOnAction(event -> {
-                choosePopup.hide();
-            });
+            dialogChooseCharacter = new Dialog<>();
+            dialogChooseCharacter.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
+            dialogChooseCharacter.setTitle("TO DO!");
+            dialogChooseCharacter.setHeaderText("Choose your character!");
+            dialogChooseCharacter.getDialogPane();
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            dialogChooseCharacter.getDialogPane().getButtonTypes().add(okButton);
+            dialogChooseCharacter.showAndWait();
         });
-
-
     }
 
     private void updateView() {
 
     }
-
-    public Game getModel() {
-        return model;
-    }
-
 }

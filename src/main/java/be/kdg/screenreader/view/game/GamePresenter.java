@@ -5,12 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 
 public class GamePresenter {
-    // elke view/scene heeft zijn eigen presenter (home met homepresenter, game met gamepresenter)
-    // bij grote applicaties -> per view en presenter een package aanmaken
-    // moet ook weten van het model
-
     private final GameView view;
     private final Game model;
+    private Dialog<String> dialog;
 
     public GamePresenter(GameView view, Game model) {
         this.view = view;
@@ -24,17 +21,45 @@ public class GamePresenter {
 
     }
 
-    // eventhandler = code die een event gaat ophalen door dat er iets gebeurt met view en daar iets mee gaat doen (bv. op knop drukken)
-    // update view, als er een event gebeurt dan moet er daarna iets gebeuren om het te updaten en dat is updateview
     private void addEventHandlers() {
-        // hieronder is een anonimous interclass (eventhandler = interface, methodes hiervan ook implementeren)(gereplaced met lamba)
-        // als je meerdere keren deze eventhandler nodig hebt dan moet je hiervoor een aparte klasse aanmaken
+        //NEW GAME
+        this.view.getNewGame().setOnAction(actionEvent -> {
+            this.model.reset();
+            this.view.getConfirmPerson().setDisable(false);
+            this.view.getConfirmQuestion().setDisable(true);
+            this.view.getGuessButton().setDisable(true);
+            this.view.getEndTurn().setDisable(true);
+            this.updateView();
+        });
+        //LOAD GAME
+        this.view.getLoadGame().setOnAction(actionEvent -> {
+            //loadgamelogic
+        });
+        //SAVE GAME
+        this.view.getSaveGame().setOnAction(actionEvent -> {
+            //savegamelogic
+        });
+        //EXIT ALERT
+        this.view.getExit().setOnAction(actionEvent -> {
+            Alert alertExit = new Alert(Alert.AlertType.CONFIRMATION);
+            alertExit.setTitle("Exit");
+            alertExit.setContentText("Are you sure you want to exit?");
+            ButtonType yesButton = new ButtonType("Yes");
+            ButtonType cancelButton = new ButtonType("Cancel");
+            alertExit.getButtonTypes().setAll(yesButton, cancelButton);
+            alertExit.showAndWait().ifPresent(response -> {
+                if (response == yesButton) {
+                    System.exit(0);
+                }
+            });
+        });
+        //HOW TO PLAY DIALOG
         this.view.getHowToPlay().setOnAction(actionEvent -> {
-            Dialog<String> dialog = new Dialog<>();
-            dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
-            dialog.setTitle("How To Play");
-            dialog.setHeaderText("Instruction");
-            dialog.setContentText("This is a game where you have to guess the character of your opponent.\n" +
+            this.dialog = new Dialog<>();
+            this.dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
+            this.dialog.setTitle("How To Play");
+            this.dialog.setHeaderText("Instruction");
+            this.dialog.setContentText("This is a game where you have to guess the character of your opponent.\n" +
                     "1. The  player and the computer chooses a character.\n" +
                     "2. The computer and the player has to guess the character of each other.\n" +
                     "3. The questions are only yes or no answers.\n" +
@@ -45,28 +70,41 @@ public class GamePresenter {
                     "8. The player can take a guess whenever he or she wants.\n" +
                     "9. You can win the game by guessing right or the computer guesses wrong.\n\n" +
                     "NOTE: You can only guess when it is your turn. When you guess wrong, the computer will win the game. The same goes for the computer.");
-
-
-            dialog.getDialogPane();
-
+            this.dialog.getDialogPane();
             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().add(okButton);
-            dialog.showAndWait();
+            this.dialog.getDialogPane().getButtonTypes().add(okButton);
+            this.dialog.showAndWait();
         });
-        this.view.getExit().setOnAction(actionEvent -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Exit");
-            alert.setContentText("Are you sure you want to exit?");
-            ButtonType yesButton = new ButtonType("Yes");
-            ButtonType cancelButton = new ButtonType("Cancel");
-            alert.getButtonTypes().setAll(yesButton, cancelButton);
-            alert.showAndWait().ifPresent(response -> {
-                if (response == yesButton) {
-                    System.exit(0);
-                }
-            });
+        //RULES DIALOG
+        this.view.getRules().setOnAction(actionEvent -> {
+            this.dialog = new Dialog<>();
+            this.dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
+            this.dialog.setTitle("Rules");
+            this.dialog.setHeaderText("Rules");
+            this.dialog.setContentText("1. You need to choose a character!\n" +
+                    "2. You either choose a question or you take a guess!\n" +
+                    "3. You cannot take a guess when it is not your turn!\n");
+            this.dialog.getDialogPane();
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            this.dialog.getDialogPane().getButtonTypes().add(okButton);
+            this.dialog.showAndWait();
         });
-
+        //INFO DIALOG
+        this.view.getInfo().setOnAction(actionEvent -> {
+            this.dialog = new Dialog<>();
+            this.dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
+            this.dialog.setTitle("About");
+            this.dialog.setHeaderText("INFO");
+            this.dialog.setContentText("This game is made by:\n"+
+                    "Emma Bogaerts & Sharon Chung\n"+
+                    "For the course 'JavaFX' at Karel de Grote Hogeschool for an oral exam presentation \n"+
+                    "Made in the year 2023.");
+            this.dialog.getDialogPane();
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            this.dialog.getDialogPane().getButtonTypes().add(okButton);
+            this.dialog.showAndWait();
+        });
+        //ELIMINATE OR DE-ELIMINATE CHARACTERS OR CHOOSE A CHARACTER
         this.view.getGameGrid().getChildren().forEach(node -> {
             node.setOnMouseClicked(mouseEvent -> {
                 GamePersonView person = (GamePersonView) node;
@@ -83,7 +121,7 @@ public class GamePresenter {
                 }
             });
         });
-
+        //CONFIRM PERSON
         this.view.getConfirmPerson().setOnAction(actionEvent -> {
             try {
                 model.getBoard(true).setPersonConfirmed();
@@ -98,7 +136,7 @@ public class GamePresenter {
             this.view.getGuessButton().setDisable(false);
             this.view.getEndTurn().setDisable(false);
         });
-
+        //CONFIRM QUESTION
         this.view.getConfirmQuestion().setOnAction(actionEvent -> {
             int questionIndex = this.view.getComboBoxQuestion().getSelectionModel().getSelectedIndex();
             //No question selected
@@ -115,7 +153,7 @@ public class GamePresenter {
             this.view.getConfirmQuestion().setDisable(true);
             this.view.getGuessButton().setDisable(true);
         });
-
+        //END TURN
         this.view.getEndTurn().setOnAction(actionEvent -> {
             if (model.getAi().getCounter() > 1) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -148,6 +186,7 @@ public class GamePresenter {
             this.view.getConfirmQuestion().setDisable(false);
             this.view.getGuessButton().setDisable(false);
         });
+        //GUESS BUTTON
         this.view.getGuessButton().setOnAction(actionEvent -> {
             this.view.getGameGrid().getChildren().forEach(node -> {
                 GamePersonView person = (GamePersonView) node;
