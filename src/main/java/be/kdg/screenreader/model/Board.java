@@ -10,9 +10,13 @@ public class Board {
 
     private final Person[][] board;
     private Person chosenPerson;
+    // ^ chosen character by computer and human
     private boolean personConfirmed;
+    // ^ boolean for button to choose your character (if you haven't chosen anyone yet you can't ask questions or make a guess)
     private Person guessPerson;
+    // ^ character guessed by the human
     private Question question;
+    // ^ attribute per question
 
     public Board() {
         board = new Person[COLUMNS][ROWS];
@@ -32,6 +36,7 @@ public class Board {
     public void setChosenPerson(int x, int y) {
         this.chosenPerson = board[x][y];
     }
+    // ^ to choose your character
 
     public void setPersonConfirmed() {
         if (this.chosenPerson == null)
@@ -42,10 +47,12 @@ public class Board {
     public boolean isPersonConfirmed() {
         return personConfirmed;
     }
+    // ^ to know if you already chose your character (true -> already chose)
 
 
     public boolean checkQuestion(int questionIndex, Person person) {
         return this.question.checkQuestion(questionIndex, person);
+        // ^ compare the two lists of question to get the right index of the question
     }
 
     public void removeQuestion(int questionIndex) {
@@ -65,14 +72,14 @@ public class Board {
     public void setGuessPerson(int x, int y) {
         this.guessPerson = board[x][y];
     }
+    // ^ for human to set guessPerson (view gives you the coordinates)
 
     public Person getGuessPerson() {
-        return guessPerson;
+        return this.guessPerson;
     }
 
     public boolean checkWin(Person guessPerson) {
-        boolean isCorrect = guessPerson.getName().equals(this.chosenPerson.getName());
-        return isCorrect;
+        return guessPerson.getName().equals(this.chosenPerson.getName());
     }
 
     public int getROWS() {
@@ -121,4 +128,5 @@ public class Board {
     public Person getChosenPerson() {
         return chosenPerson;
     }
+
 }

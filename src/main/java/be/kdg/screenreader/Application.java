@@ -25,21 +25,12 @@ public class Application extends javafx.application.Application {
         Scene scene = new Scene(homeView);
         // in de scene zitten nodes (buttons, text, ...)
         String cssMainFile = this.getClass().getResource("/stylesheet/main.css").toExternalForm();
-        String cssDialogFile = this.getClass().getResource("/stylesheet/dialog.css").toExternalForm();
-        scene.getStylesheets().addAll(cssMainFile, cssDialogFile);
+        scene.getStylesheets().addAll(cssMainFile);
         new HomePresenter(homeView);
-
-
-        URL cssFile = getClass().getResource("/stylesheet/dialog.css");
-        if (cssFile == null) {
-            System.err.println("Error loading CSS file");
-        } else {
-            System.out.println("Loaded CSS file: " + cssFile.toExternalForm());
-        }
 
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("JavaFX Application");
+        stage.setTitle("Guess Who?");
         stage.setHeight(600);
         stage.setWidth(800);
         stage.show();

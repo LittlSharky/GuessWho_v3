@@ -19,6 +19,7 @@ public class GamePersonView extends Canvas {
     private final int COORD_X;
     private final int COORD_Y;
     public GamePersonView(String path, int columnIndex, int rowIndex) {
+        // ^ draws photos in canvas
         this.photo = new ImageView(path);
         this.eliminated = false;
 
@@ -43,6 +44,7 @@ public class GamePersonView extends Canvas {
             this.gc.setLineWidth(10);
 
             this.gc.strokeLine(0, 0, WIDTH, HEIGHT);
+            // TODO vragen van instelling coordinate
             this.gc.strokeLine(WIDTH, 0, 0, HEIGHT);
         } else {
             this.gc.clearRect(0, 0, WIDTH, HEIGHT);//clear de canvas

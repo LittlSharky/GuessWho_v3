@@ -11,6 +11,7 @@ public class Question {
     // ^^ the one that is in the combobox
     private final TreeMap<String, Integer> questionsMap;
     // ^^ This list of questions doesn't change EVER
+    private int index;
 
     public Question() {
         this.questions = new ArrayList<>();
@@ -38,7 +39,6 @@ public class Question {
     public List<String> getQuestions() {
         return questions;
     }
-    public int index;
     public boolean checkQuestion(int questionIndex, Person person) {
         index = compareQuestions(questionIndex);
         switch (index) {
@@ -96,4 +96,5 @@ public class Question {
     public int getIndex() {
         return index;
     }
+    // ^ gives integer = value from questionmap (that never changes)
 }

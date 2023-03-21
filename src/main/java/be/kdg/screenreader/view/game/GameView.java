@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Popup;
@@ -20,9 +21,9 @@ import javafx.stage.Popup;
 import java.util.ArrayList;
 
 public class GameView extends BorderPane {
-
     private MenuItem newGame;
     private MenuItem loadGame;
+    // TODO vragen aan maarten voor name, loadgame en savegame
     private MenuItem saveGame;
     private MenuItem exit;
     private MenuItem howToPlay;
@@ -41,11 +42,7 @@ public class GameView extends BorderPane {
     private Button confirmPerson;
     private ImageView confirmedPerson;
     private ComboBox<String> comboBoxQuestion;
-    private String username;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
     public GameView() {
         this.persons = new ArrayList<>();
         this.fillPersons();
@@ -57,6 +54,7 @@ public class GameView extends BorderPane {
 
 
     private void initializeNodes() {
+        //Initialize menuitems
         this.exit = new MenuItem("Exit");
         this.info = new MenuItem("Info");
         this.saveGame = new MenuItem("Save game");
@@ -65,17 +63,17 @@ public class GameView extends BorderPane {
         this.howToPlay = new MenuItem("How to play");
         this.rules = new MenuItem("Rules");
 
-        //Initiliaze buttons & labels
+        //Initialize buttons & labels
         this.confirmQuestion = new Button("Confirm question");
         this.guessButton = new ToggleButton("Take a Guess!");
-        this.name = new Label("Player: " + this.username);
+        this.name = new Label();
         this.endTurn = new Button("End turn");
 
         //Confirmed person image view
         this.confirmPerson = new Button("Confirm person");
         this.confirmedPerson = new ImageView();
 
-        //Initiliaze questions
+        //Initialize questions
         this.comboBoxQuestion = new ComboBox<>();
     }
 
@@ -94,6 +92,7 @@ public class GameView extends BorderPane {
         for (int i = 0; i < COLUMNS; i++) {
             for (int j = 0; j < ROWS; j++) {
                 GamePersonView person = new GamePersonView(this.persons.get(index), i, j);
+                // TODO this.persons.get(index) vragen aan Maarten
                 gameGrid.add(person, i, j);
                 index++;
             }
@@ -107,9 +106,15 @@ public class GameView extends BorderPane {
         vBoxConfirm.setAlignment(Pos.CENTER_RIGHT);
 
         HBox left = new HBox();
-        left.getChildren().addAll(gameGrid, endTurn, this.name);
+        left.getChildren().addAll(gameGrid, endTurn);
         left.setPadding(new Insets(10, 0, 0, 10));
         left.setAlignment(Pos.TOP_RIGHT);
+
+        this.name.setText(" ");
+        this.name.setPadding(new Insets(10));
+        this.name.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
+        this.name.setAlignment(Pos.BASELINE_LEFT);
+
 
         //Make a hBox with the guessButton and the confirmQuestion button
         HBox hBox = new HBox(10, this.comboBoxQuestion, confirmQuestion, guessButton);

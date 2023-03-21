@@ -4,6 +4,7 @@ public class Game {
     Board boardH;
     Board boardC;
     AI ai;
+    private String username;
 
     public Game() {
         reset();
@@ -37,16 +38,22 @@ public class Game {
         boolean win;
         if (human) {
             win = boardC.checkWin(guessPerson);
-            System.out.println(guessPerson.getName());
         } else {
             win = boardH.checkWin(guessPerson);
-            System.out.println(guessPerson.getName());
         }
         return win;
     }
 
     public AI getAi() {
         return ai;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

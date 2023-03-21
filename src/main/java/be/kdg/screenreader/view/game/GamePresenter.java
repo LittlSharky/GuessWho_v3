@@ -35,15 +35,15 @@ public class GamePresenter {
             dialog.setTitle("How To Play");
             dialog.setHeaderText("Instruction");
             dialog.setContentText("This is a game where you have to guess the character of your opponent.\n" +
-                    "1. The  player and the computer chooses a character.\n"+
-                    "2. The computer and the player has to guess the character of each other.\n"+
-                    "3. The questions are only yes or no answers.\n"+
-                    "4. The player is always going to start with a question. The computer will answer with Yes or No.\n"+
-                    "5. Then the player can click on the images to eliminate the characters.\n"+
-                    "6. Ending your turn by clicking on the button 'End Turn'.\n"+
-                    "7. The Computer will ask you a question. A popup will show with the question that has been asked and you have to answer it with Yes or No by clicking on the button.\n"+
-                    "8. The player can take a guess whenever he or she wants.\n"+
-                    "9. You can win the game by guessing right or the computer guesses wrong.\n\n"+
+                    "1. The  player and the computer chooses a character.\n" +
+                    "2. The computer and the player has to guess the character of each other.\n" +
+                    "3. The questions are only yes or no answers.\n" +
+                    "4. The player is always going to start with a question. The computer will answer with Yes or No.\n" +
+                    "5. Then the player can click on the images to eliminate the characters.\n" +
+                    "6. Ending your turn by clicking on the button 'End Turn'.\n" +
+                    "7. The Computer will ask you a question. A popup will show with the question that has been asked and you have to answer it with Yes or No by clicking on the button.\n" +
+                    "8. The player can take a guess whenever he or she wants.\n" +
+                    "9. You can win the game by guessing right or the computer guesses wrong.\n\n" +
                     "NOTE: You can only guess when it is your turn. When you guess wrong, the computer will win the game. The same goes for the computer.");
 
 
@@ -107,7 +107,7 @@ public class GamePresenter {
 
                 Alert answerAlert = new Alert(Alert.AlertType.INFORMATION);
                 answerAlert.setTitle("Answer");
-                answerAlert.setContentText("Het antwoord op uw vraag is: " + (answer ? "Ja" : "Nee"));
+                answerAlert.setContentText("The answer to your question is: " + (answer ? "Yes" : "No"));
                 answerAlert.showAndWait();
 
                 this.updateView();
@@ -117,18 +117,34 @@ public class GamePresenter {
         });
 
         this.view.getEndTurn().setOnAction(actionEvent -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Question computer:");
-            alert.setContentText(model.getAi().askQuestion());
-            ButtonType trueButton = new ButtonType("True");
-            ButtonType falseButton = new ButtonType("False");
-            alert.getButtonTypes().setAll(trueButton, falseButton);
-            alert.showAndWait().ifPresent(response -> {
-                model.getAi().setAnswerHumanQuestion(response == trueButton);
-            });
-            model.checkQuestion(false,model.getAi().getRandomquestion());
-
-            model.getAi().play();
+            if (model.getAi().getCounter() > 1) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Question computer:");
+                alert.setContentText(model.getAi().askQuestion());
+                ButtonType trueButton = new ButtonType("True");
+                ButtonType falseButton = new ButtonType("False");
+                alert.getButtonTypes().setAll(trueButton, falseButton);
+                alert.showAndWait().ifPresent(response -> {
+                    model.getAi().setAnswerHumanQuestion(response == trueButton);
+                    // ^ simplified if that sets trueButton true on setAnswerHuman
+                });
+                model.checkQuestion(false, model.getAi().getRandomquestion());
+                // ^ removes question (doesn't use answer)
+                model.getAi().play();
+            } else {
+                model.getAi().makeGuess();
+                if (model.checkWin(false, model.getAi().getGuessPerson())) {
+                    Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
+                    alertLose.setTitle("The computer wins by guessing " + model.getAi().getGuessPerson().getName() + "!");
+                    alertLose.setContentText(" You lose, you snooze. The computer guessed the right person");
+                    alertLose.showAndWait();
+                } else {
+                    Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
+                    alertWin.setTitle("You win! The person guessed: " + model.getAi().getGuessPerson().getName());
+                    alertWin.setContentText(" The computer guessed the wrong person! AI isn't that far yet sorry");
+                    alertWin.showAndWait();
+                }
+            }
             this.view.getConfirmQuestion().setDisable(false);
             this.view.getGuessButton().setDisable(false);
         });
@@ -147,27 +163,29 @@ public class GamePresenter {
                             if (model.checkWin(true, model.getBoard(true).getGuessPerson())) {
                                 Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
                                 alertWin.setTitle("You win!");
-                                alertWin.setContentText("You guessed the right person! Congrats! You won the game.");
+                                alertWin.setContentText("You chose: " + model.getBoard(true).getGuessPerson().getName() +
+                                        " You guessed the right person! Congrats! You won the game.");
                                 alertWin.showAndWait();
                                 //return to rootscene
-                            } else{
-                            Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
-                            alertLose.setTitle("You lose!");
-                            alertLose.setContentText("You guessed the wrong person! Unfortunately you did not win this game...");
-                            alertLose.showAndWait();
-                            //return to rootscene
+                            } else {
+                                Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
+                                alertLose.setTitle("You lose!");
+                                alertLose.setContentText("You chose: " + model.getBoard(true).getGuessPerson().getName() +
+                                        " You guessed the wrong person! Unfortunately you did not win this game...");
+                                alertLose.showAndWait();
+                                //return to rootscene
+                            }
                         }
+                    } else {
+                        model.getBoard(true)
+                                .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
+                                        !model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
+                        updateView();
                     }
-                } else{
-                    model.getBoard(true)
-                            .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
-                                    !model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
-                    updateView();
-                }
+                });
             });
         });
-    });
-}
+    }
 
     private void updateView() {
         this.view.getGameGrid().getChildren().forEach(node -> {
@@ -176,6 +194,7 @@ public class GamePresenter {
         });
         this.view.getComboBoxQuestion().setItems(
                 FXCollections.observableArrayList(model.getBoard(true).getQuestions())
+                // ^ fills combobox with questions with list
         );
     }
 }

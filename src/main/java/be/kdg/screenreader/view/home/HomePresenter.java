@@ -68,7 +68,7 @@ public class HomePresenter {
             choosePopup.show(this.gameView.getScene().getWindow());
 
             username = view.getConfirmName().getText();
-            gameView.setUsername(this.username);
+            model.setUsername(this.username);
 
             this.okButton.setOnAction(event -> {
                 choosePopup.hide();

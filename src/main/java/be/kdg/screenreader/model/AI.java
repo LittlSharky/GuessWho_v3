@@ -13,7 +13,6 @@ public class AI {
 
     public AI(Game game) {
         GAME = game;
-        resetCounter();
         this.computerChoosePerson(GAME.boardC.getCOLUMNS(), GAME.boardC.getROWS());
         resetCounter();
     }
@@ -38,18 +37,11 @@ public class AI {
 
     public void play() {
         eliminate(GAME.boardC.getQuestion().getIndex());
-        resetCounter();
-        for (Person person : GAME.boardC.getPEOPLE()) {
-            if (!person.isEliminated()) {
-                counter++;
-            }
-        }
-        makeGuess(this.counter, this.guessPerson);
     }
 
     public String askQuestion() {
         Random random = new Random();
-        randomquestion = random.nextInt(GAME.boardC.getQuestions().size() - 1);
+        this.randomquestion = random.nextInt(GAME.boardC.getQuestions().size() - 1);
         return GAME.boardC.getQuestion().getQuestions().get(randomquestion);
     }
 
@@ -196,13 +188,20 @@ public class AI {
         }
     }
 
-    public void makeGuess(int counter, Person guessComputer) {
-        if (counter == 1) {
-            for (Person person : GAME.boardC.getPEOPLE()) {
-                if (!person.getEliminated()) {
-                    guessComputer = person;
-                    GAME.checkWin(false, guessComputer);
-                }
+    public void checkCounter() {
+        resetCounter();
+        for (Person person : GAME.boardC.getPEOPLE()) {
+            if (!person.isEliminated()) {
+                this.counter++;
+            }
+        }
+    }
+
+    public void makeGuess() {
+        checkCounter();
+        for (Person person : GAME.boardC.getPEOPLE()) {
+            if (!person.getEliminated()) {
+                this.guessPerson = person;
             }
         }
     }
@@ -210,10 +209,18 @@ public class AI {
     public boolean isAnswerHumanQuestion() {
         return answerHumanQuestion;
     }
+    // ^ True or false from human about questions computer (getter for model)
 
     public void setAnswerHumanQuestion(boolean answerHumanQuestion) {
         this.answerHumanQuestion = answerHumanQuestion;
-        // in view an alert when the human must answer the question about their character -> true or false
+        // in presenter an alert when the human must answer the question about their character -> true or false
     }
 
+    public int getCounter() {
+        return counter;
+    }
+
+    public Person getGuessPerson() {
+        return guessPerson;
+    }
 }
