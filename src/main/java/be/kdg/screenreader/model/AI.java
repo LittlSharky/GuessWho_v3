@@ -201,7 +201,7 @@ public class AI {
             for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.getEliminated()) {
                     guessComputer = person;
-                    GAME.boardC.checkWin(guessComputer);
+                    GAME.checkWin(false, guessComputer);
                 }
             }
         }
