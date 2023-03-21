@@ -23,10 +23,10 @@ public class Person {
         this.hairColor = hairColor;
         this.sex = sex;
         this.eyeColor = eyeColor;
-        this.facialHair = facialHair;
-        this.extraFacialHair = extraFacialHair;
-        this.accessories = accessories;
-        this.extraAccessories = extraAccessories;
+        this.facialHair = facialHair; //Always NONE or Moustache
+        this.extraFacialHair = extraFacialHair; //Always NONE or Beard
+        this.accessories = accessories; //Always NONE or Glasses or Earrings
+        this.extraAccessories = extraAccessories; //Always NONE or Hat
         this.eliminated = false;
     }
 
