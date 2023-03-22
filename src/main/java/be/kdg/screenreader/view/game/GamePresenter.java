@@ -107,13 +107,15 @@ public class GamePresenter {
         });
         //BIGGER BOARD
         this.view.getBiggerBoard().setOnAction(actionEvent -> {
-            this.model.reset(true);
             this.view.reset(true);
+            this.model.reset(true);
             this.view.getBiggerBoard().setSelected(true);
             this.view.getConfirmPerson().setDisable(false);
-            this.view.getConfirmQuestion().setDisable(true);
-            this.view.getGuessButton().setDisable(true);
-            this.view.getEndTurn().setDisable(true);
+            this.view.getConfirmQuestion().setDisable(false);
+            this.view.getGuessButton().setDisable(false);
+            this.view.getEndTurn().setDisable(false);
+            this.addEventHandlers();
+            updateView();
         });
 
         //ELIMINATE OR DE-ELIMINATE CHARACTERS OR CHOOSE A CHARACTER
@@ -167,7 +169,8 @@ public class GamePresenter {
         });
         //END TURN
         this.view.getEndTurn().setOnAction(actionEvent -> {
-            if (model.getAi().getCounter() > 1) {
+
+            if (model.getAi().getCounter() > 1 || model.getAi().getCounter() == 0) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Question computer:");
                 alert.setContentText(model.getAi().askQuestion());
@@ -244,7 +247,6 @@ public class GamePresenter {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
-
 
         this.view.getComboBoxQuestion().setItems(
                 FXCollections.observableArrayList(model.getBoard(true).getQuestions())

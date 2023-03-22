@@ -128,7 +128,7 @@ public class GameView extends BorderPane {
         left.setAlignment(Pos.TOP_RIGHT);
 
         //Make a hBox with the guessButton and the confirmQuestion button
-        HBox hBox = new HBox(10,this.name, this.comboBoxQuestion, confirmQuestion, guessButton);
+        HBox hBox = new HBox(10,this.name ,this.comboBoxQuestion, confirmQuestion, guessButton);
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
         //Put the comboBox and the confirmButton with the same padding around them

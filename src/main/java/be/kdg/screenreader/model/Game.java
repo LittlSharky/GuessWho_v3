@@ -56,11 +56,6 @@ public class Game {
         return ai;
     }
 
-
-    public String getUsername() {
-        return username;
-    }
-
     public void setUsername(String username) {
         if (username.isBlank()){
             throw new InvalidInputException("Username can't be blank!");
