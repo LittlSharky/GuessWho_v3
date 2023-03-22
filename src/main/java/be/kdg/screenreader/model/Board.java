@@ -174,6 +174,10 @@ public class Board {
         return PEOPLE;
     }
 
+    public Person[] getNEW_PEOPLE() {
+        return NEW_PEOPLE;
+    }
+
     public Person getChosenPerson() {
         return chosenPerson;
     }

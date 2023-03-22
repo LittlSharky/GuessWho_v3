@@ -115,6 +115,7 @@ public class GamePresenter {
             this.view.getGuessButton().setDisable(false);
             this.view.getEndTurn().setDisable(false);
             this.addEventHandlers();
+            this.view.getScene().getWindow().sizeToScene();
             updateView();
         });
 
@@ -156,56 +157,102 @@ public class GamePresenter {
             //No question selected
             if (questionIndex != -1) {
                 boolean answer = this.model.checkQuestion(true, questionIndex);
-
                 Alert answerAlert = new Alert(Alert.AlertType.INFORMATION);
                 answerAlert.setTitle("Answer");
                 answerAlert.setContentText("The answer to your question is: " + (answer ? "Yes" : "No"));
                 answerAlert.showAndWait();
-
                 this.updateView();
+                this.view.getConfirmQuestion().setDisable(true);
+                this.view.getGuessButton().setDisable(true);
+            } else {
+                Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);
+                alertNotChosen.setTitle("ERROR");
+                alertNotChosen.setContentText("You need to choose a question!");
+                alertNotChosen.showAndWait();
             }
-            this.view.getConfirmQuestion().setDisable(true);
-            this.view.getGuessButton().setDisable(true);
         });
         //END TURN
         this.view.getEndTurn().setOnAction(actionEvent -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Question computer:");
-            if (model.getAi().getCounter() == 0) {
-                alert.setContentText(model.getBoard(false).getQuestion().getQuestions().get(0));
-                //^ will always be the first question that is going to be asked to make him less stupid
-                ButtonType trueButton = new ButtonType("True");
-                ButtonType falseButton = new ButtonType("False");
-                alert.getButtonTypes().setAll(trueButton, falseButton);
-                alert.showAndWait().ifPresent(response -> {
-                    model.getAi().setAnswerHumanQuestion(response == trueButton);
-                    // ^ simplified if that sets trueButton true on setAnswerHuman
-                });
-                model.checkQuestion(false, 0);
-            } else if (model.getAi().getCounter() > 1){
-                alert.setContentText(model.getAi().askQuestion());
-                ButtonType trueButton = new ButtonType("True");
-                ButtonType falseButton = new ButtonType("False");
-                alert.getButtonTypes().setAll(trueButton, falseButton);
-                alert.showAndWait().ifPresent(response -> {
-                    model.getAi().setAnswerHumanQuestion(response == trueButton);
-                    // ^ simplified if that sets trueButton true on setAnswerHuman
-                });
-                model.checkQuestion(false, model.getAi().getRandomquestion());
-                // ^ removes question (doesn't use answer)
-                model.getAi().play();
-            } else {
-                model.getAi().makeGuess();
-                if (model.checkWin(false, model.getAi().getGuessPerson())) {
-                    Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
-                    alertLose.setTitle("The computer wins by guessing " + model.getAi().getGuessPerson().getName() + "!");
-                    alertLose.setContentText(" You lose, you snooze. The computer guessed the right person");
-                    alertLose.showAndWait();
+            if (!model.isBiggerBoard()) {
+                model.getAi().checkCounter();
+                if (model.getAi().getCounter() == 20) {
+                    alert.setContentText(model.getBoard(false).getQuestion().getQuestions().get(0));
+                    //^ will always be the first question that is going to be asked to make him less stupid
+                    ButtonType trueButton = new ButtonType("True");
+                    ButtonType falseButton = new ButtonType("False");
+                    alert.getButtonTypes().setAll(trueButton, falseButton);
+                    alert.showAndWait().ifPresent(response -> {
+                        model.getAi().setAnswerHumanQuestion(response == trueButton);
+                        // ^ simplified if that sets trueButton true on setAnswerHuman
+                    });
+                    model.checkQuestion(false, 0);
+                    model.getAi().play();
+                } else if (model.getAi().getCounter() > 1) {
+                    alert.setContentText(model.getAi().askQuestion());
+                    ButtonType trueButton = new ButtonType("True");
+                    ButtonType falseButton = new ButtonType("False");
+                    alert.getButtonTypes().setAll(trueButton, falseButton);
+                    alert.showAndWait().ifPresent(response -> {
+                        model.getAi().setAnswerHumanQuestion(response == trueButton);
+                        // ^ simplified if that sets trueButton true on setAnswerHuman
+                    });
+                    model.checkQuestion(false, model.getAi().getRandomquestion());
+                    // ^ removes question (doesn't use answer)
+                    model.getAi().play();
                 } else {
-                    Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
-                    alertWin.setTitle("You win! The person guessed: " + model.getAi().getGuessPerson().getName());
-                    alertWin.setContentText(" The computer guessed the wrong person! AI isn't that far yet sorry");
-                    alertWin.showAndWait();
+                    model.getAi().makeGuess();
+                    if (model.checkWin(false, model.getAi().getGuessPerson())) {
+                        Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
+                        alertLose.setTitle("The computer wins by guessing " + model.getAi().getGuessPerson().getName() + "!");
+                        alertLose.setContentText(" You lose, you snooze. The computer guessed the right person");
+                        alertLose.showAndWait();
+                    } else {
+                        Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
+                        alertWin.setTitle("You win! The person guessed: " + model.getAi().getGuessPerson().getName());
+                        alertWin.setContentText(" The computer guessed the wrong person! AI isn't that far yet sorry");
+                        alertWin.showAndWait();
+                    }
+                }
+            } else {
+                if (model.getAi().getCounter() == 25) {
+                    alert.setContentText(model.getBoard(false).getQuestion().getQuestions().get(0));
+                    //^ will always be the first question that is going to be asked to make him less stupid
+                    ButtonType trueButton = new ButtonType("True");
+                    ButtonType falseButton = new ButtonType("False");
+                    alert.getButtonTypes().setAll(trueButton, falseButton);
+                    alert.showAndWait().ifPresent(response -> {
+                        model.getAi().setAnswerHumanQuestion(response == trueButton);
+                        // ^ simplified if that sets trueButton true on setAnswerHuman
+                    });
+                    model.checkQuestion(false, 0);
+                    model.getAi().play();
+                } else if (model.getAi().getCounter() > 1) {
+                    alert.setContentText(model.getAi().askQuestion());
+                    ButtonType trueButton = new ButtonType("True");
+                    ButtonType falseButton = new ButtonType("False");
+                    alert.getButtonTypes().setAll(trueButton, falseButton);
+                    alert.showAndWait().ifPresent(response -> {
+                        model.getAi().setAnswerHumanQuestion(response == trueButton);
+                        // ^ simplified if that sets trueButton true on setAnswerHuman
+                    });
+                    model.checkQuestion(false, model.getAi().getRandomquestion());
+                    // ^ removes question (doesn't use answer)
+                    model.getAi().play();
+                } else {
+                    model.getAi().makeGuess();
+                    if (model.checkWin(false, model.getAi().getGuessPerson())) {
+                        Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
+                        alertLose.setTitle("The computer wins by guessing " + model.getAi().getGuessPerson().getName() + "!");
+                        alertLose.setContentText(" You lose, you snooze. The computer guessed the right person");
+                        alertLose.showAndWait();
+                    } else {
+                        Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
+                        alertWin.setTitle("You win! The person guessed: " + model.getAi().getGuessPerson().getName());
+                        alertWin.setContentText(" The computer guessed the wrong person! AI isn't that far yet sorry");
+                        alertWin.showAndWait();
+                    }
                 }
             }
             this.view.getConfirmQuestion().setDisable(false);

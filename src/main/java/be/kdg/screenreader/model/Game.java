@@ -63,5 +63,9 @@ public class Game {
             this.username = username;
         }
     }
+
+    public boolean isBiggerBoard() {
+        return isBiggerBoard;
+    }
 }
 

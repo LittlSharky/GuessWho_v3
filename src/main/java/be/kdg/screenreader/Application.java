@@ -31,8 +31,8 @@ public class Application extends javafx.application.Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Guess Who?");
-        stage.setHeight(700);
-        stage.setWidth(800);
+        stage.setHeight(1000);
+        stage.setWidth(1200);
         stage.show();
     }
 
