@@ -21,6 +21,7 @@ public class Game {
             boardC = new Board(true);
             ai = new AI(this);
         }
+
     }
 
     public Board getBoard(boolean human) {
@@ -61,7 +62,11 @@ public class Game {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        if (username.isBlank()){
+            throw new InvalidInputException("Username can't be blank!");
+        } else {
+            this.username = username;
+        }
     }
 }
 

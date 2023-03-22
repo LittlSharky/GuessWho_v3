@@ -1,6 +1,7 @@
 package be.kdg.screenreader.view.home;
 
 import be.kdg.screenreader.model.Game;
+import be.kdg.screenreader.model.InvalidInputException;
 import be.kdg.screenreader.view.game.GamePresenter;
 import be.kdg.screenreader.view.game.GameView;
 import javafx.geometry.Insets;
@@ -40,24 +41,30 @@ public class HomePresenter {
         // als je meerdere keren deze eventhandler nodig hebt dan moet je hiervoor een aparte klasse aanmaken
 
         this.view.getButton().setOnAction(actionEvent -> {
-            this.username = view.getConfirmName().getText();
-            gameView = new GameView(this.username);
-            model = new Game();
+            try {
+                this.username = view.getConfirmName().getText();
+                gameView = new GameView(this.username);
+                model = new Game();
+                model.setUsername(this.username);
                 new GamePresenter(gameView, model);
-            model.setUsername(this.username);
+                this.view.getScene().setRoot(gameView);
+                //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
+                gameView.getScene().getWindow().sizeToScene();
 
-            this.view.getScene().setRoot(gameView);
-            //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
-            gameView.getScene().getWindow().sizeToScene();
-
-            dialogChooseCharacter = new Dialog<>();
-            dialogChooseCharacter.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
-            dialogChooseCharacter.setTitle("TO DO!");
-            dialogChooseCharacter.setHeaderText("Choose your character!");
-            dialogChooseCharacter.getDialogPane();
-            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-            dialogChooseCharacter.getDialogPane().getButtonTypes().add(okButton);
-            dialogChooseCharacter.showAndWait();
+                dialogChooseCharacter = new Dialog<>();
+                dialogChooseCharacter.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
+                dialogChooseCharacter.setTitle("TO DO!");
+                dialogChooseCharacter.setHeaderText("Choose your character!");
+                dialogChooseCharacter.getDialogPane();
+                ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+                dialogChooseCharacter.getDialogPane().getButtonTypes().add(okButton);
+                dialogChooseCharacter.showAndWait();
+            } catch (InvalidInputException e) {
+                Alert alertBlank = new Alert(Alert.AlertType.ERROR);
+                alertBlank.setTitle("Blank username!");
+                alertBlank.setContentText(e.getMessage());
+                alertBlank.showAndWait();
+            }
         });
     }
 
