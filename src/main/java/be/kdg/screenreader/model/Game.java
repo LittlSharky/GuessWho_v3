@@ -4,16 +4,23 @@ public class Game {
     Board boardH;
     Board boardC;
     AI ai;
+    private boolean isBiggerBoard = false;
     private String username;
 
     public Game() {
-        reset();
+        reset(isBiggerBoard);
     }
 
-    public void reset() {
-        boardH = new Board();
-        boardC = new Board();
-        ai = new AI(this);
+    public void reset(boolean isBiggerBoard){
+        if(!isBiggerBoard){
+            boardH = new Board();
+            boardC = new Board();
+            ai = new AI(this);
+        }else{
+            boardH = new Board(true);
+            boardC = new Board(true);
+            ai = new AI(this);
+        }
     }
 
     public Board getBoard(boolean human) {
@@ -47,6 +54,7 @@ public class Game {
     public AI getAi() {
         return ai;
     }
+
 
     public String getUsername() {
         return username;

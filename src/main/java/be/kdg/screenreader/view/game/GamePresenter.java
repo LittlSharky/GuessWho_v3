@@ -2,6 +2,7 @@ package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Game;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 
 public class GamePresenter {
@@ -24,7 +25,7 @@ public class GamePresenter {
     private void addEventHandlers() {
         //NEW GAME
         this.view.getNewGame().setOnAction(actionEvent -> {
-            this.model.reset();
+            this.model.reset(false);
             this.view.getConfirmPerson().setDisable(false);
             this.view.getConfirmQuestion().setDisable(true);
             this.view.getGuessButton().setDisable(true);
@@ -95,15 +96,26 @@ public class GamePresenter {
             this.dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
             this.dialog.setTitle("About");
             this.dialog.setHeaderText("INFO");
-            this.dialog.setContentText("This game is made by:\n"+
-                    "Emma Bogaerts & Sharon Chung\n"+
-                    "For the course 'JavaFX' at Karel de Grote Hogeschool for an oral exam presentation \n"+
+            this.dialog.setContentText("This game is made by:\n" +
+                    "Emma Bogaerts & Sharon Chung\n" +
+                    "For the course 'JavaFX' at Karel de Grote Hogeschool for an oral exam presentation \n" +
                     "Made in the year 2023.");
             this.dialog.getDialogPane();
             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
             this.dialog.getDialogPane().getButtonTypes().add(okButton);
             this.dialog.showAndWait();
         });
+        //BIGGER BOARD
+        this.view.getBiggerBoard().setOnAction(actionEvent -> {
+            this.model.reset(true);
+            this.view.reset(true);
+            this.view.getBiggerBoard().setSelected(true);
+            this.view.getConfirmPerson().setDisable(false);
+            this.view.getConfirmQuestion().setDisable(true);
+            this.view.getGuessButton().setDisable(true);
+            this.view.getEndTurn().setDisable(true);
+        });
+
         //ELIMINATE OR DE-ELIMINATE CHARACTERS OR CHOOSE A CHARACTER
         this.view.getGameGrid().getChildren().forEach(node -> {
             node.setOnMouseClicked(mouseEvent -> {
@@ -227,14 +239,18 @@ public class GamePresenter {
     }
 
     private void updateView() {
+
         this.view.getGameGrid().getChildren().forEach(node -> {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
+
+
         this.view.getComboBoxQuestion().setItems(
                 FXCollections.observableArrayList(model.getBoard(true).getQuestions())
                 // ^ fills combobox with questions with list
         );
+
     }
 }
 

@@ -53,7 +53,6 @@ public class GamePersonView extends Canvas {
     }
 
 
-
     public Image getPhoto() {
         return photo.getImage();
     }

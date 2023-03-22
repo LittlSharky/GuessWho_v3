@@ -1,11 +1,5 @@
 package be.kdg.screenreader.view.game;
 
-import be.kdg.screenreader.model.Game;
-import be.kdg.screenreader.model.Question;
-import be.kdg.screenreader.view.home.HomePresenter;
-import be.kdg.screenreader.view.home.HomeView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -13,10 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Popup;
 
 import java.util.ArrayList;
 
@@ -29,29 +19,39 @@ public class GameView extends BorderPane {
     private MenuItem howToPlay;
     private MenuItem rules;
     private MenuItem info;
+    private CheckMenuItem biggerBoard;
     private Button confirmQuestion;
     private ToggleButton guessButton;
     private Label name;
     private Button endTurn;
     private GridPane gameGrid;
-    private final int ROWS = 4;
-    private final int COLUMNS = 5;
+    private int rows = 4;
+    private int columns = 5;
+    private int index = 0;
 
     private ArrayList<String> persons;
-
+    private ArrayList<String> biggerPersons;
     private Button confirmPerson;
     private ImageView confirmedPerson;
     private ComboBox<String> comboBoxQuestion;
+    private boolean isBiggerBoard = false;
 
     public GameView() {
-        this.persons = new ArrayList<>();
-        this.fillPersons();
+        reset(isBiggerBoard);
+    }
 
-
+    public void reset(boolean isBiggerBoard) {
+        this.isBiggerBoard = isBiggerBoard;
+        if(!isBiggerBoard){
+            this.persons = new ArrayList<>();
+            this.fillPersons();
+        }else {
+            this.biggerPersons = new ArrayList<>();
+            this.fillMorePersons();
+        }
         initializeNodes();
         layoutNodes();
     }
-
 
     private void initializeNodes() {
         //Initialize menuitems
@@ -62,6 +62,7 @@ public class GameView extends BorderPane {
         this.newGame = new MenuItem("New game");
         this.howToPlay = new MenuItem("How to play");
         this.rules = new MenuItem("Rules");
+        this.biggerBoard = new CheckMenuItem("Bigger board");
 
         //Initialize buttons & labels
         this.confirmQuestion = new Button("Confirm question");
@@ -78,25 +79,39 @@ public class GameView extends BorderPane {
     }
 
     private void layoutNodes() {
-        Menu gameMenu = new Menu("Game", null,  this.newGame, this.loadGame, this.saveGame,this.exit);
+        Menu gameMenu = new Menu("Game", null, this.newGame, this.loadGame, this.saveGame, this.exit);
         Menu helpMenu = new Menu("Help", null, this.howToPlay, this.rules);
-        Menu aboutMenu = new Menu("About",null, this.info);
-        MenuBar menuBar = new MenuBar(gameMenu, helpMenu,aboutMenu);
+        Menu aboutMenu = new Menu("About", null, this.info);
+        Menu settingsMenu = new Menu("Settings", null, this.biggerBoard);
+        MenuBar menuBar = new MenuBar(gameMenu, helpMenu, aboutMenu, settingsMenu);
 
         gameGrid = new GridPane();
         gameGrid.setPadding(new Insets(10));
         gameGrid.setHgap(10);
         gameGrid.setVgap(10);
 
-        int index = 0;
-        for (int i = 0; i < COLUMNS; i++) {
-            for (int j = 0; j < ROWS; j++) {
-                GamePersonView person = new GamePersonView(this.persons.get(index), i, j);
-                // TODO this.persons.get(index) vragen aan Maarten
-                gameGrid.add(person, i, j);
-                index++;
+        if(!isBiggerBoard){
+            for (int i = 0; i < columns; i++) {
+                for (int j = 0; j < rows; j++) {
+                    GamePersonView person = new GamePersonView(this.persons.get(index), i, j);
+                    // TODO this.persons.get(index) vragen aan Maarten
+                    gameGrid.add(person, i, j);
+                    index++;
+                }
+            }
+        }else{
+            index = 0;
+            rows = 5;
+            for (int i = 0; i < columns; i++) {
+                for (int j = 0; j < rows; j++) {
+                    GamePersonView person = new GamePersonView(this.biggerPersons.get(index), i, j);
+                    gameGrid.add(person, i, j);
+                    index++;
+                }
             }
         }
+
+
 
 
         //Default selected person
@@ -167,6 +182,9 @@ public class GameView extends BorderPane {
         return confirmQuestion;
     }
 
+    public CheckMenuItem getBiggerBoard() {
+        return biggerBoard;
+    }
 
     private void fillPersons() {
         persons.add("Amy.png");
@@ -189,6 +207,15 @@ public class GameView extends BorderPane {
         persons.add("Peter.png");
         persons.add("Simon.png");
         persons.add("Thomas.png");
+    }
+
+    private void fillMorePersons() {
+        biggerPersons.addAll(persons);
+        biggerPersons.add("Sarah.png");
+        biggerPersons.add("Emma.png");
+        biggerPersons.add("Daniel.png");
+        biggerPersons.add("Richard.png");
+        biggerPersons.add("Andrew.png");
     }
 
     public GridPane getGameGrid() {

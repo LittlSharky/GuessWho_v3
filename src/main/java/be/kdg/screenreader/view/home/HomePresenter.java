@@ -42,7 +42,7 @@ public class HomePresenter {
         this.view.getButton().setOnAction(actionEvent -> {
             gameView = new GameView();
             model = new Game();
-            new GamePresenter(gameView, model);
+                new GamePresenter(gameView, model);
 
             this.view.getScene().setRoot(gameView);
             //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
