@@ -242,5 +242,8 @@ public class GameView extends BorderPane {
         return info;
     }
 
+    public String getUsername() {
+        return username;
+    }
 }
 

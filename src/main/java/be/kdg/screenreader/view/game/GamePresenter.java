@@ -1,8 +1,11 @@
 package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Game;
+import be.kdg.screenreader.view.home.HomePresenter;
+import be.kdg.screenreader.view.home.HomeView;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 public class GamePresenter {
@@ -201,11 +204,13 @@ public class GamePresenter {
                     alertLose.setTitle("The computer wins by guessing " + model.getAi().getGuessPerson().getName() + "!");
                     alertLose.setContentText(" You lose, you snooze. The computer guessed the right person");
                     alertLose.showAndWait();
+                    returnToRootScene();
                 } else {
                     Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
                     alertWin.setTitle("You win! The person guessed: " + model.getAi().getGuessPerson().getName());
                     alertWin.setContentText(" The computer guessed the wrong person! AI isn't that far yet sorry");
                     alertWin.showAndWait();
+                    returnToRootScene();
                 }
             }
             this.view.getConfirmQuestion().setDisable(false);
@@ -230,14 +235,14 @@ public class GamePresenter {
                                 alertWin.setContentText("You chose: " + model.getBoard(true).getGuessPerson().getName() +
                                         " You guessed the right person! Congrats! You won the game.");
                                 alertWin.showAndWait();
-                                //return to rootscene
+                                returnToRootScene();
                             } else {
                                 Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
                                 alertLose.setTitle("You lose!");
                                 alertLose.setContentText("You chose: " + model.getBoard(true).getGuessPerson().getName() +
                                         " You guessed the wrong person! Unfortunately you did not win this game...");
                                 alertLose.showAndWait();
-                                //return to rootscene
+                                returnToRootScene();
                             }
                         }
                     } else {
@@ -245,10 +250,38 @@ public class GamePresenter {
                                 .setEliminated(person.getCOORD_X(), person.getCOORD_Y(),
                                         !model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y()));
                         updateView();
+                        // TODO extra alert na winen/verliezen die new game of home stuurt
+                        // TODO geen lege question
                     }
                 });
             });
         });
+    }
+    public void returnToRootScene(){
+        Alert alertreturn = new Alert(Alert.AlertType.INFORMATION);
+        alertreturn.setTitle("Return?");
+        alertreturn.setContentText("Do you want to return to homescreen or play a new game?");
+        ButtonType homeScreen = new ButtonType("Homescreen");
+        ButtonType newGame = new ButtonType("New Game");
+        alertreturn.getButtonTypes().remove(ButtonType.OK);
+        alertreturn.getButtonTypes().addAll(homeScreen,newGame);
+        alertreturn.showAndWait().ifPresent(response -> {
+            if (response == homeScreen){
+                HomeView homeView = new HomeView();
+                new HomePresenter(homeView);
+                this.view.getScene().setRoot(homeView);
+                homeView.getScene().getWindow().sizeToScene();
+            }
+            else {
+                GameView gameView = new GameView(this.model.getUsername());
+                Game model = new Game();
+                model.setUsername(gameView.getUsername());
+                new GamePresenter(gameView,model);
+                this.view.getScene().setRoot(gameView);
+                gameView.getScene().getWindow().sizeToScene();
+            }
+        });
+
     }
 
     private void updateView() {
