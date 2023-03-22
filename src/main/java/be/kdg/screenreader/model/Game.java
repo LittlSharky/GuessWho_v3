@@ -64,8 +64,8 @@ public class Game {
         }
     }
 
-    public boolean isBiggerBoard() {
-        return isBiggerBoard;
+    public String getUsername() {
+        return username;
     }
 }
 
