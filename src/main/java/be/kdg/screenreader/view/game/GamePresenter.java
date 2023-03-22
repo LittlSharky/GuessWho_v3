@@ -169,10 +169,20 @@ public class GamePresenter {
         });
         //END TURN
         this.view.getEndTurn().setOnAction(actionEvent -> {
-
-            if (model.getAi().getCounter() > 1 || model.getAi().getCounter() == 0) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Question computer:");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Question computer:");
+            if (model.getAi().getCounter() == 0) {
+                alert.setContentText(model.getBoard(false).getQuestion().getQuestions().get(0));
+                //^ will always be the first question that is going to be asked to make him less stupid
+                ButtonType trueButton = new ButtonType("True");
+                ButtonType falseButton = new ButtonType("False");
+                alert.getButtonTypes().setAll(trueButton, falseButton);
+                alert.showAndWait().ifPresent(response -> {
+                    model.getAi().setAnswerHumanQuestion(response == trueButton);
+                    // ^ simplified if that sets trueButton true on setAnswerHuman
+                });
+                model.checkQuestion(false, 0);
+            } else if (model.getAi().getCounter() > 1){
                 alert.setContentText(model.getAi().askQuestion());
                 ButtonType trueButton = new ButtonType("True");
                 ButtonType falseButton = new ButtonType("False");
