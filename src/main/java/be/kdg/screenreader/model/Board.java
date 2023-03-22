@@ -99,10 +99,6 @@ public class Board {
         return guessPerson.getName().equals(this.chosenPerson.getName());
     }
 
-    public boolean isSelected(boolean isSelected) {
-        return isSelected;
-    }
-
     public int getROWS() {
         return rows;
     }

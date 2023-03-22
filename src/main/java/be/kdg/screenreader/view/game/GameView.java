@@ -37,7 +37,7 @@ public class GameView extends BorderPane {
     private boolean isBiggerBoard = false;
     private String username;
 
-    public GameView(String username) {
+    public GameView(String username, boolean isBiggerBoard) {
         this.username = username;
         reset(isBiggerBoard);
     }
@@ -48,6 +48,8 @@ public class GameView extends BorderPane {
             this.persons = new ArrayList<>();
             this.fillPersons();
         }else {
+            this.persons = new ArrayList<>();
+            this.fillPersons();
             this.biggerPersons = new ArrayList<>();
             this.fillMorePersons();
         }

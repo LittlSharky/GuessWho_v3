@@ -43,8 +43,8 @@ public class HomePresenter {
         this.view.getButton().setOnAction(actionEvent -> {
             try {
                 this.username = view.getConfirmName().getText();
-                gameView = new GameView(this.username);
-                model = new Game();
+                gameView = new GameView(this.username,false);
+                model = new Game(false);
                 model.setUsername(this.username);
                 new GamePresenter(gameView, model);
                 this.view.getScene().setRoot(gameView);

@@ -4,15 +4,17 @@ public class Game {
     Board boardH;
     Board boardC;
     AI ai;
-    private boolean isBiggerBoard = false;
     private String username;
+    private boolean isBiggerBoard;
 
-    public Game() {
-        reset(isBiggerBoard);
+    public Game(boolean isBiggerBoard) {
+        this.isBiggerBoard = isBiggerBoard;
+        reset(this.isBiggerBoard);
     }
 
     public void reset(boolean isBiggerBoard){
-        if(!isBiggerBoard){
+        this.isBiggerBoard = isBiggerBoard;
+        if(!this.isBiggerBoard){
             boardH = new Board();
             boardC = new Board();
             ai = new AI(this);
@@ -63,6 +65,11 @@ public class Game {
             this.username = username;
         }
     }
+
+    public boolean isBiggerBoard() {
+        return isBiggerBoard;
+    }
+
 
     public String getUsername() {
         return username;

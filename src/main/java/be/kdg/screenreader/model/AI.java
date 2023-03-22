@@ -35,8 +35,12 @@ public class AI {
         return randomquestion;
     }
 
-    public void play() {
-        eliminate(GAME.boardC.getQuestion().getIndex());
+    public void play(boolean isBiggerBoard) {
+        if(isBiggerBoard){
+            eliminateBiggerBoard(GAME.boardC.getQuestion().getIndex());
+        }else{
+            eliminateNormalBoard(GAME.boardC.getQuestion().getIndex());
+        }
     }
 
     public String askQuestion() {
@@ -44,304 +48,301 @@ public class AI {
         this.randomquestion = random.nextInt(GAME.boardC.getQuestions().size() - 1);
         return GAME.boardC.getQuestion().getQuestions().get(randomquestion);
     }
-
-    public void eliminate(int index) {
-        if(!GAME.isBiggerBoard()){
-            for (Person person : GAME.boardC.getPEOPLE()) {
-                switch (index) {
-                    case 0 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (person.getSex().equals(Sex.MALE)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getSex().equals(Sex.FEMALE)) {
-                                person.setEliminated(true);
-                            }
+    public void eliminateNormalBoard(int index){
+        for (Person person : GAME.boardC.getPEOPLE()) {
+            switch (index) {
+                case 0 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (person.getSex().equals(Sex.MALE)) {
+                            person.setEliminated(true);
                         }
-                    }
-                    case 1 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getAccessories().equals(Accessories.GLASSES)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getAccessories().equals(Accessories.GLASSES)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 2 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getEyeColor().equals(EyeColor.BLUE)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getEyeColor().equals(EyeColor.BLUE)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 3 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getEyeColor().equals(EyeColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getEyeColor().equals(EyeColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 4 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getEyeColor().equals(EyeColor.GREY)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getEyeColor().equals(EyeColor.GREY)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 5 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getExtraFacialHair().equals(FacialHair.BEARD)
-                                    || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getExtraFacialHair().equals(FacialHair.BEARD)
-                                    || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 6 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getFacialHair().equals(FacialHair.MOUSTACHE)
-                                    || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getFacialHair().equals(FacialHair.MOUSTACHE)
-                                    || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 7 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BALD)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BALD)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 8 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BLOND)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BLOND)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 9 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BLACK)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BLACK)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 10 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
-                        }
-                    }
-                    case 11 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getExtraAccessories().equals(Accessories.HAT)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getExtraAccessories().equals(Accessories.HAT)) {
-                                person.setEliminated(true);
-                            }
+                    } else {
+                        if (person.getSex().equals(Sex.FEMALE)) {
+                            person.setEliminated(true);
                         }
                     }
                 }
-            }
-        }else{
-            for (Person person : GAME.boardC.getNEW_PEOPLE()) {
-                switch (index) {
-                    case 0 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (person.getSex().equals(Sex.MALE)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getSex().equals(Sex.FEMALE)) {
-                                person.setEliminated(true);
-                            }
+                case 1 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getAccessories().equals(Accessories.GLASSES)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getAccessories().equals(Accessories.GLASSES)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 1 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getAccessories().equals(Accessories.GLASSES)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getAccessories().equals(Accessories.GLASSES)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 2 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getEyeColor().equals(EyeColor.BLUE)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getEyeColor().equals(EyeColor.BLUE)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 2 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getEyeColor().equals(EyeColor.BLUE)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getEyeColor().equals(EyeColor.BLUE)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 3 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getEyeColor().equals(EyeColor.BROWN)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getEyeColor().equals(EyeColor.BROWN)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 3 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getEyeColor().equals(EyeColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getEyeColor().equals(EyeColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 4 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getEyeColor().equals(EyeColor.GREY)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getEyeColor().equals(EyeColor.GREY)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 4 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getEyeColor().equals(EyeColor.GREY)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getEyeColor().equals(EyeColor.GREY)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 5 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getExtraFacialHair().equals(FacialHair.BEARD)
+                                || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getExtraFacialHair().equals(FacialHair.BEARD)
+                                || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 5 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getExtraFacialHair().equals(FacialHair.BEARD)
-                                    || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getExtraFacialHair().equals(FacialHair.BEARD)
-                                    || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 6 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getFacialHair().equals(FacialHair.MOUSTACHE)
+                                || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getFacialHair().equals(FacialHair.MOUSTACHE)
+                                || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 6 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getFacialHair().equals(FacialHair.MOUSTACHE)
-                                    || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getFacialHair().equals(FacialHair.MOUSTACHE)
-                                    || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 7 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BALD)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BALD)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 7 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BALD)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BALD)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 8 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BLOND)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BLOND)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 8 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BLOND)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BLOND)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 9 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BLACK)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BLACK)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 9 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BLACK)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BLACK)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 10 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BROWN)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BROWN)) {
+                            person.setEliminated(true);
                         }
                     }
-                    case 10 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getHairColor().equals(HairColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getHairColor().equals(HairColor.BROWN)) {
-                                person.setEliminated(true);
-                            }
+                }
+                case 11 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getExtraAccessories().equals(Accessories.HAT)) {
+                            person.setEliminated(true);
                         }
-                    }
-                    case 11 -> {
-                        if (isAnswerHumanQuestion()) {
-                            if (!person.getExtraAccessories().equals(Accessories.HAT)) {
-                                person.setEliminated(true);
-                            }
-                        } else {
-                            if (person.getExtraAccessories().equals(Accessories.HAT)) {
-                                person.setEliminated(true);
-                            }
+                    } else {
+                        if (person.getExtraAccessories().equals(Accessories.HAT)) {
+                            person.setEliminated(true);
                         }
                     }
                 }
             }
         }
-
+    }
+    public void eliminateBiggerBoard(int index){
+        for (Person person : GAME.boardC.getNEW_PEOPLE()) {
+            switch (index) {
+                case 0 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (person.getSex().equals(Sex.MALE)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getSex().equals(Sex.FEMALE)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 1 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getAccessories().equals(Accessories.GLASSES)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getAccessories().equals(Accessories.GLASSES)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 2 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getEyeColor().equals(EyeColor.BLUE)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getEyeColor().equals(EyeColor.BLUE)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 3 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getEyeColor().equals(EyeColor.BROWN)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getEyeColor().equals(EyeColor.BROWN)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 4 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getEyeColor().equals(EyeColor.GREY)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getEyeColor().equals(EyeColor.GREY)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 5 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getExtraFacialHair().equals(FacialHair.BEARD)
+                                || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getExtraFacialHair().equals(FacialHair.BEARD)
+                                || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 6 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getFacialHair().equals(FacialHair.MOUSTACHE)
+                                || (!person.getFacialHair().equals(FacialHair.MOUSTACHE) && !person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getFacialHair().equals(FacialHair.MOUSTACHE)
+                                || (person.getFacialHair().equals(FacialHair.MOUSTACHE) && person.getExtraFacialHair().equals(FacialHair.BEARD))) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 7 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BALD)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BALD)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 8 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BLOND)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BLOND)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 9 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BLACK)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BLACK)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 10 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getHairColor().equals(HairColor.BROWN)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getHairColor().equals(HairColor.BROWN)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+                case 11 -> {
+                    if (isAnswerHumanQuestion()) {
+                        if (!person.getExtraAccessories().equals(Accessories.HAT)) {
+                            person.setEliminated(true);
+                        }
+                    } else {
+                        if (person.getExtraAccessories().equals(Accessories.HAT)) {
+                            person.setEliminated(true);
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    public void checkCounter() {
+    public void checkCounter(boolean isBiggerBoard) {
         resetCounter();
-        if (!GAME.isBiggerBoard()) {
-            for (Person person : GAME.boardC.getPEOPLE()) {
+        if (isBiggerBoard) {
+            for (Person person : GAME.boardC.getNEW_PEOPLE()) {
                 if (!person.isEliminated()) {
                     this.counter++;
                 }
             }
         } else {
-            for (Person person : GAME.boardC.getNEW_PEOPLE()) {
+            for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.isEliminated()) {
                     this.counter++;
                 }
@@ -349,8 +350,9 @@ public class AI {
         }
 
     }
+
     public void makeGuess() {
-        checkCounter();
+        checkCounter(GAME.isBiggerBoard());
         if (!GAME.isBiggerBoard()) {
             for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.getEliminated()) {

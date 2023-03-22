@@ -4,8 +4,6 @@ import be.kdg.screenreader.model.Game;
 import be.kdg.screenreader.view.home.HomePresenter;
 import be.kdg.screenreader.view.home.HomeView;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 public class GamePresenter {
@@ -28,12 +26,23 @@ public class GamePresenter {
     private void addEventHandlers() {
         //NEW GAME
         this.view.getNewGame().setOnAction(actionEvent -> {
-            this.model.reset(false);
-            this.view.getConfirmPerson().setDisable(false);
-            this.view.getConfirmQuestion().setDisable(true);
-            this.view.getGuessButton().setDisable(true);
-            this.view.getEndTurn().setDisable(true);
-            this.updateView();
+            boolean isBiggerBoard = this.model.isBiggerBoard();
+            if (isBiggerBoard) {
+                GameView newGameView = new GameView(this.model.getUsername(), true);
+                Game newGame = new Game(true);
+                newGame.setUsername(newGameView.getUsername());
+                new GamePresenter(newGameView, newGame);
+                this.view.getScene().setRoot(newGameView);
+                newGameView.getScene().getWindow().sizeToScene();
+            } else {
+                GameView newGameView = new GameView(this.model.getUsername(), false);
+                Game newGame = new Game(false);
+                newGame.setUsername(newGameView.getUsername());
+                new GamePresenter(newGameView, newGame);
+                this.view.getScene().setRoot(newGameView);
+                newGameView.getScene().getWindow().sizeToScene();
+            }
+
         });
         //LOAD GAME
         this.view.getLoadGame().setOnAction(actionEvent -> {
@@ -110,15 +119,12 @@ public class GamePresenter {
         });
         //BIGGER BOARD
         this.view.getBiggerBoard().setOnAction(actionEvent -> {
-            this.view.reset(true);
-            this.model.reset(true);
-            this.view.getBiggerBoard().setSelected(true);
-            this.view.getConfirmPerson().setDisable(false);
-            this.view.getConfirmQuestion().setDisable(false);
-            this.view.getGuessButton().setDisable(false);
-            this.view.getEndTurn().setDisable(false);
-            this.addEventHandlers();
-            updateView();
+            GameView biggerGameView = new GameView(this.model.getUsername(), true);
+            Game biggerGame = new Game(true);
+            biggerGame.setUsername(biggerGameView.getUsername());
+            new GamePresenter(biggerGameView, biggerGame);
+            this.view.getScene().setRoot(biggerGameView);
+            biggerGameView.getScene().getWindow().sizeToScene();
         });
 
         //ELIMINATE OR DE-ELIMINATE CHARACTERS OR CHOOSE A CHARACTER
@@ -159,62 +165,41 @@ public class GamePresenter {
             //No question selected
             if (questionIndex != -1) {
                 boolean answer = this.model.checkQuestion(true, questionIndex);
-
                 Alert answerAlert = new Alert(Alert.AlertType.INFORMATION);
                 answerAlert.setTitle("Answer");
                 answerAlert.setContentText("The answer to your question is: " + (answer ? "Yes" : "No"));
                 answerAlert.showAndWait();
-
                 this.updateView();
+                this.view.getConfirmQuestion().setDisable(true);
+                this.view.getGuessButton().setDisable(true);
+            } else {
+                Alert alertNotChosen = new Alert(Alert.AlertType.ERROR);
+                alertNotChosen.setTitle("ERROR");
+                alertNotChosen.setContentText("You need to choose a question!");
+                alertNotChosen.showAndWait();
             }
-            this.view.getConfirmQuestion().setDisable(true);
-            this.view.getGuessButton().setDisable(true);
         });
         //END TURN
         this.view.getEndTurn().setOnAction(actionEvent -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Question computer:");
-            if (model.getAi().getCounter() == 0) {
-                alert.setContentText(model.getBoard(false).getQuestion().getQuestions().get(0));
-                //^ will always be the first question that is going to be asked to make him less stupid
-                ButtonType trueButton = new ButtonType("True");
-                ButtonType falseButton = new ButtonType("False");
-                alert.getButtonTypes().setAll(trueButton, falseButton);
-                alert.showAndWait().ifPresent(response -> {
-                    model.getAi().setAnswerHumanQuestion(response == trueButton);
-                    // ^ simplified if that sets trueButton true on setAnswerHuman
-                });
-                model.checkQuestion(false, 0);
-            } else if (model.getAi().getCounter() > 1){
-                alert.setContentText(model.getAi().askQuestion());
-                ButtonType trueButton = new ButtonType("True");
-                ButtonType falseButton = new ButtonType("False");
-                alert.getButtonTypes().setAll(trueButton, falseButton);
-                alert.showAndWait().ifPresent(response -> {
-                    model.getAi().setAnswerHumanQuestion(response == trueButton);
-                    // ^ simplified if that sets trueButton true on setAnswerHuman
-                });
-                model.checkQuestion(false, model.getAi().getRandomquestion());
-                // ^ removes question (doesn't use answer)
-                model.getAi().play();
-            } else {
-                model.getAi().makeGuess();
-                if (model.checkWin(false, model.getAi().getGuessPerson())) {
-                    Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
-                    alertLose.setTitle("The computer wins by guessing " + model.getAi().getGuessPerson().getName() + "!");
-                    alertLose.setContentText(" You lose, you snooze. The computer guessed the right person");
-                    alertLose.showAndWait();
-                    returnToRootScene();
+            this.model.getAi().checkCounter(this.model.isBiggerBoard());
+            if (!this.model.isBiggerBoard()) {
+                if (this.model.getAi().getCounter() == 20) {
+                    standardQuestion();
                 } else {
-                    Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
-                    alertWin.setTitle("You win! The person guessed: " + model.getAi().getGuessPerson().getName());
-                    alertWin.setContentText(" The computer guessed the wrong person! AI isn't that far yet sorry");
-                    alertWin.showAndWait();
-                    returnToRootScene();
+                    alertQuestion();
                 }
+                this.view.getConfirmQuestion().setDisable(false);
+                this.view.getGuessButton().setDisable(false);
+            } else {
+                if (this.model.getAi().getCounter() == 25) {
+                    standardQuestion();
+                } else {
+                    alertQuestion();
+                }
+                this.view.getConfirmQuestion().setDisable(false);
+                this.view.getGuessButton().setDisable(false);
             }
-            this.view.getConfirmQuestion().setDisable(false);
-            this.view.getGuessButton().setDisable(false);
+
         });
         //GUESS BUTTON
         this.view.getGuessButton().setOnAction(actionEvent -> {
@@ -257,26 +242,26 @@ public class GamePresenter {
             });
         });
     }
-    public void returnToRootScene(){
+
+    public void returnToRootScene() {
         Alert alertreturn = new Alert(Alert.AlertType.INFORMATION);
         alertreturn.setTitle("Return?");
         alertreturn.setContentText("Do you want to return to homescreen or play a new game?");
         ButtonType homeScreen = new ButtonType("Homescreen");
         ButtonType newGame = new ButtonType("New Game");
         alertreturn.getButtonTypes().remove(ButtonType.OK);
-        alertreturn.getButtonTypes().addAll(homeScreen,newGame);
+        alertreturn.getButtonTypes().addAll(homeScreen, newGame);
         alertreturn.showAndWait().ifPresent(response -> {
-            if (response == homeScreen){
+            if (response == homeScreen) {
                 HomeView homeView = new HomeView();
                 new HomePresenter(homeView);
                 this.view.getScene().setRoot(homeView);
                 homeView.getScene().getWindow().sizeToScene();
-            }
-            else {
-                GameView gameView = new GameView(this.model.getUsername());
-                Game model = new Game();
+            } else {
+                GameView gameView = new GameView(this.model.getUsername(), false);
+                Game model = new Game(false);
                 model.setUsername(gameView.getUsername());
-                new GamePresenter(gameView,model);
+                new GamePresenter(gameView, model);
                 this.view.getScene().setRoot(gameView);
                 gameView.getScene().getWindow().sizeToScene();
             }
@@ -284,8 +269,57 @@ public class GamePresenter {
 
     }
 
-    private void updateView() {
+    private void alertQuestion() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Question computer:");
+        if (model.getAi().getCounter() > 1) {
+            alert.setContentText(model.getAi().askQuestion());
+            ButtonType trueButton = new ButtonType("True");
+            ButtonType falseButton = new ButtonType("False");
+            alert.getButtonTypes().setAll(trueButton, falseButton);
+            alert.showAndWait().ifPresent(response -> {
+                model.getAi().setAnswerHumanQuestion(response == trueButton);
+                // ^ simplified if that sets trueButton true on setAnswerHuman
+            });
+            model.checkQuestion(false, model.getAi().getRandomquestion());
+            // ^ removes question (doesn't use answer)
+            model.getAi().play(model.isBiggerBoard());
+        } else {
+            model.getAi().makeGuess();
+            if (model.checkWin(false, model.getAi().getGuessPerson())) {
+                Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
+                alertLose.setTitle("The computer wins by guessing " + model.getAi().getGuessPerson().getName() + "!");
+                alertLose.setContentText(" You lose, you snooze. The computer guessed the right person");
+                alertLose.showAndWait();
+                returnToRootScene();
+            } else {
+                Alert alertWin = new Alert(Alert.AlertType.INFORMATION);
+                alertWin.setTitle("You win! The person guessed: " + model.getAi().getGuessPerson().getName());
+                alertWin.setContentText(" The computer guessed the wrong person! AI isn't that far yet sorry");
+                alertWin.showAndWait();
+                returnToRootScene();
+            }
+        }
+    }
 
+    private void standardQuestion() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Question computer:");
+        alert.setContentText(model.getBoard(false).getQuestion().getQuestions().get(9));
+        //^ will always be the first question that is going to be asked to make him less stupid
+        ButtonType trueButton = new ButtonType("True");
+        ButtonType falseButton = new ButtonType("False");
+        alert.getButtonTypes().setAll(trueButton, falseButton);
+        alert.showAndWait().ifPresent(response -> {
+            model.getAi().setAnswerHumanQuestion(response == trueButton);
+            // ^ simplified if that sets trueButton true on setAnswerHuman
+        });
+        model.checkQuestion(false, 9);
+        // ^ removes question (doesn't use answer)
+        model.getAi().play(model.isBiggerBoard());
+    }
+
+    private void updateView() {
         this.view.getGameGrid().getChildren().forEach(node -> {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
@@ -295,7 +329,6 @@ public class GamePresenter {
                 FXCollections.observableArrayList(model.getBoard(true).getQuestions())
                 // ^ fills combobox with questions with list
         );
-
     }
 }
 
