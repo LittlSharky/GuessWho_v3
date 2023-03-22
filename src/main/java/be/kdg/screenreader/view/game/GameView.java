@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class GameView extends BorderPane {
     private MenuItem newGame;
     private MenuItem loadGame;
-    // TODO vragen aan maarten voor name, loadgame en savegame
+    // TODO vragen aan maarten voor loadgame en savegame
     private MenuItem saveGame;
     private MenuItem exit;
     private MenuItem howToPlay;

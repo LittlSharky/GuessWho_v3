@@ -29,9 +29,9 @@ public class Application extends javafx.application.Application {
         new HomePresenter(homeView);
 
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.setTitle("Guess Who?");
-        stage.setHeight(600);
+        stage.setHeight(700);
         stage.setWidth(800);
         stage.show();
     }

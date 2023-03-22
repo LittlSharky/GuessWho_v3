@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
+import java.net.URL;
+
 public class GamePersonView extends Canvas {
 
     private final GraphicsContext gc;
@@ -18,9 +20,11 @@ public class GamePersonView extends Canvas {
 
     private final int COORD_X;
     private final int COORD_Y;
+
     public GamePersonView(String path, int columnIndex, int rowIndex) {
         // ^ draws photos in canvas
-        this.photo = new ImageView(path);
+        URL resourcePath = this.getClass().getResource("/images/" + path);
+        this.photo = new ImageView(resourcePath.toExternalForm());
         this.eliminated = false;
 
         this.WIDTH = this.photo.getImage().getWidth();
