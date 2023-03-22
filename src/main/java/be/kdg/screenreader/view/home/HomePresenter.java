@@ -22,8 +22,8 @@ public class HomePresenter {
     private HomeView view;
     private Game model;
     private GameView gameView;
-    private String username;
     private Dialog<String> dialogChooseCharacter;
+    private String username;
 
     public HomePresenter(HomeView view) {
         this.view = view;
@@ -40,9 +40,11 @@ public class HomePresenter {
         // als je meerdere keren deze eventhandler nodig hebt dan moet je hiervoor een aparte klasse aanmaken
 
         this.view.getButton().setOnAction(actionEvent -> {
-            gameView = new GameView();
+            this.username = view.getConfirmName().getText();
+            gameView = new GameView(this.username);
             model = new Game();
                 new GamePresenter(gameView, model);
+            model.setUsername(this.username);
 
             this.view.getScene().setRoot(gameView);
             //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm

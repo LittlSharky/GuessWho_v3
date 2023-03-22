@@ -23,7 +23,6 @@ public class HomeView extends VBox {
     private Image image;
     private VBox vbox;
     private ImageView imageView;// Create VBox container
-    private Label usernameLabel;
 
 
     public HomeView() {

@@ -35,8 +35,10 @@ public class GameView extends BorderPane {
     private ImageView confirmedPerson;
     private ComboBox<String> comboBoxQuestion;
     private boolean isBiggerBoard = false;
+    private String username;
 
-    public GameView() {
+    public GameView(String username) {
+        this.username = username;
         reset(isBiggerBoard);
     }
 
@@ -67,7 +69,7 @@ public class GameView extends BorderPane {
         //Initialize buttons & labels
         this.confirmQuestion = new Button("Confirm question");
         this.guessButton = new ToggleButton("Take a Guess!");
-        this.name = new Label();
+        this.name = new Label("Player is: " + this.username);
         this.endTurn = new Button("End turn");
 
         //Confirmed person image view
@@ -125,14 +127,8 @@ public class GameView extends BorderPane {
         left.setPadding(new Insets(10, 0, 0, 10));
         left.setAlignment(Pos.TOP_RIGHT);
 
-        this.name.setText(" ");
-        this.name.setPadding(new Insets(10));
-        this.name.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
-        this.name.setAlignment(Pos.BASELINE_LEFT);
-
-
         //Make a hBox with the guessButton and the confirmQuestion button
-        HBox hBox = new HBox(10, this.comboBoxQuestion, confirmQuestion, guessButton);
+        HBox hBox = new HBox(10,this.name, this.comboBoxQuestion, confirmQuestion, guessButton);
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
         //Put the comboBox and the confirmButton with the same padding around them
