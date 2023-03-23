@@ -2,11 +2,13 @@ package be.kdg.screenreader.view.game;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 
@@ -116,8 +118,6 @@ public class GameView extends BorderPane {
         }
 
 
-
-
         //Default selected person
         setConfirmedPerson(new ImageView("BackPhoto.png").getImage());
         VBox vBoxConfirm = new VBox(10, confirmedPerson, confirmPerson);
@@ -136,6 +136,12 @@ public class GameView extends BorderPane {
         //Put the comboBox and the confirmButton with the same padding around them
         BorderPane.setMargin(vBoxConfirm, new Insets(10, 100, 10, 10));
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
+        this.name.setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
+        this.name.setStyle("-fx-padding: 10px;");
+        this.name.setMinWidth(100);
+        this.name.setMinHeight(50);
+        this.name.setShape(new javafx.scene.shape.Rectangle(10, 10, 200, 50));
+
 
         GridPane.setHgrow(gameGrid, Priority.ALWAYS);
         GridPane.setVgrow(gameGrid, Priority.ALWAYS);

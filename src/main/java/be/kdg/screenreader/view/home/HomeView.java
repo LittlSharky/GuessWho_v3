@@ -1,17 +1,12 @@
 package be.kdg.screenreader.view.home;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Window;
 
 public class HomeView extends VBox {
 
@@ -21,7 +16,6 @@ public class HomeView extends VBox {
     private TextField confirmName;
     private Button start;
     private Image image;
-    private VBox vbox;
     private ImageView imageView;// Create VBox container
 
 
@@ -34,7 +28,6 @@ public class HomeView extends VBox {
         this.label = new Label("Guess Who?");
         this.confirmName = new TextField("Give here your username");
         this.start = new Button("START");
-        this.vbox = new VBox();
         this.imageView = new ImageView();
 
         // dit gaat zowel text als button initialiseren
