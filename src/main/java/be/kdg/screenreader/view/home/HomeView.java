@@ -21,7 +21,6 @@ public class HomeView extends VBox {
     private TextField confirmName;
     private Button start;
     private Image image;
-    private VBox vbox;
     private ImageView imageView;// Create VBox container
 
 
@@ -34,7 +33,6 @@ public class HomeView extends VBox {
         this.label = new Label("Guess Who?");
         this.confirmName = new TextField("Give here your username");
         this.start = new Button("START");
-        this.vbox = new VBox();
         this.imageView = new ImageView();
 
         // dit gaat zowel text als button initialiseren

@@ -5,6 +5,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -42,7 +44,6 @@ public class GamePersonView extends Canvas {
 
     public void setEliminated(boolean eliminated) {
         this.eliminated = eliminated;
-
         if (this.eliminated) {
             this.gc.setStroke(Color.RED);
             this.gc.setLineWidth(10);

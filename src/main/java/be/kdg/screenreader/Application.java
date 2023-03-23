@@ -26,6 +26,7 @@ public class Application extends javafx.application.Application {
         // in de scene zitten nodes (buttons, text, ...)
         String cssMainFile = this.getClass().getResource("/stylesheet/main.css").toExternalForm();
         scene.getStylesheets().addAll(cssMainFile);
+
         new HomePresenter(homeView);
 
         stage.setScene(scene);
