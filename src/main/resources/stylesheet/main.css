@@ -15,9 +15,6 @@
     -fx-text-decoration: none;
     -fx-cursor: pointer;
 }
-.label{
-    -fx-font-style: Indie Flower;
-}
 
 /* CSS */
 .button {

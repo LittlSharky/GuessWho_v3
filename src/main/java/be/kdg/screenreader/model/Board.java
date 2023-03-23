@@ -136,7 +136,7 @@ public class Board {
             new Person(Name.PETER, HairColor.GINGER, Sex.MALE, EyeColor.BLUE, FacialHair.MOUSTACHE, FacialHair.BEARD, Accessories.NONE, Accessories.HAT),
             new Person(Name.SIMON, HairColor.BLOND, Sex.MALE, EyeColor.BROWN, FacialHair.NONE, FacialHair.BEARD, Accessories.NONE, Accessories.NONE),
             new Person(Name.THOMAS, HairColor.BLOND, Sex.MALE, EyeColor.BLUE, FacialHair.NONE, FacialHair.NONE, Accessories.NONE, Accessories.HAT),
-            new Person(Name.SARAH, HairColor.GINGER, Sex.FEMALE, EyeColor.BLUE, FacialHair.NONE, FacialHair.NONE, Accessories.GLASSES, Accessories.HAT),
+            new Person(Name.SARAH, HairColor.GINGER, Sex.FEMALE, EyeColor.BLUE, FacialHair.NONE, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.EMMA, HairColor.BLOND, Sex.FEMALE, EyeColor.BLUE, FacialHair.NONE, FacialHair.NONE, Accessories.NONE, Accessories.HAT),
             new Person(Name.DANIEL, HairColor.BROWN, Sex.MALE, EyeColor.BROWN, FacialHair.NONE, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),
             new Person(Name.RICHARD, HairColor.BALD, Sex.MALE, EyeColor.BLUE, FacialHair.NONE, FacialHair.NONE, Accessories.GLASSES, Accessories.NONE),

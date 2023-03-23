@@ -279,7 +279,7 @@ public class GamePresenter {
                 homeView.getScene().getWindow().sizeToScene();
             } else {
                 GameView gameView = new GameView(this.model.getUsername(), false);
-                Game model = new Game(false);
+                Game model = new Game(this.model.isBiggerBoard());
                 model.setUsername(gameView.getUsername());
                 new GamePresenter(gameView, model);
                 this.view.getScene().setRoot(gameView);

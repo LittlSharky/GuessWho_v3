@@ -27,6 +27,7 @@ public class Application extends javafx.application.Application {
         // in de scene zitten nodes (buttons, text, ...)
         String cssMainFile = this.getClass().getResource("/stylesheet/main.css").toExternalForm();
         scene.getStylesheets().addAll(cssMainFile);
+       // Font myfont = Font.loadFont(getClass().getResourceAsStream("/Fonts/Roboto-Regular.ttf"), 20);
 
         new HomePresenter(homeView);
 

@@ -39,6 +39,7 @@ public class GameView extends BorderPane {
     private ComboBox<String> comboBoxQuestion;
     private boolean isBiggerBoard = false;
     private String username;
+    private StackPane stackPane;
 
     public GameView(String username, boolean isBiggerBoard) {
         this.username = username;
@@ -80,7 +81,7 @@ public class GameView extends BorderPane {
         //Confirmed person image view
         this.confirmPerson = new Button("Confirm person");
         this.confirmedPerson = new ImageView();
-
+        this.stackPane = new StackPane();
         //Initialize questions
         this.comboBoxQuestion = new ComboBox<>();
     }
@@ -102,6 +103,7 @@ public class GameView extends BorderPane {
                 for (int j = 0; j < rows; j++) {
                     GamePersonView person = new GamePersonView(this.persons.get(index), i, j);
                     // TODO this.persons.get(index) vragen aan Maarten
+
                     gameGrid.add(person, i, j);
                     index++;
                 }
@@ -139,6 +141,10 @@ public class GameView extends BorderPane {
         //Put the comboBox and the confirmButton with the same padding around them
         BorderPane.setMargin(vBoxConfirm, new Insets(10, 100, 10, 10));
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
+
+        //Use of font
+        Font myfont = Font.loadFont(getClass().getResourceAsStream("/Fonts/Roboto-Regular.ttf"), 20);
+        this.name.setFont(myfont);
         this.name.setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
         this.name.setStyle("-fx-padding: 10px;");
         this.name.setMinWidth(100);
