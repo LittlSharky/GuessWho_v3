@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 
@@ -131,8 +132,10 @@ public class GameView extends BorderPane {
 
         //Make a hBox with the guessButton and the confirmQuestion button
         HBox hBox = new HBox(10,this.name ,this.comboBoxQuestion, confirmQuestion, guessButton);
+
         //Put them at the bottom of the screen on the right
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
+
         //Put the comboBox and the confirmButton with the same padding around them
         BorderPane.setMargin(vBoxConfirm, new Insets(10, 100, 10, 10));
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
@@ -141,6 +144,7 @@ public class GameView extends BorderPane {
         this.name.setMinWidth(100);
         this.name.setMinHeight(50);
         this.name.setShape(new javafx.scene.shape.Rectangle(10, 10, 200, 50));
+
 
 
         GridPane.setHgrow(gameGrid, Priority.ALWAYS);
