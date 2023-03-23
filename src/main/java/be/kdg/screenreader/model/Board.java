@@ -174,6 +174,10 @@ public class Board {
         return NEW_PEOPLE;
     }
 
+    public Person[] getPeople(boolean isBiggerBoard) {
+        return isBiggerBoard ? NEW_PEOPLE : PEOPLE;
+    }
+
     public Person getChosenPerson() {
         return chosenPerson;
     }

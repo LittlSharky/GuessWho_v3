@@ -1,10 +1,16 @@
 package be.kdg.screenreader.view.game;
 
 import be.kdg.screenreader.model.Game;
+import be.kdg.screenreader.model.SaveAndLoadService;
 import be.kdg.screenreader.view.home.HomePresenter;
 import be.kdg.screenreader.view.home.HomeView;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.util.Stack;
 
 public class GamePresenter {
     private final GameView view;
@@ -50,7 +56,21 @@ public class GamePresenter {
         });
         //SAVE GAME
         this.view.getSaveGame().setOnAction(actionEvent -> {
-            //savegamelogic
+            try {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Data File");
+
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("Save Files", "*.EmmaSharon"));
+                File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow());
+
+                SaveAndLoadService.saveGame(selectedFile, this.model);
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
         });
         //EXIT ALERT
         this.view.getExit().setOnAction(actionEvent -> {
@@ -324,7 +344,6 @@ public class GamePresenter {
             GamePersonView person = (GamePersonView) node;
             person.setEliminated((model.getBoard(true).isEliminated(person.getCOORD_X(), person.getCOORD_Y())));
         });
-
         this.view.getComboBoxQuestion().setItems(
                 FXCollections.observableArrayList(model.getBoard(true).getQuestions())
                 // ^ fills combobox with questions with list
