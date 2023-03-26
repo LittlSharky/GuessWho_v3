@@ -143,8 +143,6 @@ public class GameView extends BorderPane {
         BorderPane.setMargin(hBox, new Insets(10, 10, 10, 10));
 
         //Use of font
-        Font myfont = Font.loadFont(getClass().getResourceAsStream("/Fonts/Roboto-Regular.ttf"), 20);
-        this.name.setFont(myfont);
         this.name.setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
         this.name.setStyle("-fx-padding: 10px;");
         this.name.setMinWidth(100);

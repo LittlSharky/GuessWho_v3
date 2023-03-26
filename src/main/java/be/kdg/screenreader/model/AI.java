@@ -367,7 +367,6 @@ public class AI {
             }
         }
     }
-
     public boolean isAnswerHumanQuestion() {
         return answerHumanQuestion;
     }

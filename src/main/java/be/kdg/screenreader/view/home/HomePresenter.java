@@ -25,6 +25,7 @@ public class HomePresenter {
     private GameView gameView;
     private Dialog<String> dialogChooseCharacter;
     private String username;
+    private Dialog<String> dialog;
 
     public HomePresenter(HomeView view) {
         this.view = view;
@@ -46,11 +47,12 @@ public class HomePresenter {
                 gameView = new GameView(this.username,false);
                 model = new Game(false);
                 model.setUsername(this.username);
-                new GamePresenter(gameView, model);
                 this.view.getScene().setRoot(gameView);
-                //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
                 gameView.getScene().getWindow().sizeToScene();
+                //je vraagt het scherm op (de stage), pas het aan naar gelang de content op het scherm
 
+                new GamePresenter(gameView, model).howToPlayDialog();
+                //When showing the new scene, dialog of How To Play is shown as well.
                 dialogChooseCharacter = new Dialog<>();
                 dialogChooseCharacter.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
                 dialogChooseCharacter.setTitle("TO DO!");
@@ -59,6 +61,7 @@ public class HomePresenter {
                 ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
                 dialogChooseCharacter.getDialogPane().getButtonTypes().add(okButton);
                 dialogChooseCharacter.showAndWait();
+
             } catch (InvalidInputException e) {
                 Alert alertBlank = new Alert(Alert.AlertType.ERROR);
                 alertBlank.setTitle("Blank username!");

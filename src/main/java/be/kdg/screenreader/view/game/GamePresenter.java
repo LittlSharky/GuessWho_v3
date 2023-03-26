@@ -88,26 +88,10 @@ public class GamePresenter {
         });
         //HOW TO PLAY DIALOG
         this.view.getHowToPlay().setOnAction(actionEvent -> {
-            this.dialog = new Dialog<>();
-            this.dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
-            this.dialog.setTitle("How To Play");
-            this.dialog.setHeaderText("Instruction");
-            this.dialog.setContentText("This is a game where you have to guess the character of your opponent.\n" +
-                    "1. The  player and the computer chooses a character.\n" +
-                    "2. The computer and the player has to guess the character of each other.\n" +
-                    "3. The questions are only yes or no answers.\n" +
-                    "4. The player is always going to start with a question. The computer will answer with Yes or No.\n" +
-                    "5. Then the player can click on the images to eliminate the characters.\n" +
-                    "6. Ending your turn by clicking on the button 'End Turn'.\n" +
-                    "7. The Computer will ask you a question. A popup will show with the question that has been asked and you have to answer it with Yes or No by clicking on the button.\n" +
-                    "8. The player can take a guess whenever he or she wants.\n" +
-                    "9. You can win the game by guessing right or the computer guesses wrong.\n\n" +
-                    "NOTE: You can only guess when it is your turn. When you guess wrong, the computer will win the game. The same goes for the computer.");
-            this.dialog.getDialogPane();
-            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-            this.dialog.getDialogPane().getButtonTypes().add(okButton);
-            this.dialog.showAndWait();
+            howToPlayDialog();
         });
+
+
         //RULES DIALOG
         this.view.getRules().setOnAction(actionEvent -> {
             this.dialog = new Dialog<>();
@@ -263,6 +247,27 @@ public class GamePresenter {
         });
     }
 
+    public void howToPlayDialog(){
+        this.dialog = new Dialog<>();
+        this.dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
+        this.dialog.setTitle("How To Play");
+        this.dialog.setHeaderText("Instruction");
+        this.dialog.setContentText("This is a game where you have to guess the character of your opponent.\n" +
+                "1. The  player and the computer chooses a character.\n" +
+                "2. The computer and the player has to guess the character from each other.\n" +
+                "3. The questions are only yes or no answers.\n" +
+                "4. The player is always going to start with a question. The computer will answer with Yes or No.\n" +
+                "5. Then the player can click on the images to eliminate and not eliminate the characters.\n" +
+                "6. Ending your turn by clicking on the button 'End Turn'.\n" +
+                "7. The Computer will ask you a question. A popup will show with the question that has been asked and you have to answer it with Yes or No by clicking on the button.\n" +
+                "8. The player can take a guess whenever he or she wants.\n" +
+                "9. You can win the game by guessing right or the computer guesses wrong.\n\n" +
+                "NOTE: You can only guess when it is your turn. When you guess wrong, the computer will win the game automatically. The same goes for the computer.");
+        this.dialog.getDialogPane();
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        this.dialog.getDialogPane().getButtonTypes().add(okButton);
+        this.dialog.showAndWait();
+    }
     public void returnToRootScene() {
         Alert alertreturn = new Alert(Alert.AlertType.INFORMATION);
         alertreturn.setTitle("Return?");
