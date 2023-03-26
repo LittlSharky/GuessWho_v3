@@ -353,7 +353,7 @@ public class AI {
 
     public void makeGuess() {
         checkCounter(GAME.isBiggerBoard());
-        if (!GAME.isBiggerBoard()) {
+        if (!GAME.isBiggerBoard() || GAME.getBoard(false).getQuestion().getQuestions().size() == 1) {
             for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.getEliminated()) {
                     this.guessPerson = person;

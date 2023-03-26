@@ -283,7 +283,7 @@ public class GamePresenter {
                 this.view.getScene().setRoot(homeView);
                 homeView.getScene().getWindow().sizeToScene();
             } else {
-                GameView gameView = new GameView(this.model.getUsername(), false);
+                GameView gameView = new GameView(this.model.getUsername(), this.model.isBiggerBoard());
                 Game model = new Game(this.model.isBiggerBoard());
                 model.setUsername(gameView.getUsername());
                 new GamePresenter(gameView, model);
@@ -297,19 +297,7 @@ public class GamePresenter {
     private void alertQuestion() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Question computer:");
-        if (model.getAi().getCounter() > 1) {
-            alert.setContentText(model.getAi().askQuestion());
-            ButtonType trueButton = new ButtonType("True");
-            ButtonType falseButton = new ButtonType("False");
-            alert.getButtonTypes().setAll(trueButton, falseButton);
-            alert.showAndWait().ifPresent(response -> {
-                model.getAi().setAnswerHumanQuestion(response == trueButton);
-                // ^ simplified if that sets trueButton true on setAnswerHuman
-            });
-            model.checkQuestion(false, model.getAi().getRandomquestion());
-            // ^ removes question (doesn't use answer)
-            model.getAi().play(model.isBiggerBoard());
-        } else {
+        if (model.getAi().getCounter() < 1 || model.getBoard(false).getQuestion().getQuestions().size() == 1) {
             model.getAi().makeGuess();
             if (model.checkWin(false, model.getAi().getGuessPerson())) {
                 Alert alertLose = new Alert(Alert.AlertType.INFORMATION);
@@ -324,6 +312,19 @@ public class GamePresenter {
                 alertWin.showAndWait();
                 returnToRootScene();
             }
+        } else {
+            alert.setContentText(model.getAi().askQuestion());
+            ButtonType trueButton = new ButtonType("True");
+            ButtonType falseButton = new ButtonType("False");
+            alert.getButtonTypes().setAll(trueButton, falseButton);
+            alert.showAndWait().ifPresent(response -> {
+                model.getAi().setAnswerHumanQuestion(response == trueButton);
+                // ^ simplified if that sets trueButton true on setAnswerHuman
+            });
+            model.checkQuestion(false, model.getAi().getRandomquestion());
+            // ^ removes question (doesn't use answer)
+            model.getAi().play(model.isBiggerBoard());
+
         }
     }
 
