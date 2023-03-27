@@ -45,7 +45,7 @@ public class AI {
 
     public String askQuestion() {
         Random random = new Random();
-        this.randomquestion = random.nextInt(GAME.boardC.getQuestions().size() - 1);
+        this.randomquestion = random.nextInt(GAME.boardC.getQuestions().size());
         return GAME.boardC.getQuestion().getQuestions().get(randomquestion);
     }
     public void eliminateNormalBoard(int index){
@@ -353,7 +353,7 @@ public class AI {
 
     public void makeGuess() {
         checkCounter(GAME.isBiggerBoard());
-        if (!GAME.isBiggerBoard() || GAME.getBoard(false).getQuestion().getQuestions().size() == 1) {
+        if (!GAME.isBiggerBoard()) {
             for (Person person : GAME.boardC.getPEOPLE()) {
                 if (!person.getEliminated()) {
                     this.guessPerson = person;
