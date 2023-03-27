@@ -19,8 +19,8 @@ public class AI {
 
     public void computerChoosePerson(int rows, int columns) {
         Random random = new Random();
-        int x = random.nextInt(columns - 1);
-        int y = random.nextInt(rows - 1);
+        int x = random.nextInt(columns);
+        int y = random.nextInt(rows);
 
         GAME.boardC.setChosenPerson(x, y);
         GAME.boardC.setPersonConfirmed();
