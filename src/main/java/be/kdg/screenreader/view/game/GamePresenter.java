@@ -6,11 +6,9 @@ import be.kdg.screenreader.view.home.HomePresenter;
 import be.kdg.screenreader.view.home.HomeView;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
-import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.util.Stack;
 
 public class GamePresenter {
     private final GameView view;
@@ -130,6 +128,15 @@ public class GamePresenter {
             this.view.getScene().setRoot(biggerGameView);
             biggerGameView.getScene().getWindow().sizeToScene();
         });
+        // SMALLER BOARD
+        this.view.getSmallerBoard().setOnAction(actionEvent -> {
+            GameView smallerGameView = new GameView(this.model.getUsername(), false);
+            Game smallerGame = new Game(true);
+            smallerGame.setUsername(smallerGameView.getUsername());
+            new GamePresenter(smallerGameView, smallerGame);
+            this.view.getScene().setRoot(smallerGameView);
+            smallerGameView.getScene().getWindow().sizeToScene();
+        });
 
         //ELIMINATE OR DE-ELIMINATE CHARACTERS OR CHOOSE A CHARACTER
         this.view.getGameGrid().getChildren().forEach(node -> {
@@ -247,7 +254,7 @@ public class GamePresenter {
         });
     }
 
-    public void howToPlayDialog(){
+    public void howToPlayDialog() {
         this.dialog = new Dialog<>();
         this.dialog.getDialogPane().getScene().getStylesheets().add(getClass().getResource("/stylesheet/dialog.css").toExternalForm());
         this.dialog.setTitle("How To Play");
@@ -268,6 +275,7 @@ public class GamePresenter {
         this.dialog.getDialogPane().getButtonTypes().add(okButton);
         this.dialog.showAndWait();
     }
+
     public void returnToRootScene() {
         Alert alertreturn = new Alert(Alert.AlertType.INFORMATION);
         alertreturn.setTitle("Return?");

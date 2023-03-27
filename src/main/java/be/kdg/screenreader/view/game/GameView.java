@@ -23,6 +23,7 @@ public class GameView extends BorderPane {
     private MenuItem rules;
     private MenuItem info;
     private CheckMenuItem biggerBoard;
+    private CheckMenuItem smallerBoard;
     private Button confirmQuestion;
     private ToggleButton guessButton;
     private Label name;
@@ -71,6 +72,7 @@ public class GameView extends BorderPane {
         this.howToPlay = new MenuItem("How to play");
         this.rules = new MenuItem("Rules");
         this.biggerBoard = new CheckMenuItem("Bigger board");
+        this.smallerBoard = new CheckMenuItem("Smaller board");
 
         //Initialize buttons & labels
         this.confirmQuestion = new Button("Confirm question");
@@ -90,7 +92,7 @@ public class GameView extends BorderPane {
         Menu gameMenu = new Menu("Game", null, this.newGame, this.loadGame, this.saveGame, this.exit);
         Menu helpMenu = new Menu("Help", null, this.howToPlay, this.rules);
         Menu aboutMenu = new Menu("About", null, this.info);
-        Menu settingsMenu = new Menu("Settings", null, this.biggerBoard);
+        Menu settingsMenu = new Menu("Settings", null, this.biggerBoard, this.smallerBoard);
         MenuBar menuBar = new MenuBar(gameMenu, helpMenu, aboutMenu, settingsMenu);
 
         gameGrid = new GridPane();
@@ -102,7 +104,6 @@ public class GameView extends BorderPane {
             for (int i = 0; i < columns; i++) {
                 for (int j = 0; j < rows; j++) {
                     GamePersonView person = new GamePersonView(this.persons.get(index), i, j);
-                    // TODO this.persons.get(index) vragen aan Maarten
 
                     gameGrid.add(person, i, j);
                     index++;
@@ -150,7 +151,6 @@ public class GameView extends BorderPane {
         this.name.setShape(new javafx.scene.shape.Rectangle(10, 10, 200, 50));
 
 
-
         GridPane.setHgrow(gameGrid, Priority.ALWAYS);
         GridPane.setVgrow(gameGrid, Priority.ALWAYS);
 
@@ -196,6 +196,10 @@ public class GameView extends BorderPane {
 
     public CheckMenuItem getBiggerBoard() {
         return biggerBoard;
+    }
+
+    public CheckMenuItem getSmallerBoard() {
+        return smallerBoard;
     }
 
     private void fillPersons() {
